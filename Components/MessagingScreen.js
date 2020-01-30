@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, ScrollView} from 'react-native';
 import MessageEditor from './MessageEditor'
 import MessageArea from './MessageArea'
-import Message from './Message'
+
 
 
 
@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20
   }
-}
+})

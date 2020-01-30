@@ -1,4 +1,4 @@
-/*
+
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, ScrollView} from 'react-native';
 import MessageEditor from './Components/MessageEditor'
@@ -47,16 +47,3 @@ const styles = StyleSheet.create({
     marginBottom: 20
   }
 });
-*/
-
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
-import MessagingScreen from './Components/MessagingScreen'
-
-const MainNavigator = createStackNavigator({
-  Home: {screen: MessagingScreen}
-});
-
-const App = createAppContainer(MainNavigator);
-
-export default App;
