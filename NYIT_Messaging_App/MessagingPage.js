@@ -10,7 +10,7 @@ export default class HelloWorldApp extends Component {
 
   constructor(props){
     super(props)
-    this.state = { text: ""}
+    this.state = {text: ""}
   }
 
   updateText = (input) => {this.setState({text: input})}

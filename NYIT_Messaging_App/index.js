@@ -3,7 +3,9 @@
  */
 
 import {AppRegistry} from 'react-native';
-import App from './App';
+import MessagingPage from './MessagingPage';
+import LoginPage from './LoginPage';
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => LoginPage);
+//AppRegistry.registerComponent(appName, () => MessagingPage);
