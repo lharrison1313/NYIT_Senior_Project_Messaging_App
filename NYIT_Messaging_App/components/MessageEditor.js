@@ -46,27 +46,25 @@ const styles = StyleSheet.create({
       flex:.10,
       flexDirection: 'row',
       justifyContent: 'center',
-      marginBottom: 10
+      marginBottom: 10,
+      paddingLeft: 5,
+      paddingRight: 5
     },
 
     text_box_container:{
         flex: 3,
-        margin: 4
     },
 
     button_container:{
         flex: .75,
-        margin: 4
     },
 
     attatchments_button_container:{
         flex: .50,
-        margin: 4
     },
   
     text_box:{
-      backgroundColor: '#e3e3e3',
-      borderRadius: 10,
+      backgroundColor: 'lightgray',
       height: 50
     },
   
@@ -75,15 +73,15 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent:"center",
       borderRadius:10,
-      height: 50
+      height: 50,
+      marginLeft: 10
       
     },
     
     attatchments_button: {
-      backgroundColor: 'blue',
+      backgroundColor: 'grey',
       alignItems: "center",
       justifyContent:"center",
-      borderRadius:10,
       height: 50
     }
 

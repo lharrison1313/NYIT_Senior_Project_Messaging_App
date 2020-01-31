@@ -22,27 +22,18 @@ export default class MessagingScreen extends Component {
 
   render() {
     return (
-      <View style={styles.app_container}>
-        <View style={styles.content_container}>
-          <MessageArea>
-          </MessageArea>
-          <MessageEditor button_handler={this.buttonPressed} update_text ={this.updateText}/>
-        </View>
+      <View style={styles.content_container}>
+        <MessageArea>
+        </MessageArea>
+        <MessageEditor button_handler={this.buttonPressed} update_text ={this.updateText}/>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  app_container:{
-    flex:1,
-    backgroundColor:"white"
-  },
-
   content_container:{
     flex:1,
     flexDirection: 'column',
-    marginTop: 20,
-    marginBottom: 20
   }
 })
