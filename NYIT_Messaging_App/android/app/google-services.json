@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "583065173369",
+    "firebase_url": "https://nyitmessagingapplication.firebaseio.com",
+    "project_id": "nyitmessagingapplication",
+    "storage_bucket": "nyitmessagingapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583065173369:android:c0db88512ea9540d9283a8",
+        "android_client_info": {
+          "package_name": "com.nyit_messaging_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "583065173369-vg03fstrbi8abo21nn5e9nqgekddqb9d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nyit_messaging_app",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "583065173369-g0se3odf919j58a961gshama77t57fkv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCX_gLHHGfSp0NcjaF9efGKRdwSaFUts0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "583065173369-g0se3odf919j58a961gshama77t57fkv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
