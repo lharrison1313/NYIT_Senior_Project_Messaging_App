@@ -24,7 +24,7 @@ export default class Message extends Component{
 const styles = StyleSheet.create({
     sent_message_container:{
         alignSelf: 'flex-end',
-        backgroundColor: "green",
+        backgroundColor: "#5F6362",
         padding: 20,
         marginLeft:120,
         marginRight:20,
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
     recieved_message_container:{
         alignSelf: 'flex-start',
-        backgroundColor: "grey",
+        backgroundColor: "#00BED6",
         padding: 20,
         marginLeft: 20,
         marginRight:120,

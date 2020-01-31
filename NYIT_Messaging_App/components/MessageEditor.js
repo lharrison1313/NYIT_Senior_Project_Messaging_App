@@ -29,7 +29,7 @@ export default class MessageEditor extends Component{
                 <TouchableOpacity 
                 style={styles.send_button}
                 onPress={this.props.button_handler}>
-                    <Text style={{color:'white'}}>
+                    <Text style={{color:'black'}}>
                         send 
                     </Text>
                 </TouchableOpacity>
@@ -43,12 +43,13 @@ export default class MessageEditor extends Component{
 const styles = StyleSheet.create({
   
     message_editor:{
-      flex:.10,
+      flex:.15,
       flexDirection: 'row',
       justifyContent: 'center',
-      marginBottom: 10,
-      paddingLeft: 5,
-      paddingRight: 5
+      alignItems: 'center',
+      paddingLeft: 10,
+      paddingRight: 10,
+      backgroundColor: '#5F6362'
     },
 
     text_box_container:{
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     },
   
     send_button:{
-      backgroundColor: 'green',
+      backgroundColor: '#00BED6',
       alignItems: "center",
       justifyContent:"center",
       borderRadius:10,
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     },
     
     attatchments_button: {
-      backgroundColor: 'grey',
+      backgroundColor: 'lightgrey',
       alignItems: "center",
       justifyContent:"center",
       height: 50

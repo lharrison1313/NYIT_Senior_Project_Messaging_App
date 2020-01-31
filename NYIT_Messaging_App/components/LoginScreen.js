@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
     login_container:{
         flex:1,
         flexDirection: 'column',
+        backgroundColor: '#5F6362'
     },
 
     field_container:{
         flex: .50,
-        //backgroundColor: 'purple',
         justifyContent: 'flex-end',
         padding:10
 
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
 
     button_container:{
         flex: .50,
-        //backgroundColor: 'yellow',
         justifyContent: 'flex-start',
         alignItems: 'center',
         paddingTop: 10,
@@ -61,12 +60,12 @@ const styles = StyleSheet.create({
     },
 
     field:{
-        backgroundColor: "lightgray",
+        backgroundColor: "lightgrey",
         marginBottom: 10
     },
 
     button:{
-        backgroundColor: 'lightblue',
+        backgroundColor: '#00BED6',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 100,

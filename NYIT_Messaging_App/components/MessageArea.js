@@ -14,7 +14,8 @@ export default class MessageArea extends Component{
 const styles = StyleSheet.create({
     message_area_container:{
       flex: 1,
-      flexDirection: "column"
+      flexDirection: "column",
+      backgroundColor: 'lightgrey'
     },
   
   });
