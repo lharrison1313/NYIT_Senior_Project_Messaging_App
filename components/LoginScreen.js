@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import {View, TextInput, Text, Image, StyleSheet, TouchableOpacity, KeyboardAvoidingView, } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 export default class LogInScreen extends Component{
     render(){
         return(
-            <View style = {styles.login_container}>
+            
+            <KeyboardAwareScrollView style={styles.login_container}>
                 <View style = {styles.field_container}>
                     <TextInput 
                     style = {styles.field}
@@ -19,7 +21,7 @@ export default class LogInScreen extends Component{
                 </View>
             
                 <View style = {styles.button_container}>
-                    <TouchableOpacity style = {styles.button}>
+                    <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('App')}>
                         <Text>
                             Login
                         </Text>
@@ -38,7 +40,8 @@ export default class LogInScreen extends Component{
                     </TouchableOpacity>
 
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
+            
         );
     }
 }
@@ -47,7 +50,6 @@ export default class LogInScreen extends Component{
 const styles = StyleSheet.create({
     login_container:{
         flex:1,
-        flexDirection: 'column',
         backgroundColor: '#5F6362'
     },
 

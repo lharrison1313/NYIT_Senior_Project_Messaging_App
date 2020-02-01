@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import {View, TextInput, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 export default class RegisterScreen extends Component{
     render(){
         return(
-            <View style = {styles.login_container}>
+            <KeyboardAwareScrollView style={styles.login_container} >
                 <View style = {styles.field_container}>
                     <TextInput 
                     style = {styles.field}
                     placeholder = "Enter Username"
                     />
 
+                    <TextInput 
+                    style = {styles.field}
+                    placeholder = "Enter Email"
+                    />
+                    
                     <TextInput 
                     style = {styles.field}
                     placeholder = "Enter Password"
@@ -31,7 +37,7 @@ export default class RegisterScreen extends Component{
                         </Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
         );
     }
 }
@@ -40,7 +46,6 @@ export default class RegisterScreen extends Component{
 const styles = StyleSheet.create({
     login_container:{
         flex:1,
-        flexDirection: 'column',
         backgroundColor: '#5F6362'
     },
 
