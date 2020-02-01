@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       paddingLeft: 10,
       paddingRight: 10,
-      backgroundColor: '#5F6362'
+      backgroundColor: '#5F6362',
+      marginBottom: 15
     },
 
     text_box_container:{

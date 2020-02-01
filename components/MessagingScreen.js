@@ -37,7 +37,10 @@ export default class MessagingScreen extends Component {
     //creates the message elements in message state on render
     var messages = [];
     this.state.messages.forEach((element,key) => {
+      //places user message on screen
       messages.push(<Message sent={element.sent} sender_name ={element.sender_name} message_text ={element.message_text}/>)
+      //places a copy of the users message on screen
+      messages.push(<Message sent={false} sender_name ={element.sender_name} message_text ={element.message_text}/>)
     });
 
     return (
@@ -60,6 +63,7 @@ const styles = StyleSheet.create({
   message_area_container:{
     flex: 1,
     flexDirection: "column",
-    backgroundColor: 'lightgrey'
+    backgroundColor: 'lightgrey',
+    marginBottom: 15
   }
 })

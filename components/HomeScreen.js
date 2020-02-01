@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Button, Text } from 'react-native';
+import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import {signOut} from '../api/MessagingAppAPI'
 
 
@@ -11,13 +11,45 @@ export default class HomeScreen extends Component{
 
     render(){
         return(
-            <View>
+            <View style = {styles.main_container}>
 
-                <Button title = 'Messages' onPress = {() => this.props.navigation.navigate('Message')}/>
-                <Button title = 'Logout' onPress = {() => signOut(this.onSignOut)} />
+                
+                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Message')} >
+                            <Text>
+                                Messages
+                            </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style = {styles.button} onPress={() => signOut(this.onSignOut)} >
+                            <Text>
+                                signOut
+                            </Text>
+                </TouchableOpacity>
 
             </View>
 
         );
     }
+
 }
+
+const styles = StyleSheet.create({
+
+    main_container:{
+        flex:1,
+        backgroundColor: '#5F6362',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    
+    button:{
+        backgroundColor: '#00BED6',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        height: 50,
+        width: 300,
+        margin: 10
+    },
+
+})
