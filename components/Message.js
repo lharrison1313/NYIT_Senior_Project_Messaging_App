@@ -7,7 +7,7 @@ export default class Message extends Component{
         if(this.props.sent){
             return(
                 <View style={styles.sent_message_container}>
-                    <Text style={{color:"white"}}>Me: {this.props.message_text}</Text>
+                    <Text style={{color:"white"}}>{this.props.sender_name}: {this.props.message_text}</Text>
                 </View>
             );
         }

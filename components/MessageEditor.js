@@ -3,8 +3,22 @@ import { Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native
 
 export default class MessageEditor extends Component{
 
-    
+    constructor(props){
+        super(props)
+        this.state = {
+            text: ""
+        }
+    }
 
+    handleSend = () =>{
+        this.props.button_handler()
+        this.setState({text: ''});
+        this.textInput.clear()
+    }
+
+    handleTextInput = (text) =>{
+        this.props.update_text(text);
+    }
 
     render(){
         return(
@@ -21,14 +35,15 @@ export default class MessageEditor extends Component{
                 placeholder = "Send Message"
                 multiline
                 numberOfLines = {30}
-                onChangeText={(text) => this.props.update_text(text)}
+                onChangeText={(text) => this.handleTextInput(text)}
+                ref={input => { this.textInput = input }}
                 />
             </View>
 
             <View style={styles.button_container}>
                 <TouchableOpacity 
                 style={styles.send_button}
-                onPress={this.props.button_handler}>
+                onPress={this.handleSend}>
                     <Text style={{color:'black'}}>
                         send 
                     </Text>

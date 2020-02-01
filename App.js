@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import MessagingScreen from './components/MessagingScreen';
 import LoginScreen from './components/LoginScreen';
-import AuthLoadScreen from './components/AuthenticationLoadingScreen'
 import HomeScreen from './components/HomeScreen'
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer,  createSwitchNavigator } from 'react-navigation';
@@ -25,12 +24,11 @@ const AppStack = createStackNavigator(
 
 const AppContainer = createAppContainer(createSwitchNavigator(
   {
-    AuthLoad: AuthLoadScreen,
     Auth: LoginScreen,
     App: AppStack
   },
   {
-    initialRouteName: 'AuthLoad',
+    initialRouteName: 'Auth',
   }
   ));
 
