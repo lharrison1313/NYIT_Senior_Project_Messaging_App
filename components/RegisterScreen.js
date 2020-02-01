@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {View, TextInput, Text, Image, StyleSheet, TouchableOpacity, KeyboardAvoidingView, } from 'react-native';
+import {View, TextInput, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
-export default class LogInScreen extends Component{
+export default class RegisterScreen extends Component{
     render(){
         return(
             <View style = {styles.login_container}>
@@ -16,27 +16,20 @@ export default class LogInScreen extends Component{
                     placeholder = "Enter Password"
                     secureTextEntry
                     />
+
+                    <TextInput 
+                    style = {styles.field}
+                    placeholder = "Re-enter Password"
+                    secureTextEntry
+                    />
                 </View>
             
                 <View style = {styles.button_container}>
                     <TouchableOpacity style = {styles.button}>
                         <Text>
-                            Login
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Register')} >
-                        <Text>
                             Register
                         </Text>
                     </TouchableOpacity>
-
-                    <TouchableOpacity style = {styles.button}>
-                        <Text>
-                            Login with google
-                        </Text>
-                    </TouchableOpacity>
-
                 </View>
             </View>
         );
