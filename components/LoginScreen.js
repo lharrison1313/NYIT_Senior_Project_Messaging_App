@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Login from './Login';
 import Register from './Register'
 import {login, signUp, subscribeToAuthChanges} from '../api/MessagingAppAPI'
+import {StyleSheet, Dimensions } from 'react-native';
 
 export default class LogInScreen extends Component{
     
@@ -31,6 +32,7 @@ export default class LogInScreen extends Component{
                 <Login 
                 switch ={this.switchForm}
                 login = {login}
+                styling = {styles}
                 />
             );
         }
@@ -39,8 +41,49 @@ export default class LogInScreen extends Component{
                 <Register 
                 switch = {this.switchForm}
                 signUp = {signUp}
+                styling = {styles}
                 />
             );
         }
     }
 }
+
+const window = Dimensions.get('window');
+const styles = StyleSheet.create({
+    login_container:{
+        flex:1,
+        backgroundColor: '#5F6362',
+    },
+
+    field_container:{
+        flex: .50,
+        justifyContent: 'flex-end',        
+        alignItems: "center",
+        marginVertical: 5,
+    },
+
+    button_container:{
+        flex: .50,
+        justifyContent: 'flex-start',
+        alignItems: "center",
+        marginVertical: 5
+    },
+
+    field:{
+        backgroundColor: "lightgrey",
+        marginVertical: 5,
+        width: window.width-20,
+        height:50
+    },
+
+    button:{
+        backgroundColor: '#00BED6',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        marginVertical: 5,
+        width: window.width-75,
+        height:50
+    },
+
+})
