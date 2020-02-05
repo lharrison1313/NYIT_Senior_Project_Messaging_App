@@ -27,7 +27,7 @@ export default class LoginForm extends Component{
         const styles = this.props.styling
         return(
             
-            <View style={styles.login_container} >
+            <KeyboardAwareScrollView style={styles.login_container} >
                 <View style = {styles.field_container}>
                     <TextInput 
                     style = {styles.field}
@@ -64,7 +64,7 @@ export default class LoginForm extends Component{
                     </TouchableOpacity>
 
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
             
 
         );

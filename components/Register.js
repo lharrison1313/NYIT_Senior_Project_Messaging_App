@@ -26,13 +26,13 @@ export default class RegisterForm extends Component{
             this.props.signUp(this.state.emailField,this.state.passwordField,this.state.usernameField);
         }
     }
-    
+
     render(){
         const styles = this.props.styling
         return(
-            <View style={styles.login_container}>
+            <KeyboardAwareScrollView style={styles.login_container}>
                     <View style = {styles.field_container}>
-                        <TextInput 
+                        <TextInput
                         style = {styles.field}
                         placeholder = "Enter Email"
                         onChangeText = {(text)=> this.setState({emailField: text})}
@@ -74,7 +74,7 @@ export default class RegisterForm extends Component{
                         </TouchableOpacity>
 
                     </View>
-                </View>
+            </KeyboardAwareScrollView>
         );
     }
 } 

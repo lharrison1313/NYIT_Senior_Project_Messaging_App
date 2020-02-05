@@ -45,7 +45,10 @@ export default class MessagingScreen extends Component {
 
     return (
       <View style={styles.content_container}>
-        <ScrollView style={styles.message_area_container} ref='_scrollView'>
+        <ScrollView 
+        style={styles.message_area_container} 
+        ref='_scrollView' 
+        >
           {messages}
         </ScrollView>
         <MessageEditor button_handler={this.sendMessage} update_text ={this.updateText}/>
