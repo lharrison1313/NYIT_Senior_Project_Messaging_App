@@ -30,7 +30,7 @@ export default class RegisterForm extends Component{
     render(){
         const styles = this.props.styling
         return(
-            <KeyboardAwareScrollView style={styles.login_container}>
+            <View style={styles.login_container}>
                     <View style = {styles.field_container}>
                         <TextInput
                         style = {styles.field}
@@ -74,7 +74,7 @@ export default class RegisterForm extends Component{
                         </TouchableOpacity>
 
                     </View>
-            </KeyboardAwareScrollView>
+            </View>
         );
     }
 } 

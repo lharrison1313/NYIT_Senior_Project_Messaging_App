@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>583065173369-nusl5v92u4opavbli7710sve23ar8msb.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.583065173369-nusl5v92u4opavbli7710sve23ar8msb</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>583065173369-vg03fstrbi8abo21nn5e9nqgekddqb9d.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD82h_j7_GVwcgOLvEcmgkKVTQI7CuARzM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>583065173369</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.NYIT-Messaging-App</string>
+	<key>PROJECT_ID</key>
+	<string>nyitmessagingapplication</string>
+	<key>STORAGE_BUCKET</key>
+	<string>nyitmessagingapplication.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:583065173369:ios:30558174b44bd1639283a8</string>
+	<key>DATABASE_URL</key>
+	<string>https://nyitmessagingapplication.firebaseio.com</string>
+</dict>
+</plist>

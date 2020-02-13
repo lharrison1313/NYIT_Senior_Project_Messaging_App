@@ -15,7 +15,9 @@ export default class TestScreen extends Component{
     
         return(
             <View style ={styles.container}>
-                <GroupBar/>
+                <GroupBar location=" location" date="Date" group_name="Group Name" 
+                 intrests ="intrests"/>
+               
             </View>
         );
     }
@@ -25,9 +27,8 @@ export default class TestScreen extends Component{
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'flex-start'
+        
+       
 
     },
 })
