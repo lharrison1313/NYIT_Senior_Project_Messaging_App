@@ -15,7 +15,7 @@ export default class GroupBar extends Component{
                     <Text style = {{flex: 1}}>{this.props.date}</Text>
                 </View>
                 <Text style ={styles.body_text}>{this.props.group_name}</Text>
-                <Text style ={styles.body_text}>{this.props.intrests}</Text>
+                <Text style ={styles.body_text}>{this.props.interests}</Text>
             </TouchableOpacity>
             
         );
@@ -26,7 +26,7 @@ export default class GroupBar extends Component{
 const styles = StyleSheet.create({
     bar_container:{
         flexDirection:'column',
-        backgroundColor: 'blue',
+        backgroundColor: '#00BED6',
         height: 100,
         padding:10
     },
@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     header_container:{
         flexDirection:'row',
         marginBottom:5
-        
     },
 
     header_text:{

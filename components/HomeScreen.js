@@ -20,18 +20,6 @@ export default class HomeScreen extends Component{
                             </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style = {styles.button} >
-                            <Text>
-                                My Groups
-                            </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style = {styles.button} >
-                            <Text>
-                                My Profile
-                            </Text>
-                </TouchableOpacity>
-
                 <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Message')} >
                             <Text>
                                 Messages
