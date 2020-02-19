@@ -1,4 +1,5 @@
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 export function login(email, password){
     auth().signInWithEmailAndPassword(email,password)
@@ -28,4 +29,14 @@ export function signOut(onSignedOut){
         console.log('Signed Out')
         onSignedOut();
     })
+}
+
+
+export async function getGroups(){
+    const query = await firestore().collection("Groups")
+    .doc("TgWZj8pnBOTnIBWHaNUg")
+    .get();
+
+    console.log("Group Data",query.data())
+    
 }

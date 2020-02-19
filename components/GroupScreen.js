@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, Group } from 'react-native';
 import GroupBar from './GroupBar'
 import { FlatList, TextInput } from 'react-native-gesture-handler';
+import {getGroups} from '../api/MessagingAppAPI'
 
 const DATA = [
     {
@@ -19,12 +20,16 @@ const DATA = [
         id: "2"
     },
     
-  ];
+];
 
 export default class GroupScreen extends Component{
     
     constructor(props){
         super(props)
+    }
+
+    componentDidMount(){
+        getGroups()
     }
 
     render(){
@@ -68,7 +73,7 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor:"#5F6362"
     },
-    
+
     group_container:{
         flex:6,
     },
