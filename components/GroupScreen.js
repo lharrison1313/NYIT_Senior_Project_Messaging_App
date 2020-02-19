@@ -2,34 +2,37 @@ import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, Group } from 'react-native';
 import GroupBar from './GroupBar'
 import { FlatList, TextInput } from 'react-native-gesture-handler';
-import {getGroups} from '../api/MessagingAppAPI'
-
-const DATA = [
-    {
-        location: "Location1" ,
-        date: "Date1",
-        groupName: "Group Name 1",
-        interests: "interests1",
-        id: "1"
-    },
-    {
-        location: "Location2" ,
-        date: "Date2",
-        groupName: "Group Name2",
-        interests: "interests2",
-        id: "2"
-    },
-    
-];
+import firestore from '@react-native-firebase/firestore';
 
 export default class GroupScreen extends Component{
     
     constructor(props){
         super(props)
+        this.state = {
+            groupList: []
+        }
+        this.ref = firestore().collection("Groups")
     }
 
     componentDidMount(){
-        getGroups()
+        this.unsubscribe = this.ref.onSnapshot((querrySnapshot) => {
+            const groups = []
+            querrySnapshot.forEach((doc) =>{
+                groups.push({
+                    GroupName: doc.data().GroupName,
+                    id: doc.id
+                });
+            });
+            this.setState({
+                groupList: groups.sort((a,b) => {
+                    return (a.GroupName < b.GroupName);
+                })
+            });
+            console.log("groups",groups)
+
+        });
+        
+
     }
 
     render(){
@@ -43,19 +46,14 @@ export default class GroupScreen extends Component{
 
                 <View style = {styles.group_container} >
                     <FlatList
-                        data = {DATA}
+                        data = {this.state.groupList}
                         renderItem={({ item }) => (
                             <GroupBar
-                                location = {item.location}
-                                interests = {item.interests}
-                                group_name = {item.groupName} 
-                                date = {item.date}
+                                group_name = {item.GroupName} 
                             />
                           )}
                         keyExtractor = {item => item.id}
-                    
                     />
-                
                 </View>
                 
                 <View style={styles.modify_container}>

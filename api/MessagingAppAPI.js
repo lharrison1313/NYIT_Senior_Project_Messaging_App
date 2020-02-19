@@ -31,12 +31,3 @@ export function signOut(onSignedOut){
     })
 }
 
-
-export async function getGroups(){
-    const query = await firestore().collection("Groups")
-    .doc("TgWZj8pnBOTnIBWHaNUg")
-    .get();
-
-    console.log("Group Data",query.data())
-    
-}
