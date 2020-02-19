@@ -28,12 +28,16 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         backgroundColor: '#00BED6',
         height: 100,
-        padding:10
+        padding:10,
+        borderColor:"black"
+
     },
 
     header_container:{
         flexDirection:'row',
         marginBottom:5
+
+
     },
 
     header_text:{

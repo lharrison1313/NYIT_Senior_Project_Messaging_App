@@ -7,6 +7,7 @@ export function login(email, password){
 }
 
 export function signUp(email, password, displayName){
+    // this connects with the fire base
     auth().createUserWithEmailAndPassword(email, password)
     .then((userInfo)=>{
         console.log(userInfo)
