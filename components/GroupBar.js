@@ -15,8 +15,7 @@ export default class GroupBar extends Component{
                     <Text style = {{flex: 1}}>{this.props.date}</Text>
                 </View>
                 <Text style ={styles.body_text}>{this.props.group_name}</Text>
-                <Text style ={styles.body_text}>{this.props.interests}</Text>
-                //quick change 
+                <Text style ={styles.body_text}>{this.props.interests}</Text> 
             </TouchableOpacity>
             
         );
