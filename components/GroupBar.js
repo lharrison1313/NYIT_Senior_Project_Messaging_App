@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#00BED6',
         height: 100,
         padding:10,
-        borderColor:"black",
+        borderColor:"red",
         borderWidth: 1
 
     },
