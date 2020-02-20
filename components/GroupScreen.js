@@ -20,6 +20,9 @@ export default class GroupScreen extends Component{
             querrySnapshot.forEach((doc) =>{
                 groups.push({
                     GroupName: doc.data().GroupName,
+                    Date: doc.data().Date,
+                    Location: doc.data().Location,
+                    Interests: doc.data().Interests,
                     id: doc.id
                 });
             });
@@ -50,6 +53,9 @@ export default class GroupScreen extends Component{
                         renderItem={({ item }) => (
                             <GroupBar
                                 group_name = {item.GroupName} 
+                                date = {item.Date}
+                                location = {item.Location}
+                                interests = {item.Interests}
                             />
                           )}
                         keyExtractor = {item => item.id}

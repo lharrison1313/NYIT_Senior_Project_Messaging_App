@@ -29,13 +29,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#00BED6',
         height: 100,
         padding:10,
-        borderColor:'black',
-        borderWidth:1
+
+        borderColor:"black",
+        borderWidth: 1
+
+
     },
 
     header_container:{
         flexDirection:'row',
         marginBottom:5
+
+
     },
 
     header_text:{
