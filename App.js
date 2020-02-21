@@ -12,7 +12,8 @@ const AppStack = createStackNavigator(
   {
     Home: HomeScreen,
     Message: MessagingScreen,
-    Test: GroupScreen
+    Groups: GroupScreen
+  
   },
   {
     initialRouteName: 'Home',

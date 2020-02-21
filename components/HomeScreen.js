@@ -3,6 +3,7 @@ import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import {signOut} from '../api/MessagingAppAPI'
 
 
+
 export default class HomeScreen extends Component{
 
     onSignOut = ()=>{
@@ -14,15 +15,9 @@ export default class HomeScreen extends Component{
             <View style = {styles.main_container}>
 
                 
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Test')}>
+                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Groups')}>
                             <Text>
                                 Search Groups
-                            </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Message')} >
-                            <Text>
-                                Messages
                             </Text>
                 </TouchableOpacity>
 

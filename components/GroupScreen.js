@@ -56,6 +56,7 @@ export default class GroupScreen extends Component{
                                 date = {item.Date}
                                 location = {item.Location}
                                 interests = {item.Interests}
+                                id = {item.id}
                             />
                           )}
                         keyExtractor = {item => item.id}
