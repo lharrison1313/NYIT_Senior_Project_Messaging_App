@@ -46,12 +46,6 @@ const styles = StyleSheet.create({
 
     body_text:{
         marginBottom:10
-    },
-
-    interest_bubble:{
-        borderRadius:10,
-        backgroundColor: "red",
-        
     }
 
 

@@ -5,21 +5,20 @@ import Message from './Message'
 import { FlatList } from 'react-native-gesture-handler';
 import firestore from '@react-native-firebase/firestore';
 import{withNavigation} from "react-navigation"
-import{sendMessage} from "../api/MessagingAppAPI"
+import{sendMessage,getUserInfo,getCurrentUserID} from "../api/MessagingAppAPI"
 
-
-
- class MessagingScreen extends Component {
+class MessagingScreen extends Component {
 
   constructor(props){
     super(props)
     this.state = { 
       text: "",
-      messageList: []
+      messageList: [],
+      userName: ""
     }
-    //getting collection name from selected group bar
     this.id = this.props.navigation.state.params.id
-    this.ref = firestore().collection("Groups").doc(this.id).collection("Messages").orderBy("TimeStamp")
+    this.uid = getCurrentUserID()
+    this.ref = firestore().collection("Groups").doc(this.id).collection("Messages").orderBy("TimeStamp") 
   }
 
   componentDidMount(){
@@ -29,21 +28,28 @@ import{sendMessage} from "../api/MessagingAppAPI"
             messages.push({
                 SenderName: doc.data().SenderName,
                 MessageText: doc.data().MessageText,
-                id: doc.id
+                SenderID: doc.data().SenderID,
+                GroupID: doc.id
             });
         });
         this.setState({
            messageList: messages
         });
     });
-
+    getUserInfo(this.uid,this.updateUserInfo)
   }
+
+  componentWillUnmount(){
+    this.unsubscribe()
+  }
+
+  updateUserInfo = (input) =>{this.setState({userName: input.UserName})}
 
   updateText = (input) => {this.setState({text: input})}
   
   sendMessage = () => {
     if(this.state.text !== ''){
-      sendMessage(this.id,this.state.text,"username")
+      sendMessage(this.id,this.state.text,this.state.userName,this.uid)
       //updating state and clearing input text
       this.setState({
         text: ""
@@ -62,15 +68,16 @@ import{sendMessage} from "../api/MessagingAppAPI"
             <Message
               sender_name = {item.SenderName}
               message_text = {item.MessageText}
+              sent = {this.uid === item.SenderID}
             />
           )}
-          keyExtractor = {item => item.id}
+          keyExtractor = {item => item.GroupID}
         />
         <MessageEditor button_handler={this.sendMessage} update_text ={this.updateText}/>
       </View>
     );
   }
-}
+} 
 
 const styles = StyleSheet.create({
   content_container:{
