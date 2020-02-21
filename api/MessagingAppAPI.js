@@ -32,3 +32,17 @@ export function signOut(onSignedOut){
     })
 }
 
+export function sendMessage(groupID, message, sender){
+    firestore().collection("Groups").doc(groupID).collection("Messages").add({
+        SenderName: sender,
+        MessageText: message,
+        TimeStamp: firestore.FieldValue.serverTimestamp()
+    })
+    .then(function(docRef) {
+        console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+}
+

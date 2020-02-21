@@ -11,7 +11,7 @@ export default class GroupScreen extends Component{
         this.state = {
             groupList: []
         }
-        this.ref = firestore().collection("Groups")
+        this.ref = firestore().collection("Groups").orderBy("GroupName")
     }
 
     componentDidMount(){

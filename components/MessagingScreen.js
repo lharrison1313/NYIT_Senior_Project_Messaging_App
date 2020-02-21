@@ -5,6 +5,7 @@ import Message from './Message'
 import { FlatList } from 'react-native-gesture-handler';
 import firestore from '@react-native-firebase/firestore';
 import{withNavigation} from "react-navigation"
+import{sendMessage} from "../api/MessagingAppAPI"
 
 
 
@@ -17,7 +18,8 @@ import{withNavigation} from "react-navigation"
       messageList: []
     }
     //getting collection name from selected group bar
-    this.ref = firestore().collection(this.props.navigation.state.params.id)
+    this.id = this.props.navigation.state.params.id
+    this.ref = firestore().collection("Groups").doc(this.id).collection("Messages").orderBy("TimeStamp")
   }
 
   componentDidMount(){
@@ -25,9 +27,8 @@ import{withNavigation} from "react-navigation"
         const messages = []
         querrySnapshot.forEach((doc) =>{
             messages.push({
-                senderName: doc.data().senderName,
-                sent: doc.data().sent,
-                messageText: doc.data().messageText,
+                SenderName: doc.data().SenderName,
+                MessageText: doc.data().MessageText,
                 id: doc.id
             });
         });
@@ -42,6 +43,7 @@ import{withNavigation} from "react-navigation"
   
   sendMessage = () => {
     if(this.state.text !== ''){
+      sendMessage(this.id,this.state.text,"username")
       //updating state and clearing input text
       this.setState({
         text: ""
@@ -58,9 +60,8 @@ import{withNavigation} from "react-navigation"
           data = {this.state.messageList}
           renderItem = {({item}) => (
             <Message
-              sent = {item.sent}
-              sender_name = {item.senderName}
-              message_text = {item.messageText}
+              sender_name = {item.SenderName}
+              message_text = {item.MessageText}
             />
           )}
           keyExtractor = {item => item.id}
