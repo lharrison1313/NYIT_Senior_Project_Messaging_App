@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, Group } from 'react-native';
 import GroupBar from './GroupBar'
-import { FlatList, TextInput } from 'react-native-gesture-handler';
+import { FlatList} from 'react-native-gesture-handler';
+import{withNavigation} from "react-navigation";
 import firestore from '@react-native-firebase/firestore';
 
-export default class GroupScreen extends Component{
+ class GroupScreen extends Component{
     
     constructor(props){
         super(props)
         this.state = {
             groupList: []
         }
-        this.ref = firestore().collection("Groups")
+        this.ref = firestore().collection("Groups").orderBy("GroupName")
     }
 
     componentDidMount(){
@@ -34,8 +35,11 @@ export default class GroupScreen extends Component{
             console.log("groups",groups)
 
         });
-        
 
+    }
+
+    componentWillUnmount(){
+        this.unsubscribe()
     }
 
     render(){
@@ -56,14 +60,19 @@ export default class GroupScreen extends Component{
                                 date = {item.Date}
                                 location = {item.Location}
                                 interests = {item.Interests}
+                                id = {item.id}
                             />
                           )}
                         keyExtractor = {item => item.id}
                     />
                 </View>
                 
-                <View style={styles.modify_container}>
-
+                <View style={styles.new_group_container}>
+                    <TouchableOpacity 
+                    style = {styles.new_group_button} 
+                    onPress={() => this.props.navigation.navigate('CreateGroup')}>
+                        <Text>Create A Group</Text>
+                    </TouchableOpacity>
                 </View>
                 
             </View>
@@ -84,9 +93,15 @@ const styles = StyleSheet.create({
     search_container:{
         flex:0.5,
     },
-    modify_container:{
-        flex:0.5,
+    new_group_container:{
+        flex:.75,
+    },
+    new_group_button:{
+        flex: 1,
+        backgroundColor: "grey",
+        justifyContent: "center",
+        alignItems: "center"
     }
-        
-
 })
+
+export default withNavigation(GroupScreen)
