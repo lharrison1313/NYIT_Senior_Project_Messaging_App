@@ -1,5 +1,6 @@
-import auth from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+
 
 export function login(email, password){
     auth().signInWithEmailAndPassword(email,password)
@@ -59,9 +60,15 @@ export function sendMessage(groupID, message, senderName, senderID){
 
 //creates a new group on database
 export function createGroup(groupName){
+        // The object you want to add to the collection
+    // Adding the server timestamp as finishedAt to the object
+    var today = new Date();
+    var date = (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date + ' ' + time;
     firestore().collection("Groups").add({
         GroupName: groupName,
-        Date: "2/19/2020",
+        Date: dateTime,
         Interests: "#compsci",
         Location: "Manhattan",
         GroupOwner: getCurrentUserID()
