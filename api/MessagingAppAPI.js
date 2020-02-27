@@ -58,13 +58,14 @@ export function sendMessage(groupID, message, senderName, senderID){
 }
 
 //creates a new group on database
-export function createGroup(groupName){
+export function createGroup(groupName,interests){
+
     firestore().collection("Groups").add({
         GroupName: groupName,
         Date: "2/19/2020",
-        Interests: "#compsci",
+        Interests: interests,
         Location: "Manhattan",
-        GroupOwner: getCurrentUserID()
+        GroupOwner: getCurrentUserID(),
     })
     .then(function(docRef) {
         console.log("Group Created with ID: ", docRef.id);

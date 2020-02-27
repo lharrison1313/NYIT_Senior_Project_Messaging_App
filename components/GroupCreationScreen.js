@@ -9,12 +9,13 @@ class GroupCreationScreen extends Component{
     constructor(props){
         super(props)
         this.state = {
-            groupName: ""
+            groupName: "",
+            interests: ""
         }
     }
 
     buttonHandler = ()=> {
-        createGroup(this.state.groupName)
+        createGroup(this.state.groupName,this.state.interests)
         this.props.navigation.pop()
     }
 
@@ -24,6 +25,9 @@ class GroupCreationScreen extends Component{
                 <TextInput 
                 placeholder="Enter group name"
                 onChangeText = {(text)=>this.setState({groupName: text})}/>
+                <TextInput 
+                placeholder="Enter Interests"
+                onChangeText = {(text)=>this.setState({interests: text})}/>
                 <TouchableOpacity 
                 style = {styles.button}
                 onPress = {this.buttonHandler}
