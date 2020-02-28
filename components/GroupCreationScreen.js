@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import {createGroup} from  "../api/MessagingAppAPI"
 import{withNavigation} from "react-navigation";
+import {InterestTextInput} from "./InterestTextInput";
 
 
 class GroupCreationScreen extends Component{
@@ -10,24 +11,27 @@ class GroupCreationScreen extends Component{
         super(props)
         this.state = {
             groupName: "",
-            interests: ""
+            interests: []
         }
     }
 
     buttonHandler = ()=> {
         createGroup(this.state.groupName,this.state.interests)
-        this.props.navigation.pop()
+        this.props.navigation.goBack()
+    }
+
+    interestParser = (text)=> {
+        this.setState({interests:  text.split(" ")})
     }
 
     render(){
         return(
-            <View>
-                <TextInput 
+            <View style = {styles.container}>
+                <TextInput
+                style = {{backgroundColor:"white"}} 
                 placeholder="Enter group name"
                 onChangeText = {(text)=>this.setState({groupName: text})}/>
-                <TextInput 
-                placeholder="Enter Interests"
-                onChangeText = {(text)=>this.setState({interests: text})}/>
+                <InterestTextInput retrieveInterestList= {this.interestParser}/>
                 <TouchableOpacity 
                 style = {styles.button}
                 onPress = {this.buttonHandler}
@@ -47,6 +51,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         height: 50
+    },
+
+    container:{
+        flex:1, 
+        backgroundColor:"#5F6362",
     }
     
 

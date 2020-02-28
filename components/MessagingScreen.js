@@ -5,6 +5,7 @@ import Message from './Message'
 import { FlatList } from 'react-native-gesture-handler';
 import firestore from '@react-native-firebase/firestore';
 import{withNavigation} from "react-navigation"
+import{getGroupMessages} from "../api/MessagingAppAPI"
 import{sendMessage,getUserInfo,getCurrentUserID} from "../api/MessagingAppAPI"
 
 class MessagingScreen extends Component {
@@ -16,26 +17,12 @@ class MessagingScreen extends Component {
       messageList: [],
       userName: ""
     }
-    this.id = this.props.navigation.state.params.id
+    this.gid = this.props.navigation.state.params.id
     this.uid = getCurrentUserID()
-    this.ref = firestore().collection("Groups").doc(this.id).collection("Messages").orderBy("TimeStamp") 
   }
 
   componentDidMount(){
-    this.unsubscribe = this.ref.onSnapshot((querrySnapshot) => {
-        const messages = []
-        querrySnapshot.forEach((doc) =>{
-            messages.push({
-                SenderName: doc.data().SenderName,
-                MessageText: doc.data().MessageText,
-                SenderID: doc.data().SenderID,
-                GroupID: doc.id
-            });
-        });
-        this.setState({
-           messageList: messages
-        });
-    });
+    getGroupMessages(this.gid,this.retrieveMessages).then( (unsub) => this.unsubscribe = unsub )
     getUserInfo(this.uid,this.updateUserInfo)
   }
 
@@ -43,13 +30,15 @@ class MessagingScreen extends Component {
     this.unsubscribe()
   }
 
+  retrieveMessages = (messages) =>{this.setState({messageList: messages})}
+
   updateUserInfo = (input) =>{this.setState({userName: input.UserName})}
 
   updateText = (input) => {this.setState({text: input})}
   
   sendMessage = () => {
     if(this.state.text !== ''){
-      sendMessage(this.id,this.state.text,this.state.userName,this.uid)
+      sendMessage(this.gid,this.state.text,this.state.userName,this.uid)
       //updating state and clearing input text
       this.setState({
         text: ""

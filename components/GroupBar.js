@@ -4,7 +4,9 @@ import{withNavigation} from "react-navigation"
 
 
 class GroupBar extends Component{
-    
+    constructor(props){
+        super(props)
+    }
 
     render(){
     
@@ -16,10 +18,10 @@ class GroupBar extends Component{
                 onPress={() => this.props.navigation.navigate('Message',{id: this.props.id})}>
                 <View style={styles.header_container}>
                     <Text style = {{flex: 1}}>{this.props.location}</Text>
-                    <Text style = {{flex: 1}}>{this.props.date}</Text>
+                    <Text style = {{flex: 1}}>{this.props.date.toString()}</Text>
                 </View>
                 <Text style ={styles.body_text}>{this.props.group_name}</Text>
-                <Text style ={styles.body_text}>{this.props.interests}</Text>
+                <Text style ={styles.body_text}>{this.props.interests.join(" ")}</Text>
                 
             </TouchableOpacity>
             

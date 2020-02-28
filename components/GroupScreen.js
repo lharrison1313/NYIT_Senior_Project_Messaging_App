@@ -12,34 +12,23 @@ import firestore from '@react-native-firebase/firestore';
         this.state = {
             groupList: []
         }
-        this.ref = firestore().collection("Groups").orderBy("GroupName")
+        //getting group retrival function from navigation
+        this.getGroups = this.props.navigation.state.params.getGroupsFunc
     }
 
     componentDidMount(){
-        this.unsubscribe = this.ref.onSnapshot((querrySnapshot) => {
-            const groups = []
-            querrySnapshot.forEach((doc) =>{
-                groups.push({
-                    GroupName: doc.data().GroupName,
-                    Date: doc.data().Date,
-                    Location: doc.data().Location,
-                    Interests: doc.data().Interests,
-                    id: doc.id
-                });
-            });
-            this.setState({
-                groupList: groups.sort((a,b) => {
-                    return (a.GroupName < b.GroupName);
-                })
-            });
-            console.log("groups",groups)
-
-        });
-
+        this.getGroups(this.retrieveGroups).then( (unsub) => this.unsubscribe = unsub )
     }
 
     componentWillUnmount(){
         this.unsubscribe()
+    }
+
+    retrieveGroups = (groups) => {
+        this.setState({
+            groupList: groups
+        });
+        console.log("groups",groups)
     }
 
     render(){
@@ -71,7 +60,7 @@ import firestore from '@react-native-firebase/firestore';
                     <TouchableOpacity 
                     style = {styles.new_group_button} 
                     onPress={() => this.props.navigation.navigate('CreateGroup')}>
-                        <Text>Create A Group</Text>
+                        <Text>Create New Group</Text>
                     </TouchableOpacity>
                 </View>
                 
