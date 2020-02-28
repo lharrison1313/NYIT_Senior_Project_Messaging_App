@@ -15,6 +15,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [GMSServices provideAPIKey:@"AIzaSyD82h_j7_GVwcgOLvEcmgkKVTQI7CuARzM"];
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
   }

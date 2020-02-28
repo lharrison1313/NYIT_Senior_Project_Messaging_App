@@ -21,6 +21,12 @@ export default class HomeScreen extends Component{
                             </Text>
                 </TouchableOpacity>
 
+                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('GroupMap')}>
+                            <Text>
+                                Group Map
+                            </Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity style = {styles.button} onPress={() => signOut(this.onSignOut)} >
                             <Text>
                                 signOut
