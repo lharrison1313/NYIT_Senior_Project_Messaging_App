@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import {createGroup} from  "../api/MessagingAppAPI"
 import{withNavigation} from "react-navigation";
-import {InterestTextInput} from "./InterestTextInput";
+import InterestTextInput from "./InterestTextInput";
+import GooglePlacesButton from "./GooglePlacesButton"
+
 
 
 class GroupCreationScreen extends Component{
@@ -11,17 +13,22 @@ class GroupCreationScreen extends Component{
         super(props)
         this.state = {
             groupName: "",
-            interests: []
+            interests: [],
+            place: {}
         }
     }
 
     buttonHandler = ()=> {
-        createGroup(this.state.groupName,this.state.interests)
+        createGroup(this.state.groupName,this.state.interests,this.state.place.name,this.state.place.location)
         this.props.navigation.goBack()
     }
 
     interestParser = (text)=> {
         this.setState({interests:  text.split(" ")})
+    }
+
+    retrieveLocation = (place) =>{
+        this.setState({place: place})
     }
 
     render(){
@@ -31,7 +38,9 @@ class GroupCreationScreen extends Component{
                 style = {{backgroundColor:"white"}} 
                 placeholder="Enter group name"
                 onChangeText = {(text)=>this.setState({groupName: text})}/>
+                
                 <InterestTextInput retrieveInterestList= {this.interestParser}/>
+                <GooglePlacesButton button_style={styles.button} retrieveLocation = {this.retrieveLocation}/>
                 <TouchableOpacity 
                 style = {styles.button}
                 onPress = {this.buttonHandler}

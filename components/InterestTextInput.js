@@ -3,7 +3,7 @@ import { TextInput, StyleSheet, View,Text  } from 'react-native';
 
 
 
-export class InterestTextInput extends Component{
+export default class InterestTextInput extends Component{
     constructor(props){
         super(props)
         this.state = {

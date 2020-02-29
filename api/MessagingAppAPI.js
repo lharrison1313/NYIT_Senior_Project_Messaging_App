@@ -56,18 +56,20 @@ export function sendMessage(groupID, message, senderName, senderID){
 }
 
 //creates a new group on database
-export function createGroup(groupName,interests){
+export function createGroup(groupName,interests,locationName,coordinates){
     //prepending hash tags to interests
     var interestList = []
     interests.forEach( element =>{
         var hash = "#"
         interestList.push(hash.concat(element))
     })
+    
     firestore().collection("Groups").add({
         GroupName: groupName,
         Date: "2/19/2020",
         Interests: interestList,
-        Location: "Manhattan",
+        Location: locationName,
+        Coordinates: coordinates,
         GroupOwner: getCurrentUserID(),
     })
     .then(function(docRef) {
@@ -99,6 +101,7 @@ export async function getAllGroups(groupsRetrieved){
                 GroupName: doc.data().GroupName,
                 Date: doc.data().Date,
                 Location: doc.data().Location,
+                Coordinates: doc.data().Coordinates,
                 Interests: doc.data().Interests,
                 id: doc.id
             });

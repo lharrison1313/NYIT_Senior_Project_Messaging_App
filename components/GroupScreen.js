@@ -3,7 +3,6 @@ import {View, TouchableOpacity, Text, StyleSheet, Group } from 'react-native';
 import GroupBar from './GroupBar'
 import { FlatList} from 'react-native-gesture-handler';
 import{withNavigation} from "react-navigation";
-import firestore from '@react-native-firebase/firestore';
 
  class GroupScreen extends Component{
     

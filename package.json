@@ -18,6 +18,7 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-gesture-handler": "^1.5.3",
+    "react-native-google-places": "^3.1.2",
     "react-native-keyboard-aware-scrollview": "^2.1.0",
     "react-native-maps": "0.26.1",
     "react-native-reanimated": "^1.7.0",
