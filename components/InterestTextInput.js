@@ -33,7 +33,7 @@ export class InterestTextInput extends Component{
         return(
             <View>
                 <TextInput
-                style = {{backgroundColor:"white"}} 
+                style = {this.props.style} 
                 onChangeText = {(text) => this.interestParser(text)}
                 placeholder = {"Enter Interests"}
                 />
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#00BED6",
         padding:5,
         margin: 2,
-        borderRadius: 5
+        borderRadius: 5,
     }
     
 
