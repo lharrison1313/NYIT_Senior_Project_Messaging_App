@@ -8,12 +8,10 @@ export function login(email, password){
 }
 
 export function signUp(email, password, userName){
-    // this connects with the fire base
     auth().createUserWithEmailAndPassword(email, password)
     .then((userInfo)=>{
         console.log(userInfo)
         //adding user to user collection
-        
         firestore().collection("Users").doc(userInfo.user.uid).set({
             UserName: userName
         }).then(function() {
@@ -71,7 +69,7 @@ export function createGroup(groupName){
         Date: dateTime,
         Interests: "#compsci",
         Location: "Manhattan",
-        GroupOwner: getCurrentUserID()
+        GroupOwner: getCurrentUserID(),
     })
     .then(function(docRef) {
         console.log("Group Created with ID: ", docRef.id);
@@ -92,3 +90,37 @@ export async function getUserInfo(uid,userInfoRetrieved){
     userInfoRetrieved(document.data())
 }
 
+//gets all groups from database
+export async function getAllGroups(groupsRetrieved){
+    var ref = firestore().collection("Groups").orderBy("GroupName")
+    return ref.onSnapshot((querrySnapshot) => {
+        const groups = []
+        querrySnapshot.forEach((doc) =>{
+            groups.push({
+                GroupName: doc.data().GroupName,
+                Date: doc.data().Date,
+                Location: doc.data().Location,
+                Interests: doc.data().Interests,
+                id: doc.id
+            });
+        });
+        groupsRetrieved(groups);
+    })
+}
+
+//given a group id, gets all messages from that group
+export async function getGroupMessages(gid,messagesRetrieved){
+    var ref = firestore().collection("Groups").doc(gid).collection("Messages").orderBy("TimeStamp")
+    return ref.onSnapshot((querrySnapshot) => {
+        const messages = []
+        querrySnapshot.forEach((doc) =>{
+            messages.push({
+                SenderName: doc.data().SenderName,
+                MessageText: doc.data().MessageText,
+                SenderID: doc.data().SenderID,
+                GroupID: doc.id
+            });
+        });
+        messagesRetrieved(messages)
+    })
+}
