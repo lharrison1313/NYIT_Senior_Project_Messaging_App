@@ -64,6 +64,7 @@ export function createGroup(groupName,interests,locationName,coordinates){
         interestList.push(hash.concat(element))
     })
     
+    //creating new group
     firestore().collection("Groups").add({
         GroupName: groupName,
         Date: "2/19/2020",
@@ -73,6 +74,15 @@ export function createGroup(groupName,interests,locationName,coordinates){
         GroupOwner: getCurrentUserID(),
     })
     .then(function(docRef) {
+        //adding group to users group collection
+        firestore().collection("Users").doc(getCurrentUserID()).collection("Groups").add({
+            Owner: true,
+            GroupID: docRef.id
+        }).then(function(){
+            console.log("Group Added to user's groups")
+        }).catch(function(error){
+            console.error("Error addigng group to user's groups: ", error);
+        })
         console.log("Group Created with ID: ", docRef.id);
     })
     .catch(function(error) {
@@ -109,6 +119,57 @@ export async function getAllGroups(groupsRetrieved){
         groupsRetrieved(groups);
     })
 }
+
+//gets only the groups the user is in
+export async function getAllMyGroups(groupsRetrieved){
+    var ref = firestore().collection("Users").doc(getCurrentUserID()).collection("Groups")
+    return ref.onSnapshot((querrySnapshot) => {
+        const groupIDs = []
+        querrySnapshot.forEach((doc) =>{
+            groupIDs.push(doc.data().GroupID);
+        });
+        getGroupsByID(groupIDs,groupsRetrieved);
+    })
+}
+
+//given an id or array of ids it will return group info
+export function getGroupsByID(groupIDs, groupsRetrieved){
+    var ref = firestore().collection("Groups")
+    const groups = []
+    
+    if(groupIDs.length > 1){
+        groupIDs.forEach((id)=>{
+            ref.doc(id).get().then((doc)=>{
+                groups.push({
+                    GroupName: doc.data().GroupName,
+                    Date: doc.data().Date,
+                    Location: doc.data().Location,
+                    Coordinates: doc.data().Coordinates,
+                    Interests: doc.data().Interests,
+                    id: doc.id
+                })
+                
+            })
+        })
+        groupsRetrieved(groups)
+    }
+    else if(groupIDs.length == 1){
+        ref.doc(groupIDs[0]).get().then((doc)=>{
+            console.log(doc)
+            groups.push({
+                GroupName: doc.data().GroupName,
+                Date: doc.data().Date,
+                Location: doc.data().Location,
+                Coordinates: doc.data().Coordinates,
+                Interests: doc.data().Interests,
+                id: doc.id
+            })
+            groupsRetrieved(groups)
+        })
+    }
+    
+}
+
 
 //given a group id, gets all messages from that group
 export async function getGroupMessages(gid,messagesRetrieved){
