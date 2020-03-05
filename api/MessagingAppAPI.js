@@ -102,7 +102,7 @@ export async function getUserInfo(uid,userInfoRetrieved){
 }
 
 //gets all groups from database
-export async function getAllGroups(groupsRetrieved){
+export async function getAllGroups(groupsRetrieved,filterBy,filter){
     var ref = firestore().collection("Groups").orderBy("GroupName")
     return ref.onSnapshot((querrySnapshot) => {
         const groups = []
@@ -121,7 +121,7 @@ export async function getAllGroups(groupsRetrieved){
 }
 
 //gets only the groups the user is in
-export async function getAllMyGroups(groupsRetrieved){
+export async function getAllMyGroups(groupsRetrieved,filterBy,filter){
     var ref = firestore().collection("Users").doc(getCurrentUserID()).collection("Groups")
     return ref.onSnapshot((querrySnapshot) => {
         const groupIDs = []

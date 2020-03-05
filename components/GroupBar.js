@@ -14,14 +14,15 @@ class GroupBar extends Component{
             
             <View
             style = {styles.bar_container} 
-            //passing group id to messaging screen
             >
                
                 <View style={styles.header_container}>
-                        <Text style = {{flex: 1}}>{this.props.location}</Text>
-                    <Text style = {{flex: 1}}>{this.props.date.toString()}</Text>
+                        <Text style = {{flex: 1, fontSize:10}}>{this.props.location}</Text>
+                    <Text style = {{flex: 1, fontSize: 10}}>{this.props.date.toString()}</Text>
                 </View>
+
                 <View style={styles.body_container}>
+
                     <View style={styles.left_container}>
                         <Text style ={styles.body_text}>{this.props.group_name}</Text>
                         <Text style ={styles.body_text}>{this.props.interests.join(" ")}</Text>
@@ -32,6 +33,7 @@ class GroupBar extends Component{
                             <Text>Join</Text>
                         </TouchableOpacity>
                     </View>
+                    
                 </View>
             </View>
             

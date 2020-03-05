@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import {View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, } from 'react-native';
+import {View, TextInput, Text, TouchableOpacity,Image } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 
@@ -28,7 +28,11 @@ export default class LoginForm extends Component{
         return(
             
             <View style={styles.login_container} >
-                <View style = {styles.field_container}>
+               
+                
+
+                    <Image style = {{width: 200, height: 200, margin: 20,}} source = {require('../res/nyit.png')} />
+
                     <TextInput 
                     style = {styles.field}
                     placeholder = "Enter Email"
@@ -42,9 +46,9 @@ export default class LoginForm extends Component{
                     onChangeText = {(text)=> this.setState({passwordField: text})}
                     />
                     
-                </View>
+               
             
-                <View style = {styles.button_container}>
+                
                     <TouchableOpacity style = {styles.button} onPress={this.handleLogin}>
                         <Text>
                             Login
@@ -63,7 +67,7 @@ export default class LoginForm extends Component{
                         </Text>
                     </TouchableOpacity>
 
-                </View>
+                
             </View>
             
 

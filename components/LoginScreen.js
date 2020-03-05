@@ -53,20 +53,8 @@ const styles = StyleSheet.create({
     login_container:{
         flex:1,
         backgroundColor: '#5F6362',
-    },
-
-    field_container:{
-        flex: .50,
-        justifyContent: 'flex-end',        
-        alignItems: "center",
-        marginVertical: 5,
-    },
-
-    button_container:{
-        flex: .50,
-        justifyContent: 'flex-start',
-        alignItems: "center",
-        marginVertical: 5
+        alignItems:"center",
+        justifyContent: "center"
     },
 
     field:{
