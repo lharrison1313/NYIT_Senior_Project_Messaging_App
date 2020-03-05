@@ -35,10 +35,9 @@ class GroupCreationScreen extends Component{
         return(
             <View style = {styles.container}>
                 <TextInput
-                style = {{backgroundColor:"white"}} 
+                style = {styles.textInputContainer} 
                 placeholder="Enter group name"
                 onChangeText = {(text)=>this.setState({groupName: text})}/>
-                
                 <InterestTextInput retrieveInterestList= {this.interestParser}/>
                 <GooglePlacesButton button_style={styles.button} retrieveLocation = {this.retrieveLocation}/>
                 <TouchableOpacity 
@@ -59,14 +58,21 @@ const styles = StyleSheet.create({
         backgroundColor: "#00BED6",
         justifyContent: "center",
         alignItems: "center",
-        height: 50
+        height: 50,
+
     },
 
     container:{
         flex:1, 
         backgroundColor:"#5F6362",
-    }
-    
+    },
+    textInputContainer:{
+        height:50,
+        marginVertical:1,
+        backgroundColor:"white"
+        
+    },
+
 
 })
 

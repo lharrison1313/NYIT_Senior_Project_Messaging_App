@@ -4,6 +4,7 @@ import LoginScreen from './components/LoginScreen';
 import GroupScreen from './components/GroupScreen';
 import HomeScreen from './components/HomeScreen'
 import GroupMapScreen from './components/GroupMapScreen'
+import ProfilePage from './components/ProfilePage';
 import GroupCreationScreen from "./components/GroupCreationScreen"
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer,  createSwitchNavigator } from 'react-navigation';
@@ -16,7 +17,8 @@ const AppStack = createStackNavigator(
     Message: MessagingScreen,
     Groups: GroupScreen,
     CreateGroup: GroupCreationScreen,
-    GroupMap: GroupMapScreen
+    GroupMap: GroupMapScreen,
+    Profile: ProfilePage,
   
   },
   {
