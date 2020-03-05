@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {StyleSheet, View, Text, Image } from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import{withNavigation} from "react-navigation"
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {getAllGroups} from '../api/MessagingAppAPI'
+
 
 
 class ProfilePage extends Component{
@@ -30,7 +31,7 @@ class ProfilePage extends Component{
                         Add Friends
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style = {styles.button}>
+                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Groups',{getGroupsFunc: getAllGroups})}>
                     <Text>
                         My Groups
                     </Text>
