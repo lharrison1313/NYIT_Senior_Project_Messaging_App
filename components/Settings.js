@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import{withNavigation} from "react-navigation"
 import {getAllGroups} from '../api/MessagingAppAPI'
+import {signOut} from '../api/MessagingAppAPI'
 
 
 
-class ProfilePage extends Component{
+class Settings extends Component{
     constructor(props){
         super(props)
         this.state = {
-            name: "Default Name",
-            status: "Offline",
+            version: "0.1"
         }
         
     }
@@ -19,30 +19,29 @@ class ProfilePage extends Component{
     
         return(
             <View style = {styles.MainPage}>
-                <Image style = {{width: 100, height: 100, margin: 20,}} source = {require('./nyit.png')} />
-                <Text style = {{margin: 10,}}>
-                    {this.state.name}
+                <Image style = {{width: 100, height: 100, margin: 20,}} source = {require('./SettingsWheel.png')} />
+                <Text style = {{margin: 3, fontSize: 40, fontWeight: "bold"}}>
+                    Settings
                 </Text>
-                <Text style = {{margin: 10,}}>
-                    {this.state.status}
+                <TouchableOpacity style = {styles.button} >
+                    <Text>
+                        About
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style = {styles.button} >
+                    <Text>
+                        FAQs
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style = {styles.button} >
+                    <Text>
+                        Sign Out
+                    </Text>
+                </TouchableOpacity>
+                <Text>
+                Current Version: {this.state.version}
                 </Text>
-                <TouchableOpacity style = {styles.button}>
-                    <Text>
-                        Add Friends
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Groups',{getGroupsFunc: getAllGroups})}>
-                    <Text>
-                        My Groups
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Settings')}>
-                    <Text>
-                        Settings
-                    </Text>
-                </TouchableOpacity>
             </View>
-            
         );
     }
 
@@ -53,7 +52,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "grey",
         alignItems: "center", 
-        justifyContent: "center",
     },
     button:{
         backgroundColor: '#00BED6',
@@ -64,8 +62,6 @@ const styles = StyleSheet.create({
         width: 300,
         margin: 10
     },
-
-
 })
 
-export default withNavigation(ProfilePage)
+export default withNavigation(Settings)

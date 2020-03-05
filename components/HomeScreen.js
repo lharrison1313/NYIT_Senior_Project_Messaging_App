@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import {View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import {signOut} from '../api/MessagingAppAPI'
 import {getAllGroups} from '../api/MessagingAppAPI'
 
@@ -14,16 +14,10 @@ export default class HomeScreen extends Component{
         return(
             <View style = {styles.main_container}>
 
-                
+                <Image style = {{width: 100, height: 100, margin: 20,}} source = {require('./HomeScreenLogo.png')} />
                 <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Groups',{getGroupsFunc: getAllGroups})}>
                             <Text>
                                 Search Groups
-                            </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style = {styles.button} onPress={() => signOut(this.onSignOut)} >
-                            <Text>
-                                signOut
                             </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Profile')}>
@@ -31,7 +25,11 @@ export default class HomeScreen extends Component{
                                 Profile
                             </Text>
                 </TouchableOpacity>
-
+                <TouchableOpacity style = {styles.button} onPress={() => signOut(this.onSignOut)} >
+                            <Text>
+                                Sign Out
+                            </Text>
+                </TouchableOpacity>
 
             </View>
 
@@ -45,7 +43,6 @@ const styles = StyleSheet.create({
     main_container:{
         flex:1,
         backgroundColor: '#5F6362',
-        justifyContent: 'center',
         alignItems: 'center'
     },
     
