@@ -17,11 +17,18 @@ import{withNavigation} from "react-navigation";
     }
 
     componentDidMount(){
-        this.getGroups(this.retrieveGroups).then((unsub) => this.unsubscribe = unsub )
+        this.getGroups(this.retrieveGroups)
+        .then((unsub) => {
+            this.unsubscribe = unsub
+            console.log("subscribe")})
+        .catch((error)=> console.log("GroupScreen: ",error))
     }
 
     componentWillUnmount(){
-        this.unsubscribe()
+        if(this.unsubscribe != null){
+            console.log("unsubscribe")
+            this.unsubscribe()
+        }
     }
 
     componentDidUpdate(){

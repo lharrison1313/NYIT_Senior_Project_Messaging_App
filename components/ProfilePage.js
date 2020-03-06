@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import{withNavigation} from "react-navigation"
 
-import {getAllMyGroups} from "../api/MessagingAppAPI"
+import {getMyGroups} from "../api/MessagingAppAPI"
 
 
 class ProfilePage extends Component{

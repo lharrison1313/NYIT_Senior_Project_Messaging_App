@@ -72,22 +72,9 @@ export function createGroup(groupName,interests,locationName,coordinates){
         Location: locationName,
         Coordinates: coordinates,
         GroupOwner: getCurrentUserID(),
+    }).catch((error)=>{
+        console.log(error)
     })
-    .then(function(docRef) {
-        //adding group to users group collection
-        firestore().collection("Users").doc(getCurrentUserID()).collection("Groups").add({
-            Owner: true,
-            GroupID: docRef.id
-        }).then(function(){
-            console.log("Group Added to user's groups")
-        }).catch(function(error){
-            console.error("Error addigng group to user's groups: ", error);
-        })
-        console.log("Group Created with ID: ", docRef.id);
-    })
-    .catch(function(error) {
-        console.error("Error creating group: ", error);
-    });
 }
 
 //gets the current users id
@@ -103,6 +90,7 @@ export async function getUserInfo(uid,userInfoRetrieved){
 
 //gets all groups from database
 export async function getAllGroups(groupsRetrieved,filter){
+
     if(filter == null){
         //given no filter get all groups in database
         var ref = firestore().collection("Groups").orderBy("GroupName")
@@ -112,10 +100,10 @@ export async function getAllGroups(groupsRetrieved,filter){
         var ref = firestore().collection("Groups").where("Interests","array-contains",filter).orderBy("GroupName")
     }
 
-    return ref.onSnapshot((querrySnapshot) => {
+    return ref.onSnapshot((querySnapshot) => {
         const groups = []
-        if(querrySnapshot !== null){
-            querrySnapshot.forEach((doc) =>{
+        if(querySnapshot !== null){
+            querySnapshot.forEach((doc) =>{
                 groups.push({
                     GroupName: doc.data().GroupName,
                     Date: doc.data().Date,
