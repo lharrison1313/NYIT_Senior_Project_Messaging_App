@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import {signOut} from '../api/MessagingAppAPI'
+import {getAllGroups} from '../api/MessagingAppAPI'
 
 
 export default class HomeScreen extends Component{
@@ -14,21 +15,20 @@ export default class HomeScreen extends Component{
             <View style = {styles.main_container}>
 
                 
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Test')}>
+                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Groups',{getGroupsFunc: getAllGroups})}>
                             <Text>
                                 Search Groups
-                            </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Message')} >
-                            <Text>
-                                Messages
                             </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style = {styles.button} onPress={() => signOut(this.onSignOut)} >
                             <Text>
                                 signOut
+                            </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Profile')}>
+                            <Text>
+                                Profile
                             </Text>
                 </TouchableOpacity>
 

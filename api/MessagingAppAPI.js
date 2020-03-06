@@ -6,13 +6,19 @@ export function login(email, password){
     .then((value) => console.log(value))
 }
 
-export function signUp(email, password, displayName){
-    // this connects with the fire base
+export function signUp(email, password, userName){
     auth().createUserWithEmailAndPassword(email, password)
     .then((userInfo)=>{
         console.log(userInfo)
-        userInfo.user.updateProfile({displayName: displayName.trim()})
-        .then(() => {})
+        //adding user to user collection
+        firestore().collection("Users").doc(userInfo.user.uid).set({
+            UserName: userName
+        }).then(function() {
+            console.log("User added to database");
+        })
+        .catch(function(error) {
+            console.error("Error adding user to database: ", error);
+        });
     })
 }
 
@@ -32,3 +38,88 @@ export function signOut(onSignedOut){
     })
 }
 
+//sends messages to group on database
+export function sendMessage(groupID, message, senderName, senderID){
+
+    firestore().collection("Groups").doc(groupID).collection("Messages").add({
+        SenderName: senderName,
+        SenderID: senderID,
+        MessageText: message,
+        TimeStamp: firestore.FieldValue.serverTimestamp()
+    })
+    .then(function(docRef) {
+        console.log("Message sent with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+        console.error("Error sending message: ", error);
+    });
+}
+
+//creates a new group on database
+export function createGroup(groupName,interests){
+    //prepending hash tags to interests
+    var interestList = []
+    interests.forEach( element =>{
+        var hash = "#"
+        interestList.push(hash.concat(element))
+    })
+    firestore().collection("Groups").add({
+        GroupName: groupName,
+        Date: "2/19/2020",
+        Interests: interestList,
+        Location: "Manhattan",
+        GroupOwner: getCurrentUserID(),
+    })
+    .then(function(docRef) {
+        console.log("Group Created with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+        console.error("Error creating group: ", error);
+    });
+}
+
+//gets the current users id
+export function getCurrentUserID(){
+    return auth().currentUser.uid;
+}
+
+//gets any users public info
+export async function getUserInfo(uid,userInfoRetrieved){
+    var document = await firestore().collection("Users").doc(uid).get()
+    userInfoRetrieved(document.data())
+}
+
+//gets all groups from database
+export async function getAllGroups(groupsRetrieved){
+    var ref = firestore().collection("Groups").orderBy("GroupName")
+    return ref.onSnapshot((querrySnapshot) => {
+        const groups = []
+        querrySnapshot.forEach((doc) =>{
+            groups.push({
+                GroupName: doc.data().GroupName,
+                Date: doc.data().Date,
+                Location: doc.data().Location,
+                Interests: doc.data().Interests,
+                id: doc.id
+            });
+        });
+        groupsRetrieved(groups);
+    })
+}
+
+//given a group id, gets all messages from that group
+export async function getGroupMessages(gid,messagesRetrieved){
+    var ref = firestore().collection("Groups").doc(gid).collection("Messages").orderBy("TimeStamp")
+    return ref.onSnapshot((querrySnapshot) => {
+        const messages = []
+        querrySnapshot.forEach((doc) =>{
+            messages.push({
+                SenderName: doc.data().SenderName,
+                MessageText: doc.data().MessageText,
+                SenderID: doc.data().SenderID,
+                GroupID: doc.id
+            });
+        });
+        messagesRetrieved(messages)
+    })
+}
