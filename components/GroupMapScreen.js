@@ -50,9 +50,9 @@ class GroupMapScreen extends Component{
     render(){
         return(
             <View style = {{flex: 1}}>
-                <View style={{flex:.10}}>
-                    <GooglePlacesButton button_style = {styles.button} retrieveLocation = {this.retrieveLocation} />
-                </View>
+                
+                
+                
                 <MapView
                     style = {styles.map}
                     provider = {PROVIDER_GOOGLE}
@@ -66,13 +66,15 @@ class GroupMapScreen extends Component{
                         />
                     ))}
                 </MapView>
-                <View style={styles.new_group_container}>
-                    <TouchableOpacity 
-                    style = {styles.button} 
-                    onPress={() => this.props.navigation.navigate('CreateGroup')}>
-                        <Text>Create New Group</Text>
-                    </TouchableOpacity>
-                </View>
+                
+                <GooglePlacesButton button_style = {styles.location_button} retrieveLocation = {this.retrieveLocation} />
+
+                <TouchableOpacity 
+                style = {styles.new_group_button} 
+                onPress={() => this.props.navigation.navigate('CreateGroup')}>
+                    <Text>Create New Group</Text>
+                </TouchableOpacity>
+                
             </View>
         );
     }
@@ -88,11 +90,29 @@ const styles = StyleSheet.create({
     new_group_container:{
         flex:.10,
     },
-    button:{
-        flex: 1,
+    location_button:{
         backgroundColor: "grey",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        position: "absolute",
+        paddingHorizontal: 20,
+        paddingVertical: 12,
+        borderRadius: 100,
+        top: 10,
+        left:5,
+        right:5
+    },
+
+    new_group_button:{
+        backgroundColor: "grey",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        paddingHorizontal: 20,
+        paddingVertical: 12,
+        borderRadius: 100,
+        bottom: 15,
+        right: 15
     }
 
 })

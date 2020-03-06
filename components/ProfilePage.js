@@ -35,7 +35,7 @@ class ProfilePage extends Component{
                     </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Groups',{getGroupsFunc: getAllMyGroups})}>
+                <TouchableOpacity style = {styles.button}>
                     <Text>
                         My Groups
                     </Text>
