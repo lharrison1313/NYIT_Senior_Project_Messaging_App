@@ -1,61 +1,72 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, ScrollView} from 'react-native';
+import { View, StyleSheet} from 'react-native';
 import MessageEditor from './MessageEditor'
 import Message from './Message'
+import { FlatList } from 'react-native-gesture-handler';
+import firestore from '@react-native-firebase/firestore';
+import{withNavigation} from "react-navigation"
+import{getGroupMessages} from "../api/MessagingAppAPI"
+import{sendMessage,getUserInfo,getCurrentUserID} from "../api/MessagingAppAPI"
 
-
-
-
-export default class MessagingScreen extends Component {
+class MessagingScreen extends Component {
 
   constructor(props){
     super(props)
     this.state = { 
       text: "",
-      messages: []
+      messageList: [],
+      userName: ""
     }
+    this.gid = this.props.navigation.state.params.id
+    this.uid = getCurrentUserID()
   }
+
+  componentDidMount(){
+    getGroupMessages(this.gid,this.retrieveMessages).then( (unsub) => this.unsubscribe = unsub )
+    getUserInfo(this.uid,this.updateUserInfo)
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe()
+  }
+
+  retrieveMessages = (messages) =>{this.setState({messageList: messages})}
+
+  updateUserInfo = (input) =>{this.setState({userName: input.UserName})}
 
   updateText = (input) => {this.setState({text: input})}
   
   sendMessage = () => {
     if(this.state.text !== ''){
-      //pushing new message into message array
-      this.state.messages.push({sent: true, sender_name:'User', message_text: this.state.text})
+      sendMessage(this.gid,this.state.text,this.state.userName,this.uid)
       //updating state and clearing input text
       this.setState({
-        messages: this.state.messages,
         text: ""
       })
-      //scrolling to bottom
-      this.refs._scrollView.scrollToEnd()
     }
   }
 
   render() {
 
-    //creates the message elements in message state on render
-    var messages = [];
-    this.state.messages.forEach((element,key) => {
-      //places user message on screen
-      messages.push(<Message sent={element.sent} sender_name ={element.sender_name} message_text ={element.message_text}/>)
-      //places a copy of the users message on screen
-      messages.push(<Message sent={false} sender_name ={element.sender_name} message_text ={element.message_text}/>)
-    });
-
     return (
       <View style={styles.content_container}>
-        <ScrollView 
-        style={styles.message_area_container} 
-        ref='_scrollView' 
-        >
-          {messages}
-        </ScrollView>
+        <FlatList
+          style={styles.message_area_container} 
+          data = {this.state.messageList}
+          renderItem = {({item}) => (
+            <Message
+              sender_name = {item.SenderName}
+              message_text = {item.MessageText}
+              sent = {this.uid === item.SenderID}
+            />
+          )}
+          keyExtractor = {item => item.GroupID}
+        />
         <MessageEditor button_handler={this.sendMessage} update_text ={this.updateText}/>
       </View>
     );
   }
-}
+} 
 
 const styles = StyleSheet.create({
   content_container:{
@@ -70,3 +81,5 @@ const styles = StyleSheet.create({
     marginBottom: 15
   }
 })
+
+export default withNavigation(MessagingScreen)

@@ -1,41 +1,34 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, Group } from 'react-native';
 import GroupBar from './GroupBar'
-import { FlatList, TextInput } from 'react-native-gesture-handler';
+import { FlatList} from 'react-native-gesture-handler';
+import{withNavigation} from "react-navigation";
 import firestore from '@react-native-firebase/firestore';
 
-export default class GroupScreen extends Component{
+ class GroupScreen extends Component{
     
     constructor(props){
         super(props)
         this.state = {
             groupList: []
         }
-        this.ref = firestore().collection("Groups")
+        //getting group retrival function from navigation
+        this.getGroups = this.props.navigation.state.params.getGroupsFunc
     }
 
     componentDidMount(){
-        this.unsubscribe = this.ref.onSnapshot((querrySnapshot) => {
-            const groups = []
-            querrySnapshot.forEach((doc) =>{
-                groups.push({
-                    GroupName: doc.data().GroupName,
-                    Date: doc.data().Date,
-                    Location: doc.data().Location,
-                    Interests: doc.data().Interests,
-                    id: doc.id
-                });
-            });
-            this.setState({
-                groupList: groups.sort((a,b) => {
-                    return (a.GroupName < b.GroupName);
-                })
-            });
-            console.log("groups",groups)
+        this.getGroups(this.retrieveGroups).then( (unsub) => this.unsubscribe = unsub )
+    }
 
+    componentWillUnmount(){
+        this.unsubscribe()
+    }
+
+    retrieveGroups = (groups) => {
+        this.setState({
+            groupList: groups
         });
-        
-
+        console.log("groups",groups)
     }
 
     render(){
@@ -56,14 +49,19 @@ export default class GroupScreen extends Component{
                                 date = {item.Date}
                                 location = {item.Location}
                                 interests = {item.Interests}
+                                id = {item.id}
                             />
                           )}
                         keyExtractor = {item => item.id}
                     />
                 </View>
                 
-                <View style={styles.modify_container}>
-
+                <View style={styles.new_group_container}>
+                    <TouchableOpacity 
+                    style = {styles.new_group_button} 
+                    onPress={() => this.props.navigation.navigate('CreateGroup')}>
+                        <Text>Create New Group</Text>
+                    </TouchableOpacity>
                 </View>
                 
             </View>
@@ -84,9 +82,15 @@ const styles = StyleSheet.create({
     search_container:{
         flex:0.5,
     },
-    modify_container:{
-        flex:0.5,
+    new_group_container:{
+        flex:.75,
+    },
+    new_group_button:{
+        flex: 1,
+        backgroundColor: "grey",
+        justifyContent: "center",
+        alignItems: "center"
     }
-        
-
 })
+
+export default withNavigation(GroupScreen)
