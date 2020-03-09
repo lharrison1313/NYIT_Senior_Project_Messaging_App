@@ -29,7 +29,7 @@ class GroupBar extends Component{
 
                     <View styles={styles.right_container}>
                         <TouchableOpacity style={styles.join_button} onPress={() => this.props.navigation.navigate('Message',{id: this.props.id})}>
-                            <Text>Join</Text>
+                            <Text style ={styles.join_text}>Join</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         height: 100,
         padding:10,
 
-        borderColor:"red",
+        borderColor:"purple",
 
         borderWidth: 1
 
@@ -78,9 +78,15 @@ const styles = StyleSheet.create({
         flex:1
     },
     join_button:{
-        backgroundColor:"green",
+        backgroundColor:"blue",
         padding:5,
-        borderRadius:10
+        borderRadius:10,
+    },
+
+    join_text:{
+        color:"gold",
+        fontWeight:"bold",
+        fontSize:15
     }
 
 
