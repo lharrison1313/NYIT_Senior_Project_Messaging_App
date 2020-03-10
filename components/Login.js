@@ -63,6 +63,12 @@ export default class LoginForm extends Component{
                         </Text>
                     </TouchableOpacity>
 
+                    <TouchableOpacity style = {styles.button} >
+                        <Text>
+                            Forget Passowrd
+                        </Text>
+                    </TouchableOpacity>
+
                 </View>
             </View>
             
