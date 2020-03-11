@@ -63,7 +63,7 @@ export default class LoginForm extends Component{
                         </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style = {styles.button} >
+                    <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('ForgetPassword')} >
                         <Text>
                             Forget Passowrd
                         </Text>
