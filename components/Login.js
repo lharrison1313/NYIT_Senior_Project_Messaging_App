@@ -1,10 +1,11 @@
 
 import React, { Component } from 'react';
 import {View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, } from 'react-native';
+import{withNavigation} from "react-navigation";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 
-export default class LoginForm extends Component{
+ class LoginForm extends Component{
 
     constructor(props){
         super(props)
@@ -76,3 +77,5 @@ export default class LoginForm extends Component{
         );
     }
 } 
+
+export default withNavigation(LoginForm)
