@@ -29,8 +29,6 @@ export default class LoginForm extends Component{
             
             <View style={styles.login_container} >
                
-                
-
                     <Image style = {{width: 200, height: 200, margin: 20,}} source = {require('../res/nyit.png')} />
 
                     <TextInput 
@@ -45,9 +43,6 @@ export default class LoginForm extends Component{
                     secureTextEntry
                     onChangeText = {(text)=> this.setState({passwordField: text})}
                     />
-                    
-               
-            
                 
                     <TouchableOpacity style = {styles.button} onPress={this.handleLogin}>
                         <Text>

@@ -91,6 +91,8 @@ export async function getUserInfo(uid,userInfoRetrieved){
 //gets all groups from database
 export async function getAllGroups(groupsRetrieved,filter){
 
+    
+
     if(filter == null){
         //given no filter get all groups in database
         var ref = firestore().collection("Groups").orderBy("GroupName")
@@ -103,6 +105,7 @@ export async function getAllGroups(groupsRetrieved,filter){
     return ref.onSnapshot((querySnapshot) => {
         const groups = []
         if(querySnapshot !== null){
+            var index = 0;
             querySnapshot.forEach((doc) =>{
                 groups.push({
                     GroupName: doc.data().GroupName,
@@ -110,8 +113,10 @@ export async function getAllGroups(groupsRetrieved,filter){
                     Location: doc.data().Location,
                     Coordinates: doc.data().Coordinates,
                     Interests: doc.data().Interests,
-                    id: doc.id
+                    id: doc.id,
+                    index: index
                 });
+                index++
             });
             groupsRetrieved(groups);
         }
