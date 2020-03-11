@@ -60,8 +60,9 @@ import{withNavigation} from "react-navigation";
 
                 
                 <TextInput 
-                style = {{height:50, backgroundColor: "white"}}
+                style = {styles.search_bar}
                 onChangeText = {(input)=>{this.textChanged(input)}}
+                placeholder = {"Search"}
                 />
                 
                 <FlatList
@@ -108,6 +109,13 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         bottom: 15,
         right: 15
+    },
+
+    search_bar:{
+        height:40, 
+        backgroundColor: "white",
+        borderRadius:30,
+        margin: 5,
     }
 
 })

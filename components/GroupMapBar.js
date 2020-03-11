@@ -26,7 +26,9 @@ class GroupMapBar extends Component{
                     </View>
 
                     <View style={styles.right_container}>
-                        <TouchableOpacity style={styles.join_button}>
+                        <TouchableOpacity style={styles.join_button}
+                        onPress={() => this.props.navigation.navigate('Message',{id: this.props.id})}
+                        >
                             <Text>Join</Text>
                         </TouchableOpacity>
                     </View>
