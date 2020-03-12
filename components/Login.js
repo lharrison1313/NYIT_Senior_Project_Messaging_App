@@ -1,10 +1,11 @@
 
 import React, { Component } from 'react';
-import {View, TextInput, Text, TouchableOpacity,Image } from 'react-native';
+import {View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, } from 'react-native';
+import{withNavigation} from "react-navigation";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 
-export default class LoginForm extends Component{
+ class LoginForm extends Component{
 
     constructor(props){
         super(props)
@@ -62,10 +63,16 @@ export default class LoginForm extends Component{
                         </Text>
                     </TouchableOpacity>
 
-                
+                    <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('ForgetPassword')} >
+                        <Text>
+                            Forget Passowrd
+                        </Text>
+                    </TouchableOpacity>
             </View>
             
 
         );
     }
 } 
+
+export default withNavigation(LoginForm)

@@ -5,6 +5,8 @@ import GroupScreen from './components/GroupScreen';
 import HomeScreen from './components/HomeScreen'
 import GroupMapScreen from './components/GroupMapScreen'
 import ProfilePage from './components/ProfilePage';
+import SettingsScreen from './components/SettingsScreen';
+import ForgetPasswordScreen from './components/ForgetPasswordScreen'
 import GroupCreationScreen from "./components/GroupCreationScreen"
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer,  createSwitchNavigator } from 'react-navigation';
@@ -19,6 +21,7 @@ const AppStack = createStackNavigator(
     CreateGroup: GroupCreationScreen,
     GroupMap: GroupMapScreen,
     Profile: ProfilePage,
+    Settings: SettingsScreen 
   
   },
   {
@@ -30,10 +33,25 @@ const AppStack = createStackNavigator(
       },
     },
   });
+  const AuthStack = createStackNavigator(
+    {
+      Login: LoginScreen,
+      ForgetPassword: ForgetPasswordScreen
+    
+    },
+    {
+      initialRouteName: "Login",
+      defaultNavigationOptions: {
+        title: '',
+        headerStyle: {
+          backgroundColor: '#00BED6',
+        },
+      },
+    });
 
 const AppContainer = createAppContainer(createSwitchNavigator(
   {
-    Auth: LoginScreen,
+    Auth: AuthStack,
     App: AppStack
   },
   {
