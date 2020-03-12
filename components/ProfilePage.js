@@ -47,7 +47,7 @@ class ProfilePage extends Component{
                 </TouchableOpacity>
                 <TouchableOpacity style = {styles.button} onPress={() => signOut(this.onSignOut)} >
                             <Text>
-                                signOut
+                                Signout
                             </Text>
                 </TouchableOpacity>
             </View>

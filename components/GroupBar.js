@@ -30,7 +30,7 @@ export default class GroupBar extends Component{
                
                 <View style={styles.header_container}>
                     <Text style = {{fontSize:12, marginRight:10, fontWeight: "bold"}}>{this.props.location}</Text>
-                    <Text style = {{fontSize:12}}>{this.props.date.toString()}</Text>
+                    <Text style = {{fontSize:12}}>{this.props.date}</Text>
                 </View>
 
                 <View style={styles.body_container}>
@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
 
     left_container:{
         flexDirection:"column",
-        
         flex: .55
     },
     right_container:{
@@ -94,7 +93,8 @@ const styles = StyleSheet.create({
         backgroundColor:"grey",
         padding:5,
         borderRadius:10,
-        marginHorizontal: 2
+        alignItems:"center",
+        justifyContent: "center"
     },
 
     ld_container:{

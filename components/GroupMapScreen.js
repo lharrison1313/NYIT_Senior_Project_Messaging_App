@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import {View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-native';
 import MapView,{PROVIDER_GOOGLE,Marker, Callout} from 'react-native-maps';
-import GooglePlacesButton from './GooglePlacesButton'
 import GroupBar from './GroupBar'
-//import {withNavigation} from "react-navigation";
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {getAllGroups} from "../api/MessagingAppAPI";
 import { FlatList } from 'react-native-gesture-handler';
+import RNGooglePlaces from 'react-native-google-places';
 
+const locationIcon = <Icon name="map-marker" size={25} color="grey" />;
+const plusIcon = <Icon name="plus-circle" size={25} color="grey" />;
 export default class GroupMapScreen extends Component{
 
     constructor(props){
@@ -22,6 +24,16 @@ export default class GroupMapScreen extends Component{
         }
     }
 
+    openSearchModal() {
+        RNGooglePlaces.openAutocompleteModal()
+        .then((place) => {
+            console.log(place);
+            this.setState({chosenLocation: place.name})
+            this.props.retrieveLocation(place)
+        })
+        .catch(error => console.log(error.message));  // error is a Javascript Error object
+    }
+
     componentDidMount(){
         getAllGroups(this.retrieveGroups).then((unsub) => {this.unsubscribe = unsub})
     }
@@ -31,9 +43,11 @@ export default class GroupMapScreen extends Component{
     }
 
     retrieveGroups = (groups) =>{
+        
         this.setState({
             groups: groups
         })
+        
     }
     
     retrieveLocation = (place) =>{
@@ -51,6 +65,7 @@ export default class GroupMapScreen extends Component{
         return(
             <View style = {{flex: 1}}>
                 
+                
                 <MapView
                     style = {styles.map}
                     provider = {PROVIDER_GOOGLE}
@@ -58,15 +73,21 @@ export default class GroupMapScreen extends Component{
                     region = {this.state.coordinates} 
                 >
                     {this.state.groups.map( group =>(
+                        
                         <Marker
                             key = {group.id} 
                             coordinate = {group.Coordinates}
                             onPress = {() => this.flatListRef.scrollToIndex({index: group.index, animated:true})}
                         />
+                        
                     ))}
+
                 </MapView>
 
-                <GooglePlacesButton button_style = {styles.location_button} retrieveLocation = {this.retrieveLocation} />
+
+                <TouchableOpacity style={styles.location_button}  onPress={() => this.openSearchModal()}>
+                    {locationIcon}
+                </TouchableOpacity>
                 
                 <FlatList
                     style = {styles.list_container}
@@ -91,10 +112,8 @@ export default class GroupMapScreen extends Component{
                 <TouchableOpacity 
                 style = {styles.new_group_button} 
                 onPress={() => this.props.navigation.navigate('CreateGroup')}>
-                    <Text>Create New Group</Text>
+                    {plusIcon}
                 </TouchableOpacity>
-
-                
                 
             </View>
         );
@@ -112,6 +131,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginHorizontal: 2,
     },
+
     bar_container:{
         flexDirection:'column',
         flex:1,
@@ -119,24 +139,29 @@ const styles = StyleSheet.create({
         width: window.width,
         height:120
     },
+
     map:{
         flex:1
     },
+
     new_group_container:{
         flex:.10,
     },
+
     location_button:{
         backgroundColor: "#00BED6",
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        paddingHorizontal: 20,
-        paddingVertical: 12,
-        borderRadius: 100,
+        height:50,
+        width: 50,
+        borderRadius: 25,
         top: 10,
-        left:5,
-        right:5
-        
+        right:60
+    },
+
+    search_bar:{
+
     },
 
     new_group_button:{
@@ -144,13 +169,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        paddingHorizontal: 20,
-        paddingVertical: 12,
-        borderRadius: 100,
-        bottom: 140,
-        right: 15
+        height:50,
+        width: 50,
+        borderRadius: 25,
+        top: 10,
+        right: 5
     }
 
 })
-
-//export default withNavigation(GroupMapScreen)

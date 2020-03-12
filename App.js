@@ -7,9 +7,9 @@ import ProfilePage from './components/ProfilePage';
 import SettingsScreen from './components/SettingsScreen';
 import ForgetPasswordScreen from './components/ForgetPasswordScreen'
 import GroupCreationScreen from "./components/GroupCreationScreen"
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {NavigationContainer } from '@react-navigation/native';
+import {createStackNavigator } from '@react-navigation/stack';
+import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {subscribeToAuthChanges} from './api/MessagingAppAPI'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -48,8 +48,6 @@ function MyProfileStackScreen(){
 
 const AuthStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
-const mapIcon = <Icon name="map" size={25} color="#00BED6" />;
 
 export default class App extends React.Component {
 
