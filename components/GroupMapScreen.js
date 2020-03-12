@@ -1,13 +1,11 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import {View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-native';
 import MapView,{PROVIDER_GOOGLE,Marker, Callout} from 'react-native-maps';
 import GooglePlacesButton from './GooglePlacesButton'
-import GroupMapBar from './GroupMapBar';
 import GroupBar from './GroupBar'
 import {withNavigation} from "react-navigation";
 import {getAllGroups} from "../api/MessagingAppAPI";
 import { FlatList } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
 
 class GroupMapScreen extends Component{
 
