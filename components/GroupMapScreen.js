@@ -3,6 +3,7 @@ import {View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-nativ
 import MapView,{PROVIDER_GOOGLE,Marker, Callout} from 'react-native-maps';
 import GooglePlacesButton from './GooglePlacesButton'
 import GroupMapBar from './GroupMapBar';
+import GroupBar from './GroupBar'
 import {withNavigation} from "react-navigation";
 import {getAllGroups} from "../api/MessagingAppAPI";
 import { FlatList } from 'react-native-gesture-handler';
@@ -48,10 +49,6 @@ class GroupMapScreen extends Component{
         })
     }
 
-    onMarkerPress = () =>{
-       
-    }
-
     render(){
         return(
             <View style = {{flex: 1}}>
@@ -79,12 +76,13 @@ class GroupMapScreen extends Component{
                     data = {this.state.groups}
                     scrollEnabled = {false}
                     renderItem={({ item }) => (
-                        <GroupMapBar
+                        <GroupBar
                             group_name = {item.GroupName} 
                             date = {item.Date}
                             location = {item.Location}
                             interests = {item.Interests}
                             id = {item.id}
+                            bar_style = {styles.bar_container}
                         />
                     )}
                     keyExtractor = {item => item.id}
@@ -105,13 +103,22 @@ class GroupMapScreen extends Component{
 
 }
 
+const window = Dimensions.get('window');
 const styles = StyleSheet.create({
     list_container:{
         backgroundColor: '#00BED6',
         position: "absolute",
-        height: 100,
-        bottom: 10,
+        height: 120,
+        bottom: 5,
         borderRadius: 20,
+        margin: 5,
+    },
+    bar_container:{
+        flexDirection:'column',
+        flex:1,
+        padding:10,
+        width: window.width,
+        height:120
     },
     map:{
         flex:1
@@ -141,7 +148,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 12,
         borderRadius: 100,
-        bottom: 120,
+        bottom: 140,
         right: 15
     }
 

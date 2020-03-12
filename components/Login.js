@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import {View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, } from 'react-native';
+import {View, TextInput, Text, TouchableOpacity, Image, KeyboardAvoidingView, } from 'react-native';
 import{withNavigation} from "react-navigation";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 

@@ -74,6 +74,7 @@ import{withNavigation} from "react-navigation";
                             location = {item.Location}
                             interests = {item.Interests}
                             id = {item.id}
+                            bar_style = {styles.bar_container}
                         />
                         )}
                     keyExtractor = {item => item.id}
@@ -94,6 +95,16 @@ import{withNavigation} from "react-navigation";
 }
 
 const styles = StyleSheet.create({
+
+    bar_container:{
+        flexDirection:'column',
+        backgroundColor: '#00BED6',
+        height: 120,
+        padding: 10,
+        borderColor:"black",
+        borderWidth: 1
+    },
+
     container:{
         flex:1,
         backgroundColor:"#5F6362"
