@@ -3,11 +3,11 @@ import {View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-nativ
 import MapView,{PROVIDER_GOOGLE,Marker, Callout} from 'react-native-maps';
 import GooglePlacesButton from './GooglePlacesButton'
 import GroupBar from './GroupBar'
-import {withNavigation} from "react-navigation";
+//import {withNavigation} from "react-navigation";
 import {getAllGroups} from "../api/MessagingAppAPI";
 import { FlatList } from 'react-native-gesture-handler';
 
-class GroupMapScreen extends Component{
+export default class GroupMapScreen extends Component{
 
     constructor(props){
         super(props)
@@ -81,6 +81,7 @@ class GroupMapScreen extends Component{
                             interests = {item.Interests}
                             id = {item.id}
                             bar_style = {styles.bar_container}
+                            navigation = {this.props.navigation}
                         />
                     )}
                     keyExtractor = {item => item.id}
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
         height: 120,
         bottom: 5,
         borderRadius: 20,
-        margin: 5,
+        marginHorizontal: 2,
     },
     bar_container:{
         flexDirection:'column',
@@ -152,4 +153,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default withNavigation(GroupMapScreen)
+//export default withNavigation(GroupMapScreen)

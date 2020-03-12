@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import {createGroup} from  "../api/MessagingAppAPI"
-import{withNavigation} from "react-navigation";
+//import{withNavigation} from "react-navigation";
 import InterestTextInput from "./InterestTextInput";
 import GooglePlacesButton from "./GooglePlacesButton"
 
 
 
-class GroupCreationScreen extends Component{
+export default class GroupCreationScreen extends Component{
 
     constructor(props){
         super(props)
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default withNavigation(GroupCreationScreen)
+//export default withNavigation(GroupCreationScreen)

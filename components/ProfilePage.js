@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import{withNavigation} from "react-navigation"
-
+import {signOut} from '../api/MessagingAppAPI'
 import {getMyGroups} from "../api/MessagingAppAPI"
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 class ProfilePage extends Component{
@@ -12,14 +13,13 @@ class ProfilePage extends Component{
             name: "Default Name",
             status: "Offline",
         }
-        
     }
 
     render(){
     
         return(
             <View style = {styles.MainPage}>
-                <Image style = {{width: 100, height: 100, margin: 20,}} source = {require('../res/nyit.png')} />
+                <Icon name="user" size={100} color="white"/>
 
                 <Text style = {{margin: 10,}}>
                     {this.state.name}
@@ -44,6 +44,11 @@ class ProfilePage extends Component{
                     <Text>
                         Settings
                     </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style = {styles.button} onPress={() => signOut(this.onSignOut)} >
+                            <Text>
+                                signOut
+                            </Text>
                 </TouchableOpacity>
             </View>
             

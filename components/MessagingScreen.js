@@ -3,12 +3,10 @@ import { View, StyleSheet} from 'react-native';
 import MessageEditor from './MessageEditor'
 import Message from './Message'
 import { FlatList } from 'react-native-gesture-handler';
-import firestore from '@react-native-firebase/firestore';
-import{withNavigation} from "react-navigation"
 import{getGroupMessages} from "../api/MessagingAppAPI"
 import{sendMessage,getUserInfo,getCurrentUserID} from "../api/MessagingAppAPI"
 
-class MessagingScreen extends Component {
+export default class MessagingScreen extends Component {
 
   constructor(props){
     super(props)
@@ -17,7 +15,7 @@ class MessagingScreen extends Component {
       messageList: [],
       userName: ""
     }
-    this.gid = this.props.navigation.state.params.id
+    this.gid = this.props.route.params.id
     this.uid = getCurrentUserID()
   }
 
@@ -81,5 +79,3 @@ const styles = StyleSheet.create({
     marginBottom: 15
   }
 })
-
-export default withNavigation(MessagingScreen)

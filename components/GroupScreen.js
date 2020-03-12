@@ -2,18 +2,19 @@ import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, Group } from 'react-native';
 import GroupBar from './GroupBar'
 import { FlatList, TextInput} from 'react-native-gesture-handler';
-import{withNavigation} from "react-navigation";
+import {getAllGroups} from '../api/MessagingAppAPI'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
- class GroupScreen extends Component{
-    
+const plus = <Icon name="plus-circle" size={40} color="#00BED6" />;
+
+export default class GroupScreen extends Component{    
     constructor(props){
         super(props)
         this.state = {
             groupList: [],
             text: ''
         }
-        //getting group retrival function from navigation
-        this.getGroups = this.props.navigation.state.params.getGroupsFunc
+        this.getGroups = getAllGroups
     }
 
     componentDidMount(){
@@ -58,12 +59,19 @@ import{withNavigation} from "react-navigation";
 
             <View style ={styles.container}>
 
-                
-                <TextInput 
-                style = {styles.search_bar}
-                onChangeText = {(input)=>{this.textChanged(input)}}
-                placeholder = {"Search"}
-                />
+                <View style={styles.header_container}>
+                    <TextInput 
+                    style = {styles.search_bar}
+                    onChangeText = {(input)=>{this.textChanged(input)}}
+                    placeholder = {"Search"}
+                    />
+
+                    <TouchableOpacity 
+                    style = {styles.new_group_button} 
+                    onPress={() => this.props.navigation.navigate('CreateGroup')}>
+                        {plus}
+                    </TouchableOpacity>
+                </View>
                 
                 <FlatList
                     data = {this.state.groupList}
@@ -75,18 +83,11 @@ import{withNavigation} from "react-navigation";
                             interests = {item.Interests}
                             id = {item.id}
                             bar_style = {styles.bar_container}
+                            navigation = {this.props.navigation}
                         />
                         )}
                     keyExtractor = {item => item.id}
                 />
-                
-                <TouchableOpacity 
-                style = {styles.new_group_button} 
-                onPress={() => this.props.navigation.navigate('CreateGroup')}>
-                    <Text style={{color:"black", fontSize:20}}>+</Text>
-                </TouchableOpacity>
-                
-                
                 
             </View>
         );
@@ -96,39 +97,45 @@ import{withNavigation} from "react-navigation";
 
 const styles = StyleSheet.create({
 
+    header_container:{
+        flexDirection:"row",
+        alignItems: "center",
+        padding:15
+    },
+
     bar_container:{
         flexDirection:'column',
         backgroundColor: '#00BED6',
         height: 120,
         padding: 10,
-        borderColor:"black",
-        borderWidth: 1
+        borderColor:"grey",
+        borderBottomWidth: 1
     },
 
     container:{
         flex:1,
-        backgroundColor:"#5F6362"
+        backgroundColor:"grey"
     },
 
     new_group_button:{
-        backgroundColor: "green",
+        flex:.15,
+        backgroundColor: "grey",
         justifyContent: "center",
         alignItems: "center",
-        position: "absolute",
-        paddingHorizontal: 20,
-        paddingVertical: 12,
-        borderRadius: 100,
-        bottom: 15,
-        right: 15
+        height:40,
+        width: 40,
+        borderRadius: 20,
+        marginHorizontal:5
     },
 
     search_bar:{
+        flex:.85,
         height:40, 
         backgroundColor: "white",
         borderRadius:30,
-        margin: 5,
+        marginHorizontal:5
     }
 
 })
 
-export default withNavigation(GroupScreen)
+//export default withNavigation(GroupScreen)

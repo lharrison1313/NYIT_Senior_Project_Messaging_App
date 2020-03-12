@@ -13,16 +13,6 @@ export default class LogInScreen extends Component{
         }
     }
 
-    componentDidMount(){
-        subscribeToAuthChanges(this.authStateChanged)
-    }
-
-    authStateChanged = (user) =>{
-        if(user !== null){
-            this.props.navigation.navigate('App')
-        }
-    }
-
     //switches between register and login form
     switchForm = () =>{this.setState({loginFormSet: !this.state.loginFormSet})}
 
@@ -33,6 +23,7 @@ export default class LogInScreen extends Component{
                 switch ={this.switchForm}
                 login = {login}
                 styling = {styles}
+                navigation = {this.props.navigation}
                 />
             );
         }

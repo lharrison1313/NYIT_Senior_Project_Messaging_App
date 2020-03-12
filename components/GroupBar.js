@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import{withNavigation} from "react-navigation"
+import Icon from 'react-native-vector-icons/FontAwesome';
 
+const upIcon = <Icon name="arrow-up" size={25} color="grey" />;
+const downIcon = <Icon name="arrow-down" size={25} color="grey" />;
 
-class GroupBar extends Component{
+export default class GroupBar extends Component{
     constructor(props){
         super(props)
         this.state={
@@ -28,7 +30,7 @@ class GroupBar extends Component{
                
                 <View style={styles.header_container}>
                     <Text style = {{fontSize:12, marginRight:10, fontWeight: "bold"}}>{this.props.location}</Text>
-                    <Text style = {{fontSize:12, fontWeight: "bold"}}>{this.props.date.toString()}</Text>
+                    <Text style = {{fontSize:12}}>{this.props.date.toString()}</Text>
                 </View>
 
                 <View style={styles.body_container}>
@@ -39,18 +41,17 @@ class GroupBar extends Component{
                     </View>
 
                     <View style={styles.right_container}>
-
                         <TouchableOpacity style={styles.join_button} onPress={() => this.props.navigation.navigate('Message',{id: this.props.id})}>
                             <Text style ={styles.join_text}>Join</Text>
                         </TouchableOpacity>
 
                         <View style = {styles.ld_container} >
                             <TouchableOpacity style={styles.like_button} onPress={ this.incrementValue}>
-                                <Text>Like</Text>  
+                                {upIcon} 
                             </TouchableOpacity> 
                             <Text style={{fontSize:19,color:"black"}}>{this.state.count}</Text>
                             <TouchableOpacity style={styles.dislike_button} onPress={ this.decrementValue}>
-                                <Text>Dislike</Text>
+                                {downIcon}
                             </TouchableOpacity>
                         </View>
                         
@@ -104,15 +105,11 @@ const styles = StyleSheet.create({
     },
 
     dislike_button:{
-        backgroundColor:"red",
+        
         padding:3
     },
     like_button:{
-        backgroundColor:"green",
+        
         padding:3
     }
-
-
 })
-
-export default withNavigation(GroupBar)

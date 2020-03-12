@@ -30,11 +30,10 @@ export function subscribeToAuthChanges(authStateChanged){
 
 }
 
-export function signOut(onSignedOut){
+export function signOut(){
     auth().signOut()
     .then(()=>{
         console.log('Signed Out')
-        onSignedOut();
     })
 }
 
