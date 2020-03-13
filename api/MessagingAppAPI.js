@@ -1,5 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import {PermissionsAndroid} from 'react-native';
 
 export function login(email, password){
     auth().signInWithEmailAndPassword(email,password)
@@ -138,3 +139,29 @@ export async function getGroupMessages(gid,messagesRetrieved){
         messagesRetrieved(messages)
     })
 }
+
+
+//requests location permission
+export async function requestLocationPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Location Permissions',
+          message:
+            'This App needs access to your location' +
+            'so we can see nearby groups.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('Location Permission Granted');
+      } else {
+        console.log('Location Permission Denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }

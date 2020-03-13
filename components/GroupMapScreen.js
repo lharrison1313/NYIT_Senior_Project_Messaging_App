@@ -3,12 +3,17 @@ import {View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-nativ
 import MapView,{PROVIDER_GOOGLE,Marker, Callout} from 'react-native-maps';
 import GroupBar from './GroupBar'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {getAllGroups} from "../api/MessagingAppAPI";
+import {getAllGroups,requestLocationPermission} from "../api/MessagingAppAPI";
 import { FlatList, TextInput } from 'react-native-gesture-handler';
 import RNGooglePlaces from 'react-native-google-places';
+import Geolocation from '@react-native-community/geolocation';
 
-const locationIcon = <Icon name="map-marker" size={25} color="grey" />;
+
+
+const locationIcon = <Icon name="globe" size={25} color="grey" />;
+const currentLocationIcon =<Icon name="map-marker" size={25} color="grey" />
 const plusIcon = <Icon name="plus-circle" size={25} color="grey" />;
+
 export default class GroupMapScreen extends Component{
 
     constructor(props){
@@ -21,26 +26,48 @@ export default class GroupMapScreen extends Component{
                 longitudeDelta: 0.01,
             },
             groups: [],
-            text:''
         }
-    }
-
-    openSearchModal() {
-        RNGooglePlaces.openAutocompleteModal()
-        .then((place) => {
-            console.log(place);
-            this.setState({chosenLocation: place.name})
-            this.props.retrieveLocation(place)
-        })
-        .catch(error => console.log(error.message)); 
+        
     }
 
     componentDidMount(){
         getAllGroups(this.retrieveGroups).then((unsub) => {this.unsubscribe = unsub})
+        this.locationFocus()
+        
     }
 
     componentWillUnmount(){
         this.unsubscribe()
+    }
+
+    locationFocus = () =>{
+        Geolocation.getCurrentPosition((info) =>{
+            this.setState({
+                coordinates:{
+                    latitude: info.coords.latitude,
+                    longitude: info.coords.longitude,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.01,
+                }
+            })
+        } 
+        );
+    }
+
+    locationSearch = () => {
+        RNGooglePlaces.openAutocompleteModal()
+        .then((place) => {
+            console.log(place)
+            this.setState({
+                coordinates: {
+                    latitude: place.location.latitude,
+                    longitude: place.location.longitude,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.01,
+                },
+            })
+        })
+        .catch(error => console.log(error.message)); 
     }
 
     retrieveGroups = (groups) =>{
@@ -50,20 +77,9 @@ export default class GroupMapScreen extends Component{
         })
         
     }
-    
-    retrieveLocation = (place) =>{
-        this.setState({
-            coordinates:{
-                latitude: place.location.latitude,
-                longitude: place.location.longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
-            }
-        })
-    }
 
     textChanged = (input) =>{
-        this.setState({groupList:[]})
+        this.setState({groups:[]})
         if(input == ""){
             this.unsubscribe()
             getAllGroups(this.retrieveGroups).then((unsub) => this.unsubscribe = unsub )
@@ -83,7 +99,7 @@ export default class GroupMapScreen extends Component{
                     provider = {PROVIDER_GOOGLE}
                     initialRegion={this.state.coordinates}
                     region = {this.state.coordinates} 
-                    
+                    showsUserLocation ={true}
                 >
                     {this.state.groups.map( group =>(
                         
@@ -96,13 +112,9 @@ export default class GroupMapScreen extends Component{
                     ))}
 
                 </MapView>
-
-
-                <TouchableOpacity style={styles.location_button}  onPress={() => this.openSearchModal()}>
-                    {locationIcon}
-                </TouchableOpacity>
                 
                 <FlatList
+                    ref={(ref) => { this.flatListRef = ref; }}
                     style = {styles.list_container}
                     horizontal = {true}
                     data = {this.state.groups}
@@ -119,8 +131,19 @@ export default class GroupMapScreen extends Component{
                         />
                     )}
                     keyExtractor = {item => item.id}
-                    ref={(ref) => { this.flatListRef = ref; }}
                 />
+
+                <TouchableOpacity 
+                style={styles.location_button}  
+                onPress={() => this.locationSearch()}>
+                    {locationIcon}
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                style={styles.focus_button}  
+                onPress={() => this.locationFocus()}>
+                    {currentLocationIcon}
+                </TouchableOpacity>
 
                 <TouchableOpacity 
                 style = {styles.new_group_button} 
@@ -200,6 +223,18 @@ const styles = StyleSheet.create({
         width: 50,
         borderRadius: 25,
         top: 10,
+        right: 5
+    },
+
+    focus_button:{
+        backgroundColor: "#00BED6",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        height:50,
+        width: 50,
+        borderRadius: 25,
+        top: 65,
         right: 5
     }
 

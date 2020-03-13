@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import {View, TextInput, Text, TouchableOpacity, Image, KeyboardAvoidingView, } from 'react-native';
-
+import {requestLocationPermission} from "../api/MessagingAppAPI";
 
 
 
@@ -13,6 +13,10 @@ export default class LoginForm extends Component{
             emailField: '',
             passwordField: ''
         }
+    }
+
+    componentDidMount(){
+        requestLocationPermission()
     }
 
     handleLogin = () =>{
