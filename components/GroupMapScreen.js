@@ -4,7 +4,7 @@ import MapView,{PROVIDER_GOOGLE,Marker, Callout} from 'react-native-maps';
 import GroupBar from './GroupBar'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {getAllGroups} from "../api/MessagingAppAPI";
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, TextInput } from 'react-native-gesture-handler';
 import RNGooglePlaces from 'react-native-google-places';
 
 const locationIcon = <Icon name="map-marker" size={25} color="grey" />;
@@ -21,6 +21,7 @@ export default class GroupMapScreen extends Component{
                 longitudeDelta: 0.01,
             },
             groups: [],
+            text:''
         }
     }
 
@@ -31,11 +32,22 @@ export default class GroupMapScreen extends Component{
             this.setState({chosenLocation: place.name})
             this.props.retrieveLocation(place)
         })
-        .catch(error => console.log(error.message));  // error is a Javascript Error object
+        .catch(error => console.log(error.message)); 
     }
 
     componentDidMount(){
         getAllGroups(this.retrieveGroups).then((unsub) => {this.unsubscribe = unsub})
+    }
+
+    componentDidUpdate(){
+        // if(this.state.text == ""){
+        //     this.unsubscribe()
+        //     getAllGroups(this.retrieveGroups).then((unsub) => this.unsubscribe = unsub )
+        // }
+        // else{
+        //     this.unsubscribe()
+        //     getAllGroups(this.retrieveGroups,this.state.text).then((unsub) => this.unsubscribe = unsub )
+        // }
     }
 
     componentWillUnmount(){
@@ -61,16 +73,20 @@ export default class GroupMapScreen extends Component{
         })
     }
 
+    textChanged = (input) =>{
+        this.setState({text: input, groupList:[]})
+    }
+
     render(){
         return(
             <View style = {{flex: 1}}>
-                
-                
+
                 <MapView
                     style = {styles.map}
                     provider = {PROVIDER_GOOGLE}
                     initialRegion={this.state.coordinates}
                     region = {this.state.coordinates} 
+                    
                 >
                     {this.state.groups.map( group =>(
                         
@@ -114,6 +130,12 @@ export default class GroupMapScreen extends Component{
                 onPress={() => this.props.navigation.navigate('CreateGroup')}>
                     {plusIcon}
                 </TouchableOpacity>
+
+                <TextInput
+                style = {styles.search_bar}
+                onChangeText = {(input)=>{this.textChanged(input)}}
+                placeholder = {"Search"}
+                />
                 
             </View>
         );
@@ -161,7 +183,15 @@ const styles = StyleSheet.create({
     },
 
     search_bar:{
-
+        backgroundColor: "#dedede",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        height:50,
+        width: window.width-120,
+        borderRadius: 30,
+        top: 10,
+        left: 5
     },
 
     new_group_button:{
