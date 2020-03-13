@@ -39,17 +39,6 @@ export default class GroupMapScreen extends Component{
         getAllGroups(this.retrieveGroups).then((unsub) => {this.unsubscribe = unsub})
     }
 
-    componentDidUpdate(){
-        // if(this.state.text == ""){
-        //     this.unsubscribe()
-        //     getAllGroups(this.retrieveGroups).then((unsub) => this.unsubscribe = unsub )
-        // }
-        // else{
-        //     this.unsubscribe()
-        //     getAllGroups(this.retrieveGroups,this.state.text).then((unsub) => this.unsubscribe = unsub )
-        // }
-    }
-
     componentWillUnmount(){
         this.unsubscribe()
     }
@@ -74,7 +63,15 @@ export default class GroupMapScreen extends Component{
     }
 
     textChanged = (input) =>{
-        this.setState({text: input, groupList:[]})
+        this.setState({groupList:[]})
+        if(input == ""){
+            this.unsubscribe()
+            getAllGroups(this.retrieveGroups).then((unsub) => this.unsubscribe = unsub )
+        }
+        else{
+            this.unsubscribe()
+            getAllGroups(this.retrieveGroups,input).then((unsub) => this.unsubscribe = unsub )
+        }
     }
 
     render(){

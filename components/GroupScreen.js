@@ -32,17 +32,6 @@ export default class GroupScreen extends Component{
         }
     }
 
-    componentDidUpdate(){
-        // if(this.state.text == ""){
-        //     this.unsubscribe()
-        //     this.getGroups(this.retrieveGroups).then((unsub) => this.unsubscribe = unsub )
-        // }
-        // else{
-        //     this.unsubscribe()
-        //     this.getGroups(this.retrieveGroups,this.state.text).then((unsub) => this.unsubscribe = unsub )
-        // }
-    }
-
     retrieveGroups = (groups) => {
         this.setState({
             groupList: groups
@@ -50,7 +39,15 @@ export default class GroupScreen extends Component{
     }
 
     textChanged = (input) =>{
-            this.setState({text: input, groupList:[]})
+            this.setState({groupList:[]})
+            if(input == ""){
+                this.unsubscribe()
+                getAllGroups(this.retrieveGroups).then((unsub) => this.unsubscribe = unsub )
+            }
+            else{
+                this.unsubscribe()
+                getAllGroups(this.retrieveGroups,input).then((unsub) => this.unsubscribe = unsub )
+            }
     }
 
     render(){
