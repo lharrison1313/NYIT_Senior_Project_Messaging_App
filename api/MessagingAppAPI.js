@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {PermissionsAndroid} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 export function login(email, password){
     auth().signInWithEmailAndPassword(email,password)
@@ -55,6 +56,22 @@ export function sendMessage(groupID, message, senderName, senderID){
     });
 }
 
+export function addUserToGroup(uid,gid){
+    
+    var ref = firestore().collection("Groups").doc(gid)
+    ref.get().then((doc) =>{
+        var users = doc.data().GroupUsers
+        if(!users.includes(uid)){
+            firestore().collection("Groups").doc(gid).update({
+                GroupUsers: firestore.FieldValue.arrayUnion(uid)
+            })
+        }
+        console.log("Done")
+            
+    })
+    .catch((error) =>{console.log("error adding user to group", error)})
+}
+
 //creates a new group on database
 export function createGroup(groupName,interests,locationName,coordinates){
     //prepending hash tags to interests
@@ -72,9 +89,18 @@ export function createGroup(groupName,interests,locationName,coordinates){
         Location: locationName,
         Coordinates: coordinates,
         GroupOwner: getCurrentUserID(),
-    }).catch((error)=>{
+        GroupUsers: [getCurrentUserID()]
+    }).then((info)=>{
+        firestore().collection("Users").doc(getCurrentUserID()).collection("Groups").add({
+            GroupID: info.id,
+            GroupOwner: true
+        })
+    })
+    .catch((error)=>{
         console.log(error)
     })
+
+    
 }
 
 //gets the current users id
@@ -88,11 +114,42 @@ export async function getUserInfo(uid,userInfoRetrieved){
     userInfoRetrieved(document.data())
 }
 
+//gets the groups the user is in
+export async function getCurrentUserGroups(groupsRetrieved,filter){
+
+    if(filter == null){
+        //given no filter get all groups in database
+        var ref = firestore().collection("Groups").where("GroupUsers","array-contains",getCurrentUserID())
+    }
+    else{
+        //filter by interest
+        var ref = firestore().collection("Groups").where("Interests","array-contains",filter).orderBy("GroupName")
+    }
+
+    return ref.onSnapshot((querySnapshot) => {
+        const groups = []
+        if(querySnapshot !== null){
+            var index = 0;
+            querySnapshot.forEach((doc) =>{
+                groups.push({
+                    GroupName: doc.data().GroupName,
+                    Date: doc.data().Date,
+                    Location: doc.data().Location,
+                    Coordinates: doc.data().Coordinates,
+                    Interests: doc.data().Interests,
+                    id: doc.id,
+                    index: index
+                });
+                index++
+            });
+            groupsRetrieved(groups);
+        }
+    })
+}
+
 //gets all groups from database
 export async function getAllGroups(groupsRetrieved,filter){
-
     
-
     if(filter == null){
         //given no filter get all groups in database
         var ref = firestore().collection("Groups").orderBy("GroupName")

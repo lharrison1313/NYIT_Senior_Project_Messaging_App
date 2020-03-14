@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import {addUserToGroup,getCurrentUserID, getUserInfo} from '../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const upIcon = <Icon name="arrow-up" size={25} color="grey" />;
@@ -13,10 +14,16 @@ export default class GroupBar extends Component{
         }  
     }
 
-    incrementValue=() => {
+    handleJoin = () =>{
+        addUserToGroup(getCurrentUserID(),this.props.id)
+        this.props.navigation.navigate('Message',{id: this.props.id})
+    }
+
+    incrementValue = () => {
     this.setState({count:this.state.count+1})
     }
-    decrementValue=() => {
+
+    decrementValue = () => {
     this.setState({count:this.state.count-1})
     }
 
@@ -41,7 +48,7 @@ export default class GroupBar extends Component{
                     </View>
 
                     <View style={styles.right_container}>
-                        <TouchableOpacity style={styles.join_button} onPress={() => this.props.navigation.navigate('Message',{id: this.props.id})}>
+                        <TouchableOpacity style={styles.join_button} onPress={() => this.handleJoin()}>
                             <Text style ={styles.join_text}>Join</Text>
                         </TouchableOpacity>
 

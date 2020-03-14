@@ -3,6 +3,7 @@ import {View, TouchableOpacity, Text, StyleSheet, Group } from 'react-native';
 import GroupBar from './GroupBar'
 import { FlatList, TextInput} from 'react-native-gesture-handler';
 import {getAllGroups} from '../api/MessagingAppAPI'
+//import{withNavigation} from "react-navigation";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const plus = <Icon name="plus-circle" size={40} color="#00BED6" />;
@@ -14,7 +15,7 @@ export default class GroupScreen extends Component{
             groupList: [],
             text: ''
         }
-        this.getGroups = getAllGroups
+        this.getGroups = this.props.get_groups_functions
     }
 
     componentDidMount(){
