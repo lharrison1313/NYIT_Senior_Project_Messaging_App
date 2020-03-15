@@ -71,9 +71,14 @@ export default class GroupMapScreen extends Component{
     }
 
     retrieveGroups = (groups) =>{
-        
+        var allowedGroups = []
+        groups.forEach(element => {
+            if(element.Coordinates != null){
+                allowedGroups.push(element)
+            }
+        });
         this.setState({
-            groups: groups
+            groups: allowedGroups
         })
         
     }

@@ -1,7 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {PermissionsAndroid} from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 
 export function login(email, password){
     auth().signInWithEmailAndPassword(email,password)
@@ -74,13 +73,16 @@ export function addUserToGroup(uid,gid){
 
 //creates a new group on database
 export function createGroup(groupName,interests,locationName,coordinates){
+    if(locationName == null){
+        locationName = "Anywhere"
+    }
+    
     //prepending hash tags to interests
     var interestList = []
     interests.forEach( element =>{
         var hash = "#"
         interestList.push(hash.concat(element))
     })
-    
     //creating new group
     firestore().collection("Groups").add({
         GroupName: groupName,
@@ -122,8 +124,8 @@ export async function getCurrentUserGroups(groupsRetrieved,filter){
         var ref = firestore().collection("Groups").where("GroupUsers","array-contains",getCurrentUserID())
     }
     else{
-        //filter by interest
-        var ref = firestore().collection("Groups").where("Interests","array-contains",filter).orderBy("GroupName")
+        //filter by group name
+        var ref = firestore().collection("Groups").where("GroupUsers","array-contains",getCurrentUserID()).where("GroupName","==",filter).orderBy("GroupName")
     }
 
     return ref.onSnapshot((querySnapshot) => {
@@ -131,6 +133,7 @@ export async function getCurrentUserGroups(groupsRetrieved,filter){
         if(querySnapshot !== null){
             var index = 0;
             querySnapshot.forEach((doc) =>{
+                
                 groups.push({
                     GroupName: doc.data().GroupName,
                     Date: doc.data().Date,
@@ -139,8 +142,14 @@ export async function getCurrentUserGroups(groupsRetrieved,filter){
                     Interests: doc.data().Interests,
                     id: doc.id,
                     index: index
+                   
                 });
-                index++
+                //removing indices of global groups
+                if(doc.data().Coordinates != null){
+                    index++
+                }
+                
+                
             });
             groupsRetrieved(groups);
         }
@@ -173,7 +182,10 @@ export async function getAllGroups(groupsRetrieved,filter){
                     id: doc.id,
                     index: index
                 });
-                index++
+                //removing indices of global groups
+                if(doc.data().Coordinates != null){
+                    index++
+                }
             });
             groupsRetrieved(groups);
         }

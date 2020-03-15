@@ -43,11 +43,11 @@ export default class GroupScreen extends Component{
             this.setState({groupList:[]})
             if(input == ""){
                 this.unsubscribe()
-                getAllGroups(this.retrieveGroups).then((unsub) => this.unsubscribe = unsub )
+                this.getGroups(this.retrieveGroups).then((unsub) => this.unsubscribe = unsub )
             }
             else{
                 this.unsubscribe()
-                getAllGroups(this.retrieveGroups,input).then((unsub) => this.unsubscribe = unsub )
+                this.getGroups(this.retrieveGroups,input).then((unsub) => this.unsubscribe = unsub )
             }
     }
 

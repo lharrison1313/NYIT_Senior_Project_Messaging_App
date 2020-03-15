@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import {createGroup} from  "../api/MessagingAppAPI"
-//import{withNavigation} from "react-navigation";
 import InterestTextInput from "./InterestTextInput";
 import GooglePlacesButton from "./GooglePlacesButton"
 
@@ -14,7 +13,7 @@ export default class GroupCreationScreen extends Component{
         this.state = {
             groupName: "",
             interests: [],
-            place: {}
+            place: {},
         }
     }
 
@@ -73,8 +72,4 @@ const styles = StyleSheet.create({
         backgroundColor:"white"
         
     },
-
-
 })
-
-//export default withNavigation(GroupCreationScreen)

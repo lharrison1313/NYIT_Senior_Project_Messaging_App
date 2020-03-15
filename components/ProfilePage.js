@@ -35,16 +35,12 @@ class ProfilePage extends Component{
                     </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style = {styles.button}>
-                    <Text>
-                        My Groups
-                    </Text>
-                </TouchableOpacity>
                 <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Settings')}>
                     <Text>
                         Settings
                     </Text>
                 </TouchableOpacity>
+                
                 <TouchableOpacity style = {styles.button} onPress={() => signOut(this.onSignOut)} >
                             <Text>
                                 Signout
