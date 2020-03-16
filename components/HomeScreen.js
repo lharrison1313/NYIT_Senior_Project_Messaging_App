@@ -26,11 +26,6 @@ export default class HomeScreen extends Component{
                                 signOut
                             </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Profile')}>
-                            <Text>
-                                Profile
-                            </Text>
-                </TouchableOpacity>
 
 
             </View>
