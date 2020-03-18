@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-native';
+import {View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
 import MapView,{PROVIDER_GOOGLE,Marker, Callout} from 'react-native-maps';
 import GroupBar from './GroupBar'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -97,72 +97,74 @@ export default class GroupMapScreen extends Component{
 
     render(){
         return(
-            <View style = {{flex: 1}}>
+            
+            <SafeAreaView>
+                <View style = {{flex: 1}}>
+                    <MapView
+                        style = {styles.map}
+                        provider = {PROVIDER_GOOGLE}
+                        initialRegion={this.state.coordinates}
+                        region = {this.state.coordinates} 
+                        showsUserLocation ={true}
+                    >
+                        {this.state.groups.map( group =>(
+                            
+                            <Marker
+                                key = {group.id} 
+                                coordinate = {group.Coordinates}
+                                onPress = {() => this.flatListRef.scrollToIndex({index: group.index, animated:true})}
+                            />
+                            
+                        ))}
 
-                <MapView
-                    style = {styles.map}
-                    provider = {PROVIDER_GOOGLE}
-                    initialRegion={this.state.coordinates}
-                    region = {this.state.coordinates} 
-                    showsUserLocation ={true}
-                >
-                    {this.state.groups.map( group =>(
-                        
-                        <Marker
-                            key = {group.id} 
-                            coordinate = {group.Coordinates}
-                            onPress = {() => this.flatListRef.scrollToIndex({index: group.index, animated:true})}
-                        />
-                        
-                    ))}
+                    </MapView>
+                    
+                    <FlatList
+                        ref={(ref) => { this.flatListRef = ref; }}
+                        style = {styles.list_container}
+                        horizontal = {true}
+                        data = {this.state.groups}
+                        scrollEnabled = {false}
+                        renderItem={({ item }) => (
+                            <GroupBar
+                                group_name = {item.GroupName} 
+                                date = {item.Date}
+                                location = {item.Location}
+                                interests = {item.Interests}
+                                id = {item.id}
+                                bar_style = {styles.bar_container}
+                                navigation = {this.props.navigation}
+                            />
+                        )}
+                        keyExtractor = {item => item.id}
+                    />
 
-                </MapView>
-                
-                <FlatList
-                    ref={(ref) => { this.flatListRef = ref; }}
-                    style = {styles.list_container}
-                    horizontal = {true}
-                    data = {this.state.groups}
-                    scrollEnabled = {false}
-                    renderItem={({ item }) => (
-                        <GroupBar
-                            group_name = {item.GroupName} 
-                            date = {item.Date}
-                            location = {item.Location}
-                            interests = {item.Interests}
-                            id = {item.id}
-                            bar_style = {styles.bar_container}
-                            navigation = {this.props.navigation}
-                        />
-                    )}
-                    keyExtractor = {item => item.id}
-                />
+                    <TouchableOpacity 
+                    style={styles.location_button}  
+                    onPress={() => this.locationSearch()}>
+                        {locationIcon}
+                    </TouchableOpacity>
 
-                <TouchableOpacity 
-                style={styles.location_button}  
-                onPress={() => this.locationSearch()}>
-                    {locationIcon}
-                </TouchableOpacity>
+                    <TouchableOpacity 
+                    style={styles.focus_button}  
+                    onPress={() => this.locationFocus()}>
+                        {currentLocationIcon}
+                    </TouchableOpacity>
 
-                <TouchableOpacity 
-                style={styles.focus_button}  
-                onPress={() => this.locationFocus()}>
-                    {currentLocationIcon}
-                </TouchableOpacity>
+                    <TouchableOpacity 
+                    style = {styles.new_group_button} 
+                    onPress={() => this.props.navigation.navigate('CreateGroup')}>
+                        {plusIcon}
+                    </TouchableOpacity>
 
-                <TouchableOpacity 
-                style = {styles.new_group_button} 
-                onPress={() => this.props.navigation.navigate('CreateGroup')}>
-                    {plusIcon}
-                </TouchableOpacity>
-
-                <TextInput
-                style = {styles.search_bar}
-                onChangeText = {(input)=>{this.textChanged(input)}}
-                placeholder = {"Search"}
-                />
-                
-            </View>
+                    <TextInput
+                    style = {styles.search_bar}
+                    onChangeText = {(input)=>{this.textChanged(input)}}
+                    placeholder = {"Search"}
+                    />
+                    
+                </View>
+            </SafeAreaView>
         );
     }
 
