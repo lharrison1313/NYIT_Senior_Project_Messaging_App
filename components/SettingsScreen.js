@@ -18,17 +18,36 @@ class SettingsScreen extends Component{
 
     render() {
         return (
-            <View>
-
+            <View style = {styles.MainPage}>
+                 <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate("ChangePassword")}>
+                    <Text>
+                        Change Password
+                    </Text>
+                </TouchableOpacity>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-   
+    MainPage:{
+        flex: 1,
+        backgroundColor: "grey",
+        alignItems: "center", 
+        justifyContent: "center",
+    },
+    button:{
+        backgroundColor: '#00BED6',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        height: 50,
+        width: 300,
+        margin: 10
+    },
 
 
 })
+
 
 export default withNavigation(SettingsScreen)
