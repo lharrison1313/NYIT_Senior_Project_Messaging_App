@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, Alert,SafeAreaView } from 'react-native';
 import{withNavigation} from "react-navigation"
 // import * as firebase from 'firebase';
 
@@ -18,6 +18,7 @@ class SettingsScreen extends Component{
 
     render() {
         return (
+            <SafeAreaView style={{flex:1}}>
             <View style = {styles.MainPage}>
                  <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate("ChangePassword")}>
                     <Text>
@@ -25,6 +26,7 @@ class SettingsScreen extends Component{
                     </Text>
                 </TouchableOpacity>
             </View>
+            </SafeAreaView>
         );
     }
 }

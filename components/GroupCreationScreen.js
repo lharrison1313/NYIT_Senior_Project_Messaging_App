@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {View, TextInput, Text, StyleSheet, TouchableOpacity ,SafeAreaView} from 'react-native';
 import {createGroup} from  "../api/MessagingAppAPI"
 import InterestTextInput from "./InterestTextInput";
 import GooglePlacesButton from "./GooglePlacesButton"
+
 
 
 
@@ -32,6 +33,7 @@ export default class GroupCreationScreen extends Component{
 
     render(){
         return(
+            <SafeAreaView style={{flex:1}}>
             <View style = {styles.container}>
                 <TextInput
                 style = {styles.textInputContainer} 
@@ -46,6 +48,7 @@ export default class GroupCreationScreen extends Component{
                     <Text>Create Group</Text>
                 </TouchableOpacity>
             </View>
+            </SafeAreaView>
         );
     }
 

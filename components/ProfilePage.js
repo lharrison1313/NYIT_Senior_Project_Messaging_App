@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableOpacity,SafeAreaView } from 'react-native';
 import{withNavigation} from "react-navigation"
 import {signOut} from '../api/MessagingAppAPI'
 import {getMyGroups} from "../api/MessagingAppAPI"
@@ -18,6 +18,7 @@ class ProfilePage extends Component{
     render(){
     
         return(
+            <SafeAreaView style={{flex:1}}>
             <View style = {styles.MainPage}>
                 <Icon name="user" size={100} color="white"/>
 
@@ -47,6 +48,7 @@ class ProfilePage extends Component{
                             </Text>
                 </TouchableOpacity>
             </View>
+            </SafeAreaView>
             
         );
     }

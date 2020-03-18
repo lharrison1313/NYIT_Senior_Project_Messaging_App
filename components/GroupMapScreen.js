@@ -98,7 +98,7 @@ export default class GroupMapScreen extends Component{
     render(){
         return(
             
-            <SafeAreaView>
+            <SafeAreaView style={{flex:1}}>
                 <View style = {{flex: 1}}>
                     <MapView
                         style = {styles.map}
