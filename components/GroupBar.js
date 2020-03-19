@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import {addUserToGroup,getCurrentUserID, getUserInfo} from '../api/MessagingAppAPI';
+import {addUserToGroup,getCurrentUserID} from '../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const upIcon = <Icon name="arrow-up" size={25} color="grey" />;
@@ -11,7 +11,7 @@ export default class GroupBar extends Component{
         super(props)
         this.state={
             count:0
-        }  
+        } 
     }
 
     handleJoin = () =>{
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
         
         padding:3
     },
+
     like_button:{
         
         padding:3

@@ -86,12 +86,12 @@ export function createGroup(groupName,interests,locationName,coordinates){
     //creating new group
     firestore().collection("Groups").add({
         GroupName: groupName,
-        Date: "2/19/2020",
+        TimeStamp: firestore.FieldValue.serverTimestamp(),
         Interests: interestList,
         Location: locationName,
         Coordinates: coordinates,
         GroupOwner: getCurrentUserID(),
-        GroupUsers: [getCurrentUserID()]
+        GroupUsers: [getCurrentUserID()],
     }).then((info)=>{
         firestore().collection("Users").doc(getCurrentUserID()).collection("Groups").add({
             GroupID: info.id,
@@ -134,15 +134,16 @@ export async function getCurrentUserGroups(groupsRetrieved,filter){
             var index = 0;
             querySnapshot.forEach((doc) =>{
                 
+                var date = Date(doc.data().TimeStamp)
+                var dateString = date.toString()
                 groups.push({
                     GroupName: doc.data().GroupName,
-                    Date: doc.data().Date,
+                    Date: dateString,
                     Location: doc.data().Location,
                     Coordinates: doc.data().Coordinates,
                     Interests: doc.data().Interests,
                     id: doc.id,
-                    index: index
-                   
+                    index: index,
                 });
                 //removing indices of global groups
                 if(doc.data().Coordinates != null){
@@ -172,10 +173,15 @@ export async function getAllGroups(groupsRetrieved,filter){
         const groups = []
         if(querySnapshot !== null){
             var index = 0;
+
             querySnapshot.forEach((doc) =>{
+
+                var date = Date(doc.data().TimeStamp)
+                var dateString = date.toString()
+
                 groups.push({
                     GroupName: doc.data().GroupName,
-                    Date: doc.data().Date,
+                    Date: dateString,
                     Location: doc.data().Location,
                     Coordinates: doc.data().Coordinates,
                     Interests: doc.data().Interests,
