@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet} from 'react-native';
+import { View, StyleSheet,SafeAreaView} from 'react-native';
 import MessageEditor from './MessageEditor'
 import Message from './Message'
 import { FlatList } from 'react-native-gesture-handler';
@@ -47,6 +47,7 @@ export default class MessagingScreen extends Component {
   render() {
 
     return (
+      <SafeAreaView style={{flex:1}}>
       <View style={styles.content_container}>
         <FlatList
           style={styles.message_area_container} 
@@ -62,6 +63,7 @@ export default class MessagingScreen extends Component {
         />
         <MessageEditor button_handler={this.sendMessage} update_text ={this.updateText}/>
       </View>
+      </SafeAreaView>
     );
   }
 } 

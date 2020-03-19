@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, TouchableOpacity, Text, StyleSheet, Group } from 'react-native';
+import {View, TouchableOpacity, Text, StyleSheet, Group,SafeAreaView } from 'react-native';
 import GroupBar from './GroupBar'
 import { FlatList, TextInput} from 'react-native-gesture-handler';
 import {getAllGroups} from '../api/MessagingAppAPI'
@@ -54,7 +54,7 @@ export default class GroupScreen extends Component{
     render(){
     
         return(
-
+            <SafeAreaView style={{flex:1}}>
             <View style ={styles.container}>
 
                 <View style={styles.header_container}>
@@ -88,6 +88,7 @@ export default class GroupScreen extends Component{
                 />
                 
             </View>
+            </SafeAreaView>
         );
     }
 

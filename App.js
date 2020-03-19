@@ -62,6 +62,7 @@ function MyProfileStackScreen(){
     <MyProfileStack.Navigator>
       <MyProfileStack.Screen name="Profile" component = {ProfilePage} options={{headerShown:false}}/>
       <MyProfileStack.Screen name="Settings" component = {SettingsScreen} />
+      <MyProfileStack.Screen name="ChangePassword"  component = {ForgetPasswordScreen}/>
     </MyProfileStack.Navigator>
   );
 }
