@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import auth from '@react-native-firebase/auth';
 import { StyleSheet, View, Text, TextInput, Button, Alert,TouchableOpacity} from 'react-native';
 import{withNavigation} from "react-navigation"
-// import * as firebase from 'firebase';
-        
-// import { TouchableOpacity } from 'react-native-gesture-handler';
-
 
 class ForgetPasswordScreen extends Component{
     constructor(props) {
@@ -25,22 +21,6 @@ class ForgetPasswordScreen extends Component{
                 Alert.alert(error.message);
             });
     }
-    onChangeEmailPress =() =>{
-        auth().currentUser.updateEmail(this.state.newEmail)
-        .then(() => {
-            Alert.alert(" email has been reset.");
-        }, (error) => {
-            Alert.alert(error.message);
-        });
-    }
-
-    // onBackToLoginPress = () => {
-    //     var navActions = NavigationActions.reset({
-    //         index: 0,
-    //         actions: [NavigationActions.navigate({routeName: "Login"})]
-    //     });
-    //     this.props.navigation.dispatch(navActions);
-    // }
     
 
     render() {
@@ -60,22 +40,9 @@ class ForgetPasswordScreen extends Component{
 
                 <TouchableOpacity  style = {styles.button} onPress={this.onResetPasswordPress}>
                 <Text>Reset Password </Text>
-                
                 </TouchableOpacity>
-                <TextInput style={styles.field}
-                    value={this.state.newEmail}
-                    onChangeText={(text) => { this.setState({newEmail: text}) }}
-                    placeholder="Email"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
                 
-                <Button title="Back to Login..." onPress={this.onBackToLoginPress} />
-                <TouchableOpacity  style = {styles.button} onPress={this.onChangeEmailPress}>
-                <Text>Change Email </Text>
                 
-                </TouchableOpacity>
             </View>
         );
     }
