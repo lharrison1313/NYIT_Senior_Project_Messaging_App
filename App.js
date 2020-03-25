@@ -6,12 +6,14 @@ import GroupMapScreen from './components/GroupMapScreen'
 import ProfilePage from './components/ProfilePage';
 import SettingsScreen from './components/SettingsScreen';
 import ForgetPasswordScreen from './components/ForgetPasswordScreen'
+import ChangeEmailScreen from './components/ChangeEmailScreen'
 import GroupCreationScreen from "./components/GroupCreationScreen"
 import {NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {subscribeToAuthChanges,getAllGroups,getCurrentUserGroups} from './api/MessagingAppAPI'
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 function myGroupScreen({navigation}){
   return(
@@ -63,6 +65,7 @@ function MyProfileStackScreen(){
       <MyProfileStack.Screen name="Profile" component = {ProfilePage} options={{headerShown:false}}/>
       <MyProfileStack.Screen name="Settings" component = {SettingsScreen} />
       <MyProfileStack.Screen name="ChangePassword"  component = {ForgetPasswordScreen}/>
+      <MyProfileStack.Screen name="ChangeEmail"  component = {ChangeEmailScreen}/>
     </MyProfileStack.Navigator>
   );
 }
