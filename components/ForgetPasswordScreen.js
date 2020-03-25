@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import auth from '@react-native-firebase/auth';
 import { StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
 import{withNavigation} from "react-navigation"
-// import * as firebase from 'firebase';
-
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
@@ -48,7 +46,7 @@ class ForgetPasswordScreen extends Component{
                 />
 
                 <Button title="Reset Password" onPress={this.onResetPasswordPress} />
-                <Button title="Back to Login..." onPress={this.onBackToLoginPress} />
+
             </View>
         );
     }

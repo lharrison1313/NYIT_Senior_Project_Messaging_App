@@ -135,7 +135,13 @@ export async function getCurrentUserGroups(groupsRetrieved,filter){
             querySnapshot.forEach((doc) =>{
                 
                 var date = Date(doc.data().TimeStamp)
-                var dateString = date.toString()
+                //removing certain date info
+                var dateArray = date.toString().split(" ")
+                dateArray.pop()
+                dateArray.pop()
+                dateArray.pop()
+                var dateString = dateArray.join(" ")
+
                 groups.push({
                     GroupName: doc.data().GroupName,
                     Date: dateString,
@@ -177,7 +183,12 @@ export async function getAllGroups(groupsRetrieved,filter){
             querySnapshot.forEach((doc) =>{
 
                 var date = Date(doc.data().TimeStamp)
-                var dateString = date.toString()
+                //removing certain date info
+                var dateArray = date.toString().split(" ")
+                dateArray.pop()
+                dateArray.pop()
+                dateArray.pop()
+                var dateString = dateArray.join(" ")
 
                 groups.push({
                     GroupName: doc.data().GroupName,
