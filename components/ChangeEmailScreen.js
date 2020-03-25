@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import auth from '@react-native-firebase/auth';
 import { StyleSheet, View, Text, TextInput, Button, Alert,TouchableOpacity} from 'react-native';
 import{withNavigation} from "react-navigation"
-// import * as firebase from 'firebase';
-        
-// import { TouchableOpacity } from 'react-native-gesture-handler';
-
 
 class ChangeEmailScreen extends Component{
     constructor(props) {
@@ -43,7 +39,6 @@ class ChangeEmailScreen extends Component{
                     autoCorrect={false}
                 />
                 
-                <Button title="Back to Login..." onPress={this.onBackToLoginPress} />
                 <TouchableOpacity  style = {styles.button} onPress={this.onChangeEmailPress}>
                 <Text>Change Email </Text>
                 
