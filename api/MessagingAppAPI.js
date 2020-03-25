@@ -55,6 +55,7 @@ export function sendMessage(groupID, message, senderName, senderID){
     });
 }
 
+//adds a specific user to a specific group
 export function addUserToGroup(uid,gid){
     
     var ref = firestore().collection("Groups").doc(gid)
@@ -70,6 +71,33 @@ export function addUserToGroup(uid,gid){
     })
     .catch((error) =>{console.log("error adding user to group", error)})
 }
+
+//removes a specific user from a specific group
+//input: uid = user id, gid = group id 
+export function removeUserFromGroup(uid,gid){
+
+}
+
+//deletes a group from the database
+//input: uid = user id, gid = group id
+export function deleteGroup(gid){
+
+}
+
+//checks if a specific user is in the group
+//input: uid = user id, gid = group id
+//output: false -> user is not in group, true -> user is in group
+export function isInGroup(uid){
+
+}
+
+//checks if a specific user is the group owner
+//input: uid = user id, gid = group id
+//output: false -> user is not in group, true -> user is in group
+export function isGroupOwner(uid){
+
+}
+
 
 //creates a new group on database
 export function createGroup(groupName,interests,locationName,coordinates){
@@ -93,10 +121,7 @@ export function createGroup(groupName,interests,locationName,coordinates){
         GroupOwner: getCurrentUserID(),
         GroupUsers: [getCurrentUserID()],
     }).then((info)=>{
-        firestore().collection("Users").doc(getCurrentUserID()).collection("Groups").add({
-            GroupID: info.id,
-            GroupOwner: true
-        })
+        
     })
     .catch((error)=>{
         console.log(error)

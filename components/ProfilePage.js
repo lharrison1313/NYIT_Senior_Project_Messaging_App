@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity,SafeAreaView } from 'react-native';
 import{withNavigation} from "react-navigation"
 import {signOut} from '../api/MessagingAppAPI'
-import {getMyGroups} from "../api/MessagingAppAPI"
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 

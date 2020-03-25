@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import auth from '@react-native-firebase/auth';
 import { StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
 import{withNavigation} from "react-navigation"
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 
 
 class ForgetPasswordScreen extends Component{
