@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import {addUserToGroup,getCurrentUserID, getUserInfo} from '../api/MessagingAppAPI';
+import {addUserToGroup,getCurrentUserID, getUserInfo, addLikeDislike} from '../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const upIcon = <Icon name="arrow-up" size={25} color="grey" />;
@@ -20,11 +20,11 @@ export default class GroupBar extends Component{
     }
 
     incrementValue = () => {
-    this.setState({count:this.state.count+1})
+        addLikeDislike(this.props.id,true);
     }
 
     decrementValue = () => {
-    this.setState({count:this.state.count-1})
+        addLikeDislike(this.props.id,false);
     }
 
     render(){
@@ -56,7 +56,7 @@ export default class GroupBar extends Component{
                             <TouchableOpacity style={styles.like_button} onPress={ this.incrementValue}>
                                 {upIcon} 
                             </TouchableOpacity> 
-                            <Text style={{fontSize:19,color:"black"}}>{this.state.count}</Text>
+                            <Text style={{fontSize:19,color:"black"}}>{this.props.votes}</Text>
                             <TouchableOpacity style={styles.dislike_button} onPress={ this.decrementValue}>
                                 {downIcon}
                             </TouchableOpacity>

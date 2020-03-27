@@ -55,6 +55,7 @@ export function sendMessage(groupID, message, senderName, senderID){
     });
 }
 
+//adds a specific user to a specific group
 export function addUserToGroup(uid,gid){
     
     var ref = firestore().collection("Groups").doc(gid)
@@ -71,6 +72,33 @@ export function addUserToGroup(uid,gid){
     .catch((error) =>{console.log("error adding user to group", error)})
 }
 
+//removes a specific user from a specific group
+//input: uid = user id, gid = group id 
+export function removeUserFromGroup(uid,gid){
+
+}
+
+//deletes a group from the database
+//input: uid = user id, gid = group id
+export function deleteGroup(gid){
+
+}
+
+//checks if a specific user is in the group
+//input: uid = user id, gid = group id
+//output: false -> user is not in group, true -> user is in group
+export function isInGroup(uid){
+
+}
+
+//checks if a specific user is the group owner
+//input: uid = user id, gid = group id
+//output: false -> user is not in group, true -> user is in group
+export function isGroupOwner(uid){
+
+}
+
+
 //creates a new group on database
 export function createGroup(groupName,interests,locationName,coordinates){
     if(locationName == null){
@@ -86,17 +114,15 @@ export function createGroup(groupName,interests,locationName,coordinates){
     //creating new group
     firestore().collection("Groups").add({
         GroupName: groupName,
-        Date: "2/19/2020",
+        TimeStamp: firestore.FieldValue.serverTimestamp(),
         Interests: interestList,
         Location: locationName,
         Coordinates: coordinates,
         GroupOwner: getCurrentUserID(),
-        GroupUsers: [getCurrentUserID()]
+        GroupUsers: [getCurrentUserID()],
+        Votes: 0
     }).then((info)=>{
-        firestore().collection("Users").doc(getCurrentUserID()).collection("Groups").add({
-            GroupID: info.id,
-            GroupOwner: true
-        })
+        
     })
     .catch((error)=>{
         console.log(error)
@@ -134,15 +160,23 @@ export async function getCurrentUserGroups(groupsRetrieved,filter){
             var index = 0;
             querySnapshot.forEach((doc) =>{
                 
+                var date = Date(doc.data().TimeStamp)
+                //removing certain date info
+                var dateArray = date.toString().split(" ")
+                dateArray.pop()
+                dateArray.pop()
+                dateArray.pop()
+                var dateString = dateArray.join(" ")
+
                 groups.push({
                     GroupName: doc.data().GroupName,
-                    Date: doc.data().Date,
+                    Date: dateString,
                     Location: doc.data().Location,
                     Coordinates: doc.data().Coordinates,
                     Interests: doc.data().Interests,
                     id: doc.id,
-                    index: index
-                   
+                    index: index,
+                    Votes: doc.data().Votes
                 });
                 //removing indices of global groups
                 if(doc.data().Coordinates != null){
@@ -172,15 +206,26 @@ export async function getAllGroups(groupsRetrieved,filter){
         const groups = []
         if(querySnapshot !== null){
             var index = 0;
+
             querySnapshot.forEach((doc) =>{
+
+                var date = Date(doc.data().TimeStamp)
+                //removing certain date info
+                var dateArray = date.toString().split(" ")
+                dateArray.pop()
+                dateArray.pop()
+                dateArray.pop()
+                var dateString = dateArray.join(" ")
+
                 groups.push({
                     GroupName: doc.data().GroupName,
-                    Date: doc.data().Date,
+                    Date: dateString,
                     Location: doc.data().Location,
                     Coordinates: doc.data().Coordinates,
                     Interests: doc.data().Interests,
                     id: doc.id,
-                    index: index
+                    index: index,
+                    Votes: doc.data().Votes
                 });
                 //removing indices of global groups
                 if(doc.data().Coordinates != null){
@@ -233,4 +278,37 @@ export async function requestLocationPermission() {
     } catch (err) {
       console.warn(err);
     }
-  }
+}
+
+// adds a like or a dislike to the current group
+// inputs gid = group id, like = if true adds 1 to database if false adds -1
+export function addLikeDislike(gid,like){
+    var ref = firestore().collection("Groups").doc(gid).collection("Votes").doc(getCurrentUserID())
+
+    ref.get().then((snapshot) => {
+
+        if(like){
+            var vote = 1
+        }
+        else{
+            var vote = -1
+        }
+
+        if(snapshot.exists){
+            ref.update({
+                vote: vote
+            })
+        }
+        else{
+            var newRef = firestore().collection("Groups").doc(gid).collection("Votes").doc(getCurrentUserID())
+            newRef.set({
+                gid: gid,
+                vote: vote
+            })
+        }
+
+    })
+    .catch((error) => {console.log(error)})       
+}
+
+
