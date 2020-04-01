@@ -92,8 +92,14 @@ export function removeUserFromGroup(uid,gid){
 
 //deletes a group from the database
 //input: uid = user id, gid = group id
-export function deleteGroup(gid){
-
+export function deleteGroup(gid,uid){
+    var ref = firestore().collection("Groups").doc(gid)
+    ref.get().then((doc)=>{
+        var owner = doc.data().GroupOwner
+        if(owner==uid){
+            ref.delete()
+        }
+    })
 }
 
 //creates a new group on database
