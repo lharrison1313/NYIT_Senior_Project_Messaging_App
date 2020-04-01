@@ -75,6 +75,18 @@ export function addUserToGroup(uid,gid){
 //removes a specific user from a specific group
 //input: uid = user id, gid = group id 
 export function removeUserFromGroup(uid,gid){
+    var ref = firestore().collection("Groups").doc(gid)
+    ref.get().then((doc) =>{
+        var users = doc.data().GroupUsers
+        if(users.includes(uid)){
+            firestore().collection("Groups").doc(gid).update({
+                GroupUsers: firestore.FieldValue.arrayRemove(uid)
+            })
+        }
+        console.log("Done")
+            
+    })
+    .catch((error) =>{console.log("error deletting user to group", error)})
 
 }
 
@@ -83,21 +95,6 @@ export function removeUserFromGroup(uid,gid){
 export function deleteGroup(gid){
 
 }
-
-//checks if a specific user is in the group
-//input: uid = user id, gid = group id
-//output: false -> user is not in group, true -> user is in group
-export function isInGroup(uid){
-
-}
-
-//checks if a specific user is the group owner
-//input: uid = user id, gid = group id
-//output: false -> user is not in group, true -> user is in group
-export function isGroupOwner(uid){
-
-}
-
 
 //creates a new group on database
 export function createGroup(groupName,interests,locationName,coordinates){
