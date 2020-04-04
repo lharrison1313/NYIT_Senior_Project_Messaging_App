@@ -290,22 +290,29 @@ export function addLikeDislike(gid,like){
 
     ref.get().then((snapshot) => {
 
+        var vote = 0
         if(like){
-            var vote = 1
+            vote = 1
         }
         else{
-            var vote = -1
+            vote = -1
         }
 
         if(snapshot.exists){
+            //if the vote is pressed twice in the same direction it is set to 0
+            var currentVote = snapshot.data().vote
+            if(currentVote == vote){
+                vote = 0
+            }
+
             ref.update({
                 vote: vote
             })
         }
         else{
+            //if no vote exists for that user than a new vote is created
             var newRef = firestore().collection("Groups").doc(gid).collection("Votes").doc(getCurrentUserID())
             newRef.set({
-                gid: gid,
                 vote: vote
             })
         }
