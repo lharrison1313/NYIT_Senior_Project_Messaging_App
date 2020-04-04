@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import {View, TextInput, Text, Image, StyleSheet, TouchableOpacity, KeyboardAvoidingView, } from 'react-native';
+import {View, TextInput, Text, Image, StyleSheet, TouchableOpacity, KeyboardAvoidingView,SafeAreaView } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 export default class RegisterForm extends Component{
@@ -30,8 +30,9 @@ export default class RegisterForm extends Component{
     render(){
         const styles = this.props.styling
         return(
+            <SafeAreaView style={{flex:1}}>
             <View style={styles.login_container}>
-                    <View style = {styles.field_container}>
+                    
                         <TextInput
                         style = {styles.field}
                         placeholder = "Enter Email"
@@ -58,9 +59,9 @@ export default class RegisterForm extends Component{
                         onChangeText = {(text)=> this.setState({rePasswordField: text})}
                         />
                         
-                    </View>
+                    
                 
-                    <View style = {styles.button_container}>
+                    
                         <TouchableOpacity style = {styles.button} onPress={this.handleRegister}>
                             <Text>
                                 Register
@@ -73,8 +74,9 @@ export default class RegisterForm extends Component{
                             </Text>
                         </TouchableOpacity>
 
-                    </View>
+                    
             </View>
+            </SafeAreaView>
         );
     }
 } 

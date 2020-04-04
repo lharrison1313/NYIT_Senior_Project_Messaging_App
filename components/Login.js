@@ -1,7 +1,8 @@
 
 import React, { Component } from 'react';
-import {View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
+import {View, TextInput, Text, TouchableOpacity, Image,SafeAreaView} from 'react-native';
+import {requestLocationPermission} from "../api/MessagingAppAPI";
+
 
 
 export default class LoginForm extends Component{
@@ -12,6 +13,10 @@ export default class LoginForm extends Component{
             emailField: '',
             passwordField: ''
         }
+    }
+
+    componentDidMount(){
+        requestLocationPermission()
     }
 
     handleLogin = () =>{
@@ -26,45 +31,50 @@ export default class LoginForm extends Component{
     render(){
         const styles = this.props.styling
         return(
-            
+            <SafeAreaView style={{flex:1}}>
             <View style={styles.login_container} >
-                <View style = {styles.field_container}>
-                    <TextInput 
-                    style = {styles.field}
-                    placeholder = "Enter Email"
-                    onChangeText = {(text)=> this.setState({emailField: text})}
-                    />
+               
+                <Image style = {{width: 150, height: 150, margin: 20,}} source = {require('../res/nyit.png')} />
 
-                    <TextInput 
-                    style = {styles.field}
-                    placeholder = "Enter Password"
-                    secureTextEntry
-                    onChangeText = {(text)=> this.setState({passwordField: text})}
-                    />
-                    
-                </View>
+                <TextInput 
+                style = {styles.field}
+                placeholder = "Enter Email"
+                onChangeText = {(text)=> this.setState({emailField: text})}
+                />
+
+                <TextInput 
+                style = {styles.field}
+                placeholder = "Enter Password"
+                secureTextEntry
+                onChangeText = {(text)=> this.setState({passwordField: text})}
+                />
             
-                <View style = {styles.button_container}>
-                    <TouchableOpacity style = {styles.button} onPress={this.handleLogin}>
-                        <Text>
-                            Login
-                        </Text>
-                    </TouchableOpacity>
+                <TouchableOpacity style = {styles.button} onPress={this.handleLogin}>
+                    <Text>
+                        Login
+                    </Text>
+                </TouchableOpacity>
 
-                    <TouchableOpacity style = {styles.button} onPress={this.props.switch} >
-                        <Text>
-                            Register
-                        </Text>
-                    </TouchableOpacity>
+                <TouchableOpacity style = {styles.button} onPress={this.props.switch} >
+                    <Text>
+                        Register
+                    </Text>
+                </TouchableOpacity>
 
-                    <TouchableOpacity style = {styles.button}>
-                        <Text>
-                            Login with google
-                        </Text>
-                    </TouchableOpacity>
+                <TouchableOpacity style = {styles.button}>
+                    <Text>
+                        Login with google
+                    </Text>
+                </TouchableOpacity>
 
-                </View>
+                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('ForgetPassword')} >
+                    <Text>
+                        Forget Passowrd
+                    </Text>
+                </TouchableOpacity>
+                
             </View>
+            </SafeAreaView>
             
 
         );

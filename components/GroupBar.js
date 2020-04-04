@@ -1,11 +1,30 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import{withNavigation} from "react-navigation"
+import {addUserToGroup,getCurrentUserID, getUserInfo, addLikeDislike} from '../api/MessagingAppAPI';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
+const upIcon = <Icon name="arrow-up" size={25} color="grey" />;
+const downIcon = <Icon name="arrow-down" size={25} color="grey" />;
 
-class GroupBar extends Component{
+export default class GroupBar extends Component{
     constructor(props){
         super(props)
+        this.state={
+            count:0
+        }  
+    }
+
+    handleJoin = () =>{
+        addUserToGroup(getCurrentUserID(),this.props.id)
+        this.props.navigation.navigate('Message',{id: this.props.id})
+    }
+
+    incrementValue = () => {
+        addLikeDislike(this.props.id,true);
+    }
+
+    decrementValue = () => {
+        addLikeDislike(this.props.id,false);
     }
 
     render(){
@@ -13,25 +32,38 @@ class GroupBar extends Component{
         return(
             
             <View
-            style = {styles.bar_container} 
-            //passing group id to messaging screen
+            style = {this.props.bar_style} 
             >
                
                 <View style={styles.header_container}>
-                        <Text style = {{flex: 1}}>{this.props.location}</Text>
-                    <Text style = {{flex: 1}}>{this.props.date.toString()}</Text>
+                    <Text style = {{fontSize:12, marginRight:10, fontWeight: "bold"}}>{this.props.location}</Text>
+                    <Text style = {{fontSize:12}}>{this.props.date}</Text>
                 </View>
+
                 <View style={styles.body_container}>
+
                     <View style={styles.left_container}>
-                        <Text style ={styles.body_text}>{this.props.group_name}</Text>
-                        <Text style ={styles.body_text}>{this.props.interests.join(" ")}</Text>
+                        <Text style ={{flex:.50}}>{this.props.group_name}</Text>
+                        <Text style ={{flex:.50}}>{this.props.interests.join(" ")}</Text>
                     </View>
 
-                    <View styles={styles.right_container}>
-                        <TouchableOpacity style={styles.join_button} onPress={() => this.props.navigation.navigate('Message',{id: this.props.id})}>
-                            <Text>Join</Text>
+                    <View style={styles.right_container}>
+                        <TouchableOpacity style={styles.join_button} onPress={() => this.handleJoin()}>
+                            <Text style ={styles.join_text}>Join</Text>
                         </TouchableOpacity>
+
+                        <View style = {styles.ld_container} >
+                            <TouchableOpacity style={styles.like_button} onPress={ this.incrementValue}>
+                                {upIcon} 
+                            </TouchableOpacity> 
+                            <Text style={{fontSize:19,color:"black"}}>{this.props.votes}</Text>
+                            <TouchableOpacity style={styles.dislike_button} onPress={ this.decrementValue}>
+                                {downIcon}
+                            </TouchableOpacity>
+                        </View>
+                        
                     </View>
+                    
                 </View>
             </View>
             
@@ -40,48 +72,51 @@ class GroupBar extends Component{
 
 }
 
+
 const styles = StyleSheet.create({
-    bar_container:{
-        flexDirection:'column',
-        backgroundColor: '#00BED6',
-        height: 100,
-        padding:10,
-        borderColor:"black",
-        borderWidth: 1
-
-    },
-
     header_container:{
+        flex: .25,
         flexDirection:'row',
-        marginBottom:5
+        flex: .30
     },
 
-    body_text:{
-        marginBottom:10
-    },
     left_container:{
         flexDirection:"column",
-       flex:.75
-       
+        flex: .55
     },
     right_container:{
-        flexDirection:"column",
+        flexDirection:"row",
         alignItems:"center",
         justifyContent:"center",
-        flex:.25
+        flex: .45,
 
     },
     body_container:{
         flexDirection:"row",
-        flex:1
+        flex: .70,
     },
     join_button:{
-        backgroundColor:"green",
+        flex: .20,
+        backgroundColor:"grey",
         padding:5,
-        borderRadius:10
+        borderRadius:10,
+        alignItems:"center",
+        justifyContent: "center"
+    },
+
+    ld_container:{
+        flex: .80,
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+
+    dislike_button:{
+        
+        padding:3
+    },
+    like_button:{
+        
+        padding:3
     }
-
-
 })
-
-export default withNavigation(GroupBar)

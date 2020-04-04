@@ -10,11 +10,14 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-
+@import GooglePlaces; 
+@import GoogleMaps;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [GMSPlacesClient provideAPIKey:@"AIzaSyD82h_j7_GVwcgOLvEcmgkKVTQI7CuARzM"];
+  [GMSServices provideAPIKey:@"AIzaSyD82h_j7_GVwcgOLvEcmgkKVTQI7CuARzM"];
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
   }

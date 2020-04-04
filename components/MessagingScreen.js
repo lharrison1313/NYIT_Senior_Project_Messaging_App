@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { View, StyleSheet} from 'react-native';
+import { View, StyleSheet,SafeAreaView} from 'react-native';
 import MessageEditor from './MessageEditor'
 import Message from './Message'
 import { FlatList } from 'react-native-gesture-handler';
-import firestore from '@react-native-firebase/firestore';
-import{withNavigation} from "react-navigation"
 import{getGroupMessages} from "../api/MessagingAppAPI"
 import{sendMessage,getUserInfo,getCurrentUserID} from "../api/MessagingAppAPI"
 
-class MessagingScreen extends Component {
+export default class MessagingScreen extends Component {
 
   constructor(props){
     super(props)
@@ -17,7 +15,7 @@ class MessagingScreen extends Component {
       messageList: [],
       userName: ""
     }
-    this.gid = this.props.navigation.state.params.id
+    this.gid = this.props.route.params.id
     this.uid = getCurrentUserID()
   }
 
@@ -49,6 +47,7 @@ class MessagingScreen extends Component {
   render() {
 
     return (
+      <SafeAreaView style={{flex:1}}>
       <View style={styles.content_container}>
         <FlatList
           style={styles.message_area_container} 
@@ -64,6 +63,7 @@ class MessagingScreen extends Component {
         />
         <MessageEditor button_handler={this.sendMessage} update_text ={this.updateText}/>
       </View>
+      </SafeAreaView>
     );
   }
 } 
@@ -81,5 +81,3 @@ const styles = StyleSheet.create({
     marginBottom: 15
   }
 })
-
-export default withNavigation(MessagingScreen)

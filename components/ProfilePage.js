@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableOpacity,SafeAreaView } from 'react-native';
 import{withNavigation} from "react-navigation"
-import {getAllGroups} from '../api/MessagingAppAPI'
-
+import {signOut} from '../api/MessagingAppAPI'
+import {getMyGroups} from "../api/MessagingAppAPI"
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 class ProfilePage extends Component{
@@ -12,28 +13,26 @@ class ProfilePage extends Component{
             name: "Default Name",
             status: "Offline",
         }
-        
     }
 
     render(){
     
         return(
+            <SafeAreaView style={{flex:1}}>
             <View style = {styles.MainPage}>
-                <Image style = {{width: 100, height: 100, margin: 20,}} source = {require('./nyit.png')} />
+                <Icon name="user" size={100} color="white"/>
+
                 <Text style = {{margin: 10,}}>
                     {this.state.name}
                 </Text>
+
                 <Text style = {{margin: 10,}}>
                     {this.state.status}
                 </Text>
+
                 <TouchableOpacity style = {styles.button}>
                     <Text>
                         Add Friends
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Groups',{getGroupsFunc: getAllGroups})}>
-                    <Text>
-                        My Groups
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Settings')}>
@@ -41,7 +40,14 @@ class ProfilePage extends Component{
                         Settings
                     </Text>
                 </TouchableOpacity>
+                
+                <TouchableOpacity style = {styles.button} onPress={() => signOut(this.onSignOut)} >
+                            <Text>
+                                Signout
+                            </Text>
+                </TouchableOpacity>
             </View>
+            </SafeAreaView>
             
         );
     }

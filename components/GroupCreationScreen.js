@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
-import {View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {View, TextInput, Text, StyleSheet, TouchableOpacity ,SafeAreaView} from 'react-native';
 import {createGroup} from  "../api/MessagingAppAPI"
-import{withNavigation} from "react-navigation";
-import {InterestTextInput} from "./InterestTextInput";
+import InterestTextInput from "./InterestTextInput";
+import GooglePlacesButton from "./GooglePlacesButton"
 
 
-class GroupCreationScreen extends Component{
+
+
+export default class GroupCreationScreen extends Component{
 
     constructor(props){
         super(props)
         this.state = {
             groupName: "",
-            interests: []
+            interests: [],
+            place: {},
         }
     }
 
     buttonHandler = ()=> {
-        createGroup(this.state.groupName,this.state.interests)
+        createGroup(this.state.groupName,this.state.interests,this.state.place.name,this.state.place.location)
         this.props.navigation.goBack()
     }
 
@@ -24,14 +27,20 @@ class GroupCreationScreen extends Component{
         this.setState({interests:  text.split(" ")})
     }
 
+    retrieveLocation = (place) =>{
+        this.setState({place: place})
+    }
+
     render(){
         return(
+            <SafeAreaView style={{flex:1}}>
             <View style = {styles.container}>
                 <TextInput
                 style = {styles.textInputContainer} 
                 placeholder="Enter group name"
                 onChangeText = {(text)=>this.setState({groupName: text})}/>
-                <InterestTextInput retrieveInterestList= {this.interestParser} style={styles.textInputContainer}/>
+                <InterestTextInput retrieveInterestList= {this.interestParser} style ={styles.textInputContainer}/>
+                <GooglePlacesButton button_style={styles.button} retrieveLocation = {this.retrieveLocation}/>
                 <TouchableOpacity 
                 style = {styles.button}
                 onPress = {this.buttonHandler}
@@ -39,6 +48,7 @@ class GroupCreationScreen extends Component{
                     <Text>Create Group</Text>
                 </TouchableOpacity>
             </View>
+            </SafeAreaView>
         );
     }
 
@@ -58,14 +68,11 @@ const styles = StyleSheet.create({
         flex:1, 
         backgroundColor:"#5F6362",
     },
+
     textInputContainer:{
         height:50,
         marginVertical:1,
         backgroundColor:"white"
         
     },
-
-
 })
-
-export default withNavigation(GroupCreationScreen)
