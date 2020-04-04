@@ -75,29 +75,32 @@ export function addUserToGroup(uid,gid){
 //removes a specific user from a specific group
 //input: uid = user id, gid = group id 
 export function removeUserFromGroup(uid,gid){
+    var ref = firestore().collection("Groups").doc(gid)
+    ref.get().then((doc) =>{
+        var users = doc.data().GroupUsers
+        if(users.includes(uid)){
+            firestore().collection("Groups").doc(gid).update({
+                GroupUsers: firestore.FieldValue.arrayRemove(uid)
+            })
+        }
+        console.log("Done")
+            
+    })
+    .catch((error) =>{console.log("error deletting user to group", error)})
 
 }
 
 //deletes a group from the database
 //input: uid = user id, gid = group id
-export function deleteGroup(gid){
-
+export function deleteGroup(gid,uid){
+    var ref = firestore().collection("Groups").doc(gid)
+    ref.get().then((doc)=>{
+        var owner = doc.data().GroupOwner
+        if(owner==uid){
+            ref.delete()
+        }
+    })
 }
-
-//checks if a specific user is in the group
-//input: uid = user id, gid = group id
-//output: false -> user is not in group, true -> user is in group
-export function isInGroup(uid){
-
-}
-
-//checks if a specific user is the group owner
-//input: uid = user id, gid = group id
-//output: false -> user is not in group, true -> user is in group
-export function isGroupOwner(uid){
-
-}
-
 
 //creates a new group on database
 export function createGroup(groupName,interests,locationName,coordinates){
@@ -120,6 +123,7 @@ export function createGroup(groupName,interests,locationName,coordinates){
         Coordinates: coordinates,
         GroupOwner: getCurrentUserID(),
         GroupUsers: [getCurrentUserID()],
+        Votes: 0
     }).then((info)=>{
         
     })
@@ -175,6 +179,7 @@ export async function getCurrentUserGroups(groupsRetrieved,filter){
                     Interests: doc.data().Interests,
                     id: doc.id,
                     index: index,
+                    Votes: doc.data().Votes
                 });
                 //removing indices of global groups
                 if(doc.data().Coordinates != null){
@@ -222,7 +227,8 @@ export async function getAllGroups(groupsRetrieved,filter){
                     Coordinates: doc.data().Coordinates,
                     Interests: doc.data().Interests,
                     id: doc.id,
-                    index: index
+                    index: index,
+                    Votes: doc.data().Votes
                 });
                 //removing indices of global groups
                 if(doc.data().Coordinates != null){
@@ -275,4 +281,37 @@ export async function requestLocationPermission() {
     } catch (err) {
       console.warn(err);
     }
-  }
+}
+
+// adds a like or a dislike to the current group
+// inputs gid = group id, like = if true adds 1 to database if false adds -1
+export function addLikeDislike(gid,like){
+    var ref = firestore().collection("Groups").doc(gid).collection("Votes").doc(getCurrentUserID())
+
+    ref.get().then((snapshot) => {
+
+        if(like){
+            var vote = 1
+        }
+        else{
+            var vote = -1
+        }
+
+        if(snapshot.exists){
+            ref.update({
+                vote: vote
+            })
+        }
+        else{
+            var newRef = firestore().collection("Groups").doc(gid).collection("Votes").doc(getCurrentUserID())
+            newRef.set({
+                gid: gid,
+                vote: vote
+            })
+        }
+
+    })
+    .catch((error) => {console.log(error)})       
+}
+
+

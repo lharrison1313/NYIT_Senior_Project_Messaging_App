@@ -3,46 +3,46 @@ import auth from '@react-native-firebase/auth';
 import { StyleSheet, View, Text, TextInput, Button, Alert,TouchableOpacity} from 'react-native';
 import{withNavigation} from "react-navigation"
 
-class ForgetPasswordScreen extends Component{
+class ChangeEmailScreen extends Component{
     constructor(props) {
         super(props);
         this.state = { 
-            email: "",
             newEmail:"",
 
         };
     }
 
-    onResetPasswordPress = () => {
-        auth().sendPasswordResetEmail(this.state.email)
-            .then(() => {
-                Alert.alert("Password reset email has been sent.");
-            }, (error) => {
-                Alert.alert(error.message);
-            });
+   
+    onChangeEmailPress =() =>{
+        auth().currentUser.updateEmail(this.state.newEmail)
+        .then(() => {
+            Alert.alert(" email has been reset.");
+        }, (error) => {
+            Alert.alert(error.message);
+        });
     }
+
+    
     
 
     render() {
         return (
             <View style={styles.login_container}>
 
-                <Text style={styles.text}>Forgot Password</Text>
-
+                
                 <TextInput style={styles.field}
-                    value={this.state.email}
-                    onChangeText={(text) => { this.setState({email: text}) }}
+                    value={this.state.newEmail}
+                    onChangeText={(text) => { this.setState({newEmail: text}) }}
                     placeholder="Email"
                     keyboardType="email-address"
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
-
-                <TouchableOpacity  style = {styles.button} onPress={this.onResetPasswordPress}>
-                <Text>Reset Password </Text>
+                
+                <TouchableOpacity  style = {styles.button} onPress={this.onChangeEmailPress}>
+                <Text>Change Email </Text>
+                
                 </TouchableOpacity>
-                
-                
             </View>
         );
     }
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default withNavigation(ForgetPasswordScreen)
+export default withNavigation(ChangeEmailScreen)

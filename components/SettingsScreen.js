@@ -22,6 +22,11 @@ class SettingsScreen extends Component{
                         Change Password
                     </Text>
                 </TouchableOpacity>
+                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate("ChangeEmail")}>
+                    <Text>
+                        Change Email
+                    </Text>
+                </TouchableOpacity>
             </View>
             </SafeAreaView>
         );

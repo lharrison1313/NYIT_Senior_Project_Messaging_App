@@ -82,6 +82,7 @@ export default class GroupScreen extends Component{
                             id = {item.id}
                             bar_style = {styles.bar_container}
                             navigation = {this.props.navigation}
+                            votes = {item.Votes}
                         />
                         )}
                     keyExtractor = {item => item.id}
