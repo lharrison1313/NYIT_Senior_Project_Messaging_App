@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const admin = require("firebase-admin");
 admin.initializeApp();
 
+
 exports.updateVoteTally = functions.firestore
     .document('Groups/{Group}/Votes/{Vote}')
     .onUpdate((change,context) => {
@@ -43,4 +44,29 @@ exports.initializeVoteTally = functions.firestore
 
         return true
 
+    })
+
+exports.sendNotificationToGroup = functions.firestore
+    .document('Groups/{Group}/Messages/{Message}')
+    .onCreate((snap,context) => {
+        const gid = context.params.Group
+        const body = snap.data().MessageText
+        const sender = snap.data().SenderName
+
+        const message = {
+            data: {},
+            notification:{
+                body: body,
+                title: sender,
+            },
+            topic: gid
+        }
+
+        admin.messaging().send(message)
+        .then(response => {
+        console.log('Successfully sent message:', response);
+        })
+        .catch(error => {
+        console.log('Error sending message:', error);
+        }); 
     })
