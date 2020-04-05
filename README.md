@@ -5,5 +5,6 @@
 
 # Get Started
 install node js in your machine 
-cd root and type npm install
+cd root and type "npm install"
+
 
