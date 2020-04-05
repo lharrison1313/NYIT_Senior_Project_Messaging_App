@@ -3,7 +3,7 @@
 
 
 
-# Gett Started
+# Get Started
 install node js in your machine 
 cd root and type npm install
 
