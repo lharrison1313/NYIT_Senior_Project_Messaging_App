@@ -6,8 +6,11 @@ This app , is a group app where you can find the groups that matches your intres
 
 # Get Started
 install node js in your machine 
+
 1)cd root 
+
 2)type"npm install"
+
 3)type "yarn install"
 
 
