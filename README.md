@@ -8,7 +8,7 @@ This app , is a group app where you can find the groups that matches your intres
 1) install node js in your machine 
   * cd root 
   * type"npm install"
-2) install yarn install
+2) install yarn 
   * type "yarn install"
 
 
