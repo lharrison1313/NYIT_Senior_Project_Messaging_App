@@ -5,10 +5,10 @@ This app , is a group app where you can find the groups that matches your intres
 
 
 # Get Started
-1)install node js in your machine 
- * cd root 
- * type"npm install"
+1) install node js in your machine 
+  * cd root 
+  * type"npm install"
 2) install yarn install
- * type "yarn install"
+  * type "yarn install"
 
 
