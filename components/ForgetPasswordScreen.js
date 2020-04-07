@@ -62,20 +62,7 @@ class ForgetPasswordScreen extends Component{
                 <Text>Reset Password </Text>
                 
                 </TouchableOpacity>
-                <TextInput style={styles.field}
-                    value={this.state.newEmail}
-                    onChangeText={(text) => { this.setState({newEmail: text}) }}
-                    placeholder="Email"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
-                
-                <Button title="Back to Login..." onPress={this.onBackToLoginPress} />
-                <TouchableOpacity  style = {styles.button} onPress={this.onChangeEmailPress}>
-                <Text>Change Email </Text>
-                
-                </TouchableOpacity>
+               
             </View>
         );
     }

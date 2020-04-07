@@ -43,7 +43,7 @@ class ChangeEmailScreen extends Component{
                     autoCorrect={false}
                 />
                 
-                <Button title="Back to Login..." onPress={this.onBackToLoginPress} />
+                
                 <TouchableOpacity  style = {styles.button} onPress={this.onChangeEmailPress}>
                 <Text>Change Email </Text>
                 

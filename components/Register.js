@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import {View, TextInput, Text, Image, StyleSheet, TouchableOpacity, KeyboardAvoidingView,SafeAreaView } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
+//import NyitImagePicker from '../components/NyitImagePicker'
+
 
 export default class RegisterForm extends Component{
 
@@ -26,13 +28,12 @@ export default class RegisterForm extends Component{
             this.props.signUp(this.state.emailField,this.state.passwordField,this.state.usernameField);
         }
     }
-
+    
     render(){
         const styles = this.props.styling
         return(
             <SafeAreaView style={{flex:1}}>
             <View style={styles.login_container}>
-                    
                         <TextInput
                         style = {styles.field}
                         placeholder = "Enter Email"

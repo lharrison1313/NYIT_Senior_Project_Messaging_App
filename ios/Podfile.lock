@@ -185,6 +185,9 @@ PODS:
   - Firebase/Firestore (6.13.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 1.8.0)
+  - Firebase/Storage (6.13.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 3.4.2)
   - FirebaseAnalytics (6.1.6):
     - FirebaseCore (~> 6.4)
     - FirebaseInstanceID (~> 4.2)
@@ -230,6 +233,10 @@ PODS:
     - FirebaseCore (~> 6.0)
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/UserDefaults (~> 6.0)
+  - FirebaseStorage (3.4.3):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 6.0)
+    - GTMSessionFetcher/Core (~> 1.1)
   - Folly (2018.10.22.00):
     - boost-for-react-native
     - DoubleConversion
@@ -487,6 +494,8 @@ PODS:
     - GoogleMaps (~> 3.1.0)
     - GooglePlaces (~> 3.1.0)
     - React
+  - react-native-image-picker (2.3.1):
+    - React
   - react-native-maps (0.26.1):
     - React
   - react-native-safe-area-context (0.6.4):
@@ -557,6 +566,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
+  - Firebase/Storage
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - Google-Maps-iOS-Utils
@@ -575,6 +585,7 @@ DEPENDENCIES:
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-google-places (from `../node_modules/react-native-google-places`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -613,6 +624,7 @@ SPEC REPOS:
     - FirebaseCoreDiagnosticsInterop
     - FirebaseFirestore
     - FirebaseInstanceID
+    - FirebaseStorage
     - Google-Maps-iOS-Utils
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -661,6 +673,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-maps"
   react-native-google-places:
     :path: "../node_modules/react-native-google-places"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
   react-native-safe-area-context:
@@ -722,6 +736,7 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
   FirebaseFirestore: 52120e2833f804a874ba1a9f59aab864a8ae2286
   FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
+  FirebaseStorage: 93fe2f8190a01bfb2b2c4932df7d679744c4ef1d
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
@@ -748,6 +763,7 @@ SPEC CHECKSUMS:
   react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
   react-native-google-maps: 4b3f95cf4f50ad53a198a8e5fe0c55a241fdc8cc
   react-native-google-places: 34e976a0e13cb55cc9603ef2fa6764ed534af806
+  react-native-image-picker: 6a850c41f57f0848d918c2a77aedd7aa272ffa30
   react-native-maps: 6e499eee4eabf422ba8b6f94e993cc768bf35153
   react-native-safe-area-context: 52342d2d80ea8faadd0ffa76d83b6051f20c5329
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
@@ -771,6 +787,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: b0d4a543b04dac5592e722827b5c72d88141d0b1
+PODFILE CHECKSUM: 41e348c4116e60708d628fe7aaf2ab07901b75ed
 
 COCOAPODS: 1.9.1

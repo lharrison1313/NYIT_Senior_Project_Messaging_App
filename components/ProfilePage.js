@@ -4,6 +4,8 @@ import{withNavigation} from "react-navigation"
 import {signOut} from '../api/MessagingAppAPI'
 import {getMyGroups} from "../api/MessagingAppAPI"
 import Icon from 'react-native-vector-icons/FontAwesome';
+// import NyitImagePicker from '../components/NyitImagePicker'
+
 
 
 class ProfilePage extends Component{
@@ -14,12 +16,15 @@ class ProfilePage extends Component{
             status: "Offline",
         }
     }
-
-    render(){
     
+    // setFoodImage = (image) => {
+    //     props.setFieldValue('imageUri', image.uri);
+    //   }
+    render(){
         return(
             <SafeAreaView style={{flex:1}}>
             <View style = {styles.MainPage}>
+            {/* <NyitImagePicker image={this.props.ProfilePage.image} onImagePicked={setFoodImage} />     */}
                 <Icon name="user" size={100} color="white"/>
 
                 <Text style = {{margin: 10,}}>
