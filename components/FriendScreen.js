@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, SafeAreaView } from 'react-native';
+import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import{withNavigation} from "react-navigation"
+import { FlatList, TextInput} from 'react-native-gesture-handler';
 import FriendBar from "./FriendBar"
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+const plus = <Icon name="plus-circle" size={40} color="#00BED6" />;
 
 class FriendScreen extends Component{
     constructor(props) {
@@ -14,12 +18,21 @@ class FriendScreen extends Component{
         return (
             <SafeAreaView style={{flex:1}}>
             <View style ={styles.container}>
-                <TextInput 
+                 <View style={styles.header_container}>
+                    <TextInput 
                     style = {styles.search_bar}
                     onChangeText = {(input)=>{this.textChanged(input)}}
                     placeholder = {"Search"}
-                />
-                {/* <FlatList
+                    />
+
+                    <TouchableOpacity 
+                    style = {styles.new_friend_button} 
+                    onPress={() => this.props.navigation.navigate('AddFriends')}>
+                        {plus}
+                    </TouchableOpacity>
+                </View>
+
+                <FlatList
                     data = {this.state.friendList}
                     renderItem={({ item }) => (
                         <FriendBar
@@ -29,9 +42,6 @@ class FriendScreen extends Component{
                         />
                         )}
                     keyExtractor = {item => item.id}
-                /> */}
-                <FriendBar 
-
                 />
 
                 
@@ -43,9 +53,26 @@ class FriendScreen extends Component{
 }
 
 const styles = StyleSheet.create({
+    header_container:{
+        flexDirection:"row",
+        alignItems: "center",
+        padding:15
+    },
+
     container:{
         flex:1,
         backgroundColor:"grey"
+    },
+
+    new_friend_button:{
+        flex:.15,
+        backgroundColor: "grey",
+        justifyContent: "center",
+        alignItems: "center",
+        height:40,
+        width: 40,
+        borderRadius: 20,
+        marginHorizontal:5
     },
 
     bar_container:{

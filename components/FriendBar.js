@@ -6,7 +6,8 @@ export default class FriendBar extends Component{
     constructor(props){
         super(props)
         this.state={
-            name: "Default Name",  
+            
+            name: "Default Name",
         }  
     }
 
@@ -14,7 +15,7 @@ export default class FriendBar extends Component{
     
         return(
             <View style = {this.props.bar_style}>
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('FriendsScreen')}>
+                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('FriendScreen')}>
                     <View style={styles.body_container}>
 
                         <View style={styles.left_container}>
