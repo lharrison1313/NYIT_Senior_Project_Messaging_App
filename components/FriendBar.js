@@ -7,7 +7,6 @@ export default class FriendBar extends Component{
         super(props)
         this.state={
             
-            name: "Default Name",
         }  
     }
 
