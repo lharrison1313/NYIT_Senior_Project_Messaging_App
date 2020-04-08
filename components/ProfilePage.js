@@ -24,7 +24,6 @@ class ProfilePage extends Component{
         return(
             <SafeAreaView style={{flex:1}}>
             <View style = {styles.MainPage}>
-            {/* <NyitImagePicker image={this.props.ProfilePage.image} onImagePicked={setFoodImage} />     */}
                 <Icon name="user" size={100} color="white"/>
 
                 <Text style = {{margin: 10,}}>
@@ -34,6 +33,11 @@ class ProfilePage extends Component{
                 <Text style = {{margin: 10,}}>
                     {this.state.status}
                 </Text>
+                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('ChangeProfile')}>
+                    <Text>
+                        Add Image
+                    </Text>
+                </TouchableOpacity>
 
                 <TouchableOpacity style = {styles.button}>
                     <Text>
@@ -46,6 +50,7 @@ class ProfilePage extends Component{
                         Settings
                     </Text>
                 </TouchableOpacity>
+                
                 
                 <TouchableOpacity style = {styles.button} onPress={() => signOut(this.onSignOut)} >
                             <Text>

@@ -6,6 +6,7 @@ import GroupMapScreen from './components/GroupMapScreen'
 import ProfilePage from './components/ProfilePage';
 import SettingsScreen from './components/SettingsScreen';
 import ForgetPasswordScreen from './components/ForgetPasswordScreen'
+import ChangeProfileScreen from'./components/ChangeProfileScreen'
 import ChangeEmailScreen from './components/ChangeEmailScreen'
 import GroupCreationScreen from "./components/GroupCreationScreen"
 import {NavigationContainer } from '@react-navigation/native';
@@ -66,6 +67,7 @@ function MyProfileStackScreen(){
       <MyProfileStack.Screen name="Settings" component = {SettingsScreen} />
       <MyProfileStack.Screen name="ChangePassword"  component = {ForgetPasswordScreen}/>
       <MyProfileStack.Screen name="ChangeEmail"  component = {ChangeEmailScreen}/>
+      <MyProfileStack.Screen name="ChangeProfile"  component = {ChangeProfileScreen}/>
     </MyProfileStack.Navigator>
   );
 }

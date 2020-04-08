@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
-const CurryImagePicker = ({ image, onImagePicked }) => {
+const NyitImagePicker = ({ image, onImagePicked }) => {
 
   const [selectedImage, setSelectedImage] = useState();
 
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default CurryImagePicker;
+export default NyitImagePicker;
