@@ -18,7 +18,8 @@ class FriendScreen extends Component{
         return (
             <SafeAreaView style={{flex:1}}>
             <View style ={styles.container}>
-                 <View style={styles.header_container}>
+
+                <View style={styles.header_container}>
                     <TextInput 
                     style = {styles.search_bar}
                     onChangeText = {(input)=>{this.textChanged(input)}}
@@ -32,24 +33,16 @@ class FriendScreen extends Component{
                     </TouchableOpacity>
                 </View>
 
-                <FriendBar
-                friend_name = "Abdul"
-                interests = "programming"
-                bar_style = {styles.bar_container}
-                />
-
-
-                {/* <FlatList
+                <FlatList
                     data = {this.state.friendList}
                     renderItem={({ item }) => (
                         <FriendBar
-                            friend_name = {item.FriendName} 
+                            name = {item.FriendName} 
                             interests = {item.Interests}
-                            bar_style = {styles.bar_container}
                         />
                         )}
                     keyExtractor = {item => item.id}
-                /> */}
+                />
 
                 
             </View>
@@ -80,15 +73,6 @@ const styles = StyleSheet.create({
         width: 40,
         borderRadius: 20,
         marginHorizontal:5
-    },
-
-    bar_container:{
-        flexDirection:'column',
-        backgroundColor: '#00BED6',
-        height: 120,
-        padding: 10,
-        borderColor:"grey",
-        borderBottomWidth: 1
     },
 
     search_bar:{
