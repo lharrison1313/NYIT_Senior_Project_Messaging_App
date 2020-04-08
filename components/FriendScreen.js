@@ -32,7 +32,14 @@ class FriendScreen extends Component{
                     </TouchableOpacity>
                 </View>
 
-                <FlatList
+                <FriendBar
+                friend_name = "Abdul"
+                interests = "programming"
+                bar_style = {styles.bar_container}
+                />
+
+
+                {/* <FlatList
                     data = {this.state.friendList}
                     renderItem={({ item }) => (
                         <FriendBar
@@ -42,7 +49,7 @@ class FriendScreen extends Component{
                         />
                         )}
                     keyExtractor = {item => item.id}
-                />
+                /> */}
 
                 
             </View>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import {View, TouchableOpacity, Text, StyleSheet, TouchableHighlightBase } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class FriendBar extends Component{
@@ -14,7 +14,7 @@ export default class FriendBar extends Component{
     
         return(
             <View style = {this.props.bar_style}>
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('FriendScreen')}>
+                <TouchableOpacity style = {this.props.bar_style} >
                     <View style={styles.body_container}>
 
                         <View style={styles.left_container}>
@@ -24,8 +24,8 @@ export default class FriendBar extends Component{
 
                         <View style={styles.right_container}>
 
-                            <Text style ={{flex:.50}}>{this.state.name}</Text>
-                            <Text style ={{flex:.50}}>{this.props.interests.join(" ")}</Text>
+                            <Text style ={{flex:.50}}>{this.props.name}</Text>
+                            <Text style ={{flex:.50}}>{this.props.interests}</Text>
                         
                         </View>
                     
