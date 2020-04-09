@@ -30,9 +30,9 @@ class ProfilePage extends Component{
                     {this.state.status}
                 </Text>
 
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('AddFriends')}>
+                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Friends')}>
                     <Text>
-                        Add Friends
+                        Friends
                     </Text>
                 </TouchableOpacity>
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import{withNavigation} from "react-navigation"
 import { FlatList, TextInput} from 'react-native-gesture-handler';
-//import {getUsers} from "../api/MessagingAppAPI"
+import {getUsers} from "../api/MessagingAppAPI"
 import FriendBar from "./FriendBar"
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -16,20 +16,20 @@ class FriendScreen extends Component{
         };
     }
 
-    // componentDidMount(){
-    //     getUsers(this.retrieveUsers,null)
-    //     .then((unsub) => {
-    //         this.unsubscribe = unsub
-    //         console.log("subscribe")})
-    //     .catch((error)=> console.log("FriendScreen: ",error))
-    // }
+    componentDidMount(){
+        getUsers(this.retrieveUsers,null)
+        .then((unsub) => {
+            this.unsubscribe = unsub
+            console.log("subscribe")})
+        .catch((error)=> console.log("FriendScreen: ",error))
+    }
 
-    // componentWillUnmount(){
-    //     if(this.unsubscribe != null){
-    //         console.log("unsubscribe")
-    //         this.unsubscribe()
-    //     }
-    // }
+    componentWillUnmount(){
+        if(this.unsubscribe != null){
+            console.log("unsubscribe")
+            this.unsubscribe()
+        }
+    }
 
     retrieveUsers = (users) => {
         this.setState({
@@ -48,12 +48,6 @@ class FriendScreen extends Component{
                     onChangeText = {(input)=>{this.textChanged(input)}}
                     placeholder = {"Search"}
                     />
-
-                    <TouchableOpacity 
-                    style = {styles.new_friend_button} 
-                    onPress={() => this.props.navigation.navigate('AddFriends')}>
-                        {plus}
-                    </TouchableOpacity>
                 </View>
 
                 <FlatList

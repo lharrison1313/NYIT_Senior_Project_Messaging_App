@@ -7,6 +7,7 @@ import ProfilePage from './components/ProfilePage';
 import SettingsScreen from './components/SettingsScreen';
 import ForgetPasswordScreen from './components/ForgetPasswordScreen'
 import ChangeEmailScreen from './components/ChangeEmailScreen'
+import AddFriendScreen from './components/AddFriendScreen'
 import GroupCreationScreen from "./components/GroupCreationScreen"
 import FriendScreen from "./components/FriendScreen"
 import {NavigationContainer } from '@react-navigation/native';
@@ -67,7 +68,8 @@ function MyProfileStackScreen(){
       <MyProfileStack.Screen name="Settings" component = {SettingsScreen} />
       <MyProfileStack.Screen name="ChangePassword"  component = {ForgetPasswordScreen}/>
       <MyProfileStack.Screen name="ChangeEmail"  component = {ChangeEmailScreen}/>
-      <MyProfileStack.Screen name="AddFriends"  component = {FriendScreen}/>
+      <MyProfileStack.Screen name="Friends"  component = {FriendScreen}/>
+      <MyProfileStack.Screen name="AddFriends"  component = {AddFriendScreen}/>
     </MyProfileStack.Navigator>
   );
 }
