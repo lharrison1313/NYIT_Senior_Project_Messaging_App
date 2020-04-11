@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
 import {View, TextInput, Text, Image, StyleSheet, TouchableOpacity, KeyboardAvoidingView,SafeAreaView } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 export default class RegisterForm extends Component{
 

@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import {View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
+import CircleButton from "../components/CircleButton";
 import MapView,{PROVIDER_GOOGLE,Marker, Callout} from 'react-native-maps';
-import GroupBar from './GroupBar'
+import GroupBar from '../components/GroupBar'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {getAllGroups,requestLocationPermission} from "../api/MessagingAppAPI";
+import {getAllGroups,requestLocationPermission} from "../../api/MessagingAppAPI";
 import { FlatList, TextInput } from 'react-native-gesture-handler';
 import RNGooglePlaces from 'react-native-google-places';
 import Geolocation from '@react-native-community/geolocation';
+import GooglePlacesButton from '../components/GooglePlacesButton';
 
 
 
-const locationIcon = <Icon name="globe" size={25} color="grey" />;
 const currentLocationIcon =<Icon name="map-marker" size={25} color="grey" />
 const plusIcon = <Icon name="plus-circle" size={25} color="grey" />;
 
@@ -54,20 +55,15 @@ export default class GroupMapScreen extends Component{
         );
     }
 
-    locationSearch = () => {
-        RNGooglePlaces.openAutocompleteModal()
-        .then((place) => {
-            console.log(place)
-            this.setState({
-                coordinates: {
-                    latitude: place.location.latitude,
-                    longitude: place.location.longitude,
-                    latitudeDelta: 0.01,
-                    longitudeDelta: 0.01,
-                },
-            })
+    locationSearch = (place) => {
+        this.setState({
+            coordinates: {
+                latitude: place.location.latitude,
+                longitude: place.location.longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+            },
         })
-        .catch(error => console.log(error.message)); 
     }
 
     retrieveGroups = (groups) =>{
@@ -106,6 +102,7 @@ export default class GroupMapScreen extends Component{
                         initialRegion={this.state.coordinates}
                         region = {this.state.coordinates} 
                         showsUserLocation ={true}
+                        showsMyLocationButton = {false}
                     >
                         {this.state.groups.map( group =>(
                             
@@ -140,23 +137,17 @@ export default class GroupMapScreen extends Component{
                         keyExtractor = {item => item.id}
                     />
 
-                    <TouchableOpacity 
-                    style={styles.location_button}  
-                    onPress={() => this.locationSearch()}>
-                        {locationIcon}
-                    </TouchableOpacity>
+                    <View style = {styles.location_button}>
+                        <GooglePlacesButton shape="circle" retrieveLocation = {this.locationSearch} />
+                    </View>
 
-                    <TouchableOpacity 
-                    style={styles.focus_button}  
-                    onPress={() => this.locationFocus()}>
-                        {currentLocationIcon}
-                    </TouchableOpacity>
+                    <View style = {styles.focus_button}>
+                        <CircleButton icon = {currentLocationIcon} handler={this.locationFocus}/>
+                    </View>
 
-                    <TouchableOpacity 
-                    style = {styles.new_group_button} 
-                    onPress={() => this.props.navigation.navigate('CreateGroup')}>
-                        {plusIcon}
-                    </TouchableOpacity>
+                    <View style = {styles.new_group_button}>
+                        <CircleButton icon = {plusIcon} handler={() => this.props.navigation.navigate('CreateGroup')}/>
+                    </View>
 
                     <TextInput
                     style = {styles.search_bar}
@@ -199,13 +190,7 @@ const styles = StyleSheet.create({
     },
 
     location_button:{
-        backgroundColor: "#00BED6",
-        justifyContent: "center",
-        alignItems: "center",
         position: "absolute",
-        height:50,
-        width: 50,
-        borderRadius: 25,
         top: 10,
         right:60
     },
@@ -223,25 +208,13 @@ const styles = StyleSheet.create({
     },
 
     new_group_button:{
-        backgroundColor: "#00BED6",
-        justifyContent: "center",
-        alignItems: "center",
         position: "absolute",
-        height:50,
-        width: 50,
-        borderRadius: 25,
         top: 10,
         right: 5
     },
 
     focus_button:{
-        backgroundColor: "#00BED6",
-        justifyContent: "center",
-        alignItems: "center",
         position: "absolute",
-        height:50,
-        width: 50,
-        borderRadius: 25,
         top: 65,
         right: 5
     }

@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import {View, TextInput, Text, TouchableOpacity, Image,SafeAreaView} from 'react-native';
-import {requestLocationPermission} from "../api/MessagingAppAPI";
+import {requestLocationPermission} from "../../api/MessagingAppAPI";
 
 
 
@@ -34,7 +34,7 @@ export default class LoginForm extends Component{
             <SafeAreaView style={{flex:1}}>
             <View style={styles.login_container} >
                
-                <Image style = {{width: 150, height: 150, margin: 20,}} source = {require('../res/nyit.png')} />
+                <Image style = {{width: 150, height: 150, margin: 20,}} source = {require('../../res/nyit.png')} />
 
                 <TextInput 
                 style = {styles.field}

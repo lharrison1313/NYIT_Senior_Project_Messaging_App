@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import {View, TouchableOpacity, Text, StyleSheet, Group,SafeAreaView } from 'react-native';
-import GroupBar from './GroupBar'
+import {View, StyleSheet,SafeAreaView } from 'react-native';
+import GroupBar from '../components/GroupBar';
 import { FlatList, TextInput} from 'react-native-gesture-handler';
-import {getAllGroups} from '../api/MessagingAppAPI'
-//import{withNavigation} from "react-navigation";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import CircleButton from '../components/CircleButton';
+import {AppStyles} from '../styles/AppStyles'
 
-const plus = <Icon name="plus-circle" size={40} color="#00BED6" />;
+
+const plus = <Icon name="plus-circle" size={40} color="grey" />;
 
 export default class GroupScreen extends Component{    
     constructor(props){
@@ -55,7 +56,7 @@ export default class GroupScreen extends Component{
     
         return(
             <SafeAreaView style={{flex:1}}>
-            <View style ={styles.container}>
+            <View style ={AppStyles.screen}>
 
                 <View style={styles.header_container}>
                     <TextInput 
@@ -63,12 +64,9 @@ export default class GroupScreen extends Component{
                     onChangeText = {(input)=>{this.textChanged(input)}}
                     placeholder = {"Search"}
                     />
-
-                    <TouchableOpacity 
-                    style = {styles.new_group_button} 
-                    onPress={() => this.props.navigation.navigate('CreateGroup')}>
-                        {plus}
-                    </TouchableOpacity>
+                    <View style = {{flex:.15}}>
+                        <CircleButton handler = {() => this.props.navigation.navigate('CreateGroup')} icon = {plus}/>
+                    </View>
                 </View>
                 
                 <FlatList
@@ -112,22 +110,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
 
-    container:{
-        flex:1,
-        backgroundColor:"grey"
-    },
-
-    new_group_button:{
-        flex:.15,
-        backgroundColor: "grey",
-        justifyContent: "center",
-        alignItems: "center",
-        height:40,
-        width: 40,
-        borderRadius: 20,
-        marginHorizontal:5
-    },
-
     search_bar:{
         flex:.85,
         height:40, 
@@ -138,4 +120,3 @@ const styles = StyleSheet.create({
 
 })
 
-//export default withNavigation(GroupScreen)

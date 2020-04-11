@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
-import {addUserToGroup,getCurrentUserID,isInGroup,isGroupOwner,getCurrentUserID,removeUserFromGroup,deleteGroup} from '../api/MessagingAppAPI';
+import {addUserToGroup,getCurrentUserID,isInGroup,isGroupOwner,getCurrentUserID,removeUserFromGroup,deleteGroup} from "../../api/MessagingAppAPI";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MapView from 'react-native-maps';
 

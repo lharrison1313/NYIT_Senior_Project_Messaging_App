@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import MessagingScreen from './components/MessagingScreen';
-import LoginScreen from './components/LoginScreen';
-import GroupScreen from './components/GroupScreen';
-import GroupMapScreen from './components/GroupMapScreen'
-import ProfilePage from './components/ProfilePage';
-import SettingsScreen from './components/SettingsScreen';
-import ForgetPasswordScreen from './components/ForgetPasswordScreen'
-import ChangeEmailScreen from './components/ChangeEmailScreen'
-import GroupCreationScreen from "./components/GroupCreationScreen"
+import MessagingScreen from './ui/screens/MessagingScreen';
+import LoginScreen from './ui/screens/LoginScreen';
+import GroupScreen from './ui/screens/GroupScreen';
+import GroupMapScreen from './ui/screens/GroupMapScreen'
+import ProfileScreen from './ui/screens/ProfileScreen';
+import SettingsScreen from './ui/screens/SettingsScreen';
+import ForgetPasswordScreen from './ui/screens/ForgetPasswordScreen'
+import ChangeEmailScreen from './ui/screens/ChangeEmailScreen'
+import GroupCreationScreen from "./ui/screens/GroupCreationScreen"
 import {NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -62,7 +62,7 @@ const MyProfileStack = createStackNavigator();
 function MyProfileStackScreen(){
   return(
     <MyProfileStack.Navigator>
-      <MyProfileStack.Screen name="Profile" component = {ProfilePage} options={{headerShown:false}}/>
+      <MyProfileStack.Screen name="Profile" component = {ProfileScreen} options={{headerShown:false}}/>
       <MyProfileStack.Screen name="Settings" component = {SettingsScreen} />
       <MyProfileStack.Screen name="ChangePassword"  component = {ForgetPasswordScreen}/>
       <MyProfileStack.Screen name="ChangeEmail"  component = {ChangeEmailScreen}/>

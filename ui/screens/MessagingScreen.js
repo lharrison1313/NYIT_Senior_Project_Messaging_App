@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { View, StyleSheet,SafeAreaView} from 'react-native';
-import MessageEditor from './MessageEditor'
-import Message from './Message'
+import MessageEditor from '../components/MessageEditor'
+import Message from '../components/Message'
 import { FlatList } from 'react-native-gesture-handler';
-import{getGroupMessages} from "../api/MessagingAppAPI"
-import{sendMessage,getUserInfo,getCurrentUserID} from "../api/MessagingAppAPI"
+import{sendMessage,getUserInfo,getCurrentUserID,getGroupMessages} from "../../api/MessagingAppAPI"
 
 export default class MessagingScreen extends Component {
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Login from './Login';
 import Register from './Register'
-import {login, signUp, subscribeToAuthChanges} from '../api/MessagingAppAPI'
+import {login, signUp} from '../../api/MessagingAppAPI'
 import {StyleSheet, Dimensions } from 'react-native';
 
 export default class LogInScreen extends Component{

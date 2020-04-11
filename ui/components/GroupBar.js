@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import {addUserToGroup,getCurrentUserID, getUserInfo, addLikeDislike} from '../api/MessagingAppAPI';
+import {addUserToGroup,getCurrentUserID, getUserInfo, addLikeDislike} from '../../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const upIcon = <Icon name="arrow-up" size={25} color="grey" />;
