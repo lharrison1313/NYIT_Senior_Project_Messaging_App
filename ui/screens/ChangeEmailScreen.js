@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import auth from '@react-native-firebase/auth';
-import { StyleSheet, View, Text, TextInput, Button, Alert,TouchableOpacity} from 'react-native';
-import{withNavigation} from "react-navigation"
+import { StyleSheet, View, Text, TextInput, Alert,TouchableOpacity} from 'react-native';
+import {AppStyles, color_a, color_b, color_c} from '../styles/AppStyles'
+import {resetEmail} from "../../api/MessagingAppAPI"
+import OvalButton from "../components/OvalButton"
 
-class ChangeEmailScreen extends Component{
+export default class ChangeEmailScreen extends Component{
     constructor(props) {
         super(props);
         this.state = { 
@@ -12,22 +14,25 @@ class ChangeEmailScreen extends Component{
         };
     }
 
-   
-    onChangeEmailPress =() =>{
-        auth().currentUser.updateEmail(this.state.newEmail)
-        .then(() => {
-            Alert.alert(" email has been reset.");
-        }, (error) => {
-            Alert.alert(error.message);
-        });
+    handleButtonPress = () =>{
+        if(!this.state.newEmail == ""){
+            resetEmail(this.state.newEmail, this.alert)
+        }
     }
 
-    
-    
+    alert = (response, message) =>{
+        if(response){
+            Alert.alert(message)
+        }
+        else{
+            Alert.alert(message)
+        }
+    }
 
     render() {
         return (
-            <View style={styles.login_container}>
+            <View style = {AppStyles.screen}>
+            <View style={styles.content_container}>
 
                 
                 <TextInput style={styles.field}
@@ -39,10 +44,9 @@ class ChangeEmailScreen extends Component{
                     autoCorrect={false}
                 />
                 
-                <TouchableOpacity  style = {styles.button} onPress={this.onChangeEmailPress}>
-                <Text>Change Email </Text>
-                
-                </TouchableOpacity>
+                <OvalButton text = "Change Email" handler={this.handleButtonPress}/>
+            
+            </View>
             </View>
         );
     }
@@ -50,38 +54,19 @@ class ChangeEmailScreen extends Component{
 
 const styles = StyleSheet.create({
    
-    button:{
-        backgroundColor: '#00BED6',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-        height: 50,
-        width: 300,
-        margin: 10
-    },
+    
     field:{
-        width: 200, height: 40, 
+        width: 200, height:40, 
         borderWidth: 1,
         marginVertical: 5, 
-        backgroundColor: "lightgrey", 
+        backgroundColor: color_c, 
         width:300
     },
-    login_container:{
+
+    content_container:{
         flex:1,
-        backgroundColor: '#5F6362',
         alignItems:"center",
         justifyContent: "center"
     },
-    text:{
-        color:"black",
-        fontWeight:"bold",
-         backgroundColor: '#00BED6',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: 300,
-          
-    }
 
 })
-
-export default withNavigation(ChangeEmailScreen)

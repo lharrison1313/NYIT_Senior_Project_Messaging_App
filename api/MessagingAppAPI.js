@@ -39,6 +39,24 @@ export function signOut(){
     })
 }
 
+export function resetPassword(email,alert){
+    auth().sendPasswordResetEmail(email)
+            .then(() => {
+                alert(true,"Password reset email has been sent.");
+            }, (error) => {
+                alert(false,error.message);
+            });
+}
+
+export function resetEmail(email, alert){
+    auth().currentUser.updateEmail(email)
+        .then(() => {
+            alert(true, "Email was successfully changed!")
+        }, (error) => {
+            alert(false,error.message);
+        });
+}
+
 //registers the app with firebase cloucd messaging 
 export async function registerAppWithFCM(){
     await messaging().registerDeviceForRemoteMessages();

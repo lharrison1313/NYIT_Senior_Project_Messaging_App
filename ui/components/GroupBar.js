@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import {addUserToGroup,getCurrentUserID, getUserInfo, addLikeDislike} from '../../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { AppStyles, color_a, color_b, color_c, color_d } from '../styles/AppStyles';
 
-const upIcon = <Icon name="arrow-up" size={25} color="grey" />;
-const downIcon = <Icon name="arrow-down" size={25} color="grey" />;
+const upIcon = <Icon name="arrow-up" size={25} color= {color_a} />;
+const downIcon = <Icon name="arrow-down" size={25} color= {color_a} />;
 
 export default class GroupBar extends Component{
     constructor(props){
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     },
     join_button:{
         flex: .20,
-        backgroundColor:"grey",
+        backgroundColor: color_a,
         padding:5,
         borderRadius:10,
         alignItems:"center",

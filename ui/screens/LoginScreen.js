@@ -3,6 +3,7 @@ import Login from './Login';
 import Register from './Register'
 import {login, signUp} from '../../api/MessagingAppAPI'
 import {StyleSheet, Dimensions } from 'react-native';
+import {AppStyles,color_a,color_b,color_c} from "../styles/AppStyles";
 
 export default class LogInScreen extends Component{
     
@@ -41,27 +42,17 @@ export default class LogInScreen extends Component{
 
 const window = Dimensions.get('window');
 const styles = StyleSheet.create({
+    
     login_container:{
         flex:1,
-        backgroundColor: '#5F6362',
         alignItems:"center",
         justifyContent: "center"
     },
 
     field:{
-        backgroundColor: "lightgrey",
+        backgroundColor: color_c ,
         marginVertical: 5,
         width: window.width-20,
-        height:50
-    },
-
-    button:{
-        backgroundColor: '#00BED6',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-        marginVertical: 5,
-        width: window.width-75,
         height:50
     },
 

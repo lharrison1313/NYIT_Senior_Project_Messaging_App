@@ -4,10 +4,10 @@ import GroupBar from '../components/GroupBar';
 import { FlatList, TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CircleButton from '../components/CircleButton';
-import {AppStyles} from '../styles/AppStyles'
+import {AppStyles, color_a, color_b, color_c} from '../styles/AppStyles'
 
 
-const plus = <Icon name="plus-circle" size={40} color="grey" />;
+const plus = <Icon name="plus-circle" size={25} color= {color_a} />;
 
 export default class GroupScreen extends Component{    
     constructor(props){
@@ -103,17 +103,17 @@ const styles = StyleSheet.create({
 
     bar_container:{
         flexDirection:'column',
-        backgroundColor: '#00BED6',
+        backgroundColor: color_b,
         height: 120,
         padding: 10,
-        borderColor:"grey",
+        borderColor: color_a,
         borderBottomWidth: 1
     },
 
     search_bar:{
         flex:.85,
         height:40, 
-        backgroundColor: "white",
+        backgroundColor: color_c,
         borderRadius:30,
         marginHorizontal:5
     }

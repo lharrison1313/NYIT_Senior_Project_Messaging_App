@@ -1,48 +1,52 @@
 import React, { Component } from 'react';
 import auth from '@react-native-firebase/auth';
-import { StyleSheet, View, Text, TextInput, Button, Alert,TouchableOpacity} from 'react-native';
-import{withNavigation} from "react-navigation"
+import { StyleSheet, View, Text, TextInput, Alert,TouchableOpacity} from 'react-native';
+import {AppStyles, color_a, color_b, color_c} from '../styles/AppStyles'
+import {resetPassword} from "../../api/MessagingAppAPI"
+import OvalButton from "../components/OvalButton"
 
-class ForgetPasswordScreen extends Component{
+export default class ChangePasswordScreen extends Component{
     constructor(props) {
         super(props);
         this.state = { 
-            email: "",
             newEmail:"",
 
         };
     }
 
-    onResetPasswordPress = () => {
-        auth().sendPasswordResetEmail(this.state.email)
-            .then(() => {
-                Alert.alert("Password reset email has been sent.");
-            }, (error) => {
-                Alert.alert(error.message);
-            });
+    handleButtonPress = () =>{
+        if(!this.state.newEmail == ""){
+            resetPassword(this.state.newEmail, this.alert)
+        }
     }
-    
+
+    alert = (response, message) =>{
+        if(response){
+            Alert.alert(message)
+        }
+        else{
+            Alert.alert(message)
+        }
+    }
 
     render() {
         return (
-            <View style={styles.login_container}>
+            <View style = {AppStyles.screen}>
+            <View style={styles.content_container}>
 
-                <Text style={styles.text}>Forgot Password</Text>
-
+                
                 <TextInput style={styles.field}
-                    value={this.state.email}
-                    onChangeText={(text) => { this.setState({email: text}) }}
+                    value={this.state.newEmail}
+                    onChangeText={(text) => { this.setState({newEmail: text}) }}
                     placeholder="Email"
                     keyboardType="email-address"
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
-
-                <TouchableOpacity  style = {styles.button} onPress={this.onResetPasswordPress}>
-                <Text>Reset Password </Text>
-                </TouchableOpacity>
                 
-                
+                <OvalButton text = "Reset Password" handler={this.handleButtonPress}/>
+            
+            </View>
             </View>
         );
     }
@@ -50,38 +54,20 @@ class ForgetPasswordScreen extends Component{
 
 const styles = StyleSheet.create({
    
-    button:{
-        backgroundColor: '#00BED6',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-        height: 50,
-        width: 300,
-        margin: 10
-    },
+    
     field:{
-        width: 200, height: 40, 
+        width: 200, height:40, 
         borderWidth: 1,
         marginVertical: 5, 
-        backgroundColor: "lightgrey", 
+        backgroundColor: color_c, 
         width:300
     },
-    login_container:{
+
+    content_container:{
         flex:1,
-        backgroundColor: '#5F6362',
         alignItems:"center",
         justifyContent: "center"
     },
-    text:{
-        color:"black",
-        fontWeight:"bold",
-         backgroundColor: '#00BED6',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: 300,
-          
-    }
 
 })
 
-export default withNavigation(ForgetPasswordScreen)

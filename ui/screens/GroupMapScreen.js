@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
+import {View, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
 import CircleButton from "../components/CircleButton";
-import MapView,{PROVIDER_GOOGLE,Marker, Callout} from 'react-native-maps';
+import MapView,{PROVIDER_GOOGLE,Marker} from 'react-native-maps';
 import GroupBar from '../components/GroupBar'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {getAllGroups,requestLocationPermission} from "../../api/MessagingAppAPI";
+import {getAllGroups} from "../../api/MessagingAppAPI";
 import { FlatList, TextInput } from 'react-native-gesture-handler';
-import RNGooglePlaces from 'react-native-google-places';
 import Geolocation from '@react-native-community/geolocation';
 import GooglePlacesButton from '../components/GooglePlacesButton';
+import {AppStyles} from "../styles/AppStyles"
 
 
 
@@ -95,7 +95,7 @@ export default class GroupMapScreen extends Component{
         return(
             
             <SafeAreaView style={{flex:1}}>
-                <View style = {{flex: 1}}>
+                <View style = {AppStyles.screen}>
                     <MapView
                         style = {styles.map}
                         provider = {PROVIDER_GOOGLE}

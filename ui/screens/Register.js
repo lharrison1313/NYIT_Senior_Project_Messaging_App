@@ -1,6 +1,8 @@
 
 import React, { Component } from 'react';
 import {View, TextInput, Text, Image, StyleSheet, TouchableOpacity, KeyboardAvoidingView,SafeAreaView } from 'react-native';
+import OvalButton from "../components/OvalButton";
+import {AppStyles,color_a,color_b,color_c} from "../styles/AppStyles";
 
 export default class RegisterForm extends Component{
 
@@ -30,50 +32,40 @@ export default class RegisterForm extends Component{
         const styles = this.props.styling
         return(
             <SafeAreaView style={{flex:1}}>
-            <View style={styles.login_container}>
-                    
-                        <TextInput
-                        style = {styles.field}
-                        placeholder = "Enter Email"
-                        onChangeText = {(text)=> this.setState({emailField: text})}
-                        />
-
-                        <TextInput 
-                        style = {styles.field}
-                        placeholder = "Username"
-                        onChangeText = {(text)=> this.setState({usernameField: text})}
-                        />
-
-                        <TextInput 
-                        style = {styles.field}
-                        placeholder = "Enter Password"
-                        secureTextEntry
-                        onChangeText = {(text)=> this.setState({passwordField: text})}
-                        />
-
-                        <TextInput 
-                        style = {styles.field}
-                        placeholder = "Reenter Password"
-                        secureTextEntry
-                        onChangeText = {(text)=> this.setState({rePasswordField: text})}
-                        />
+            <View style = {AppStyles.screen}>
+                <View style={styles.login_container}>
                         
-                    
-                
-                    
-                        <TouchableOpacity style = {styles.button} onPress={this.handleRegister}>
-                            <Text>
-                                Register
-                            </Text>
-                        </TouchableOpacity>
+                    <TextInput
+                    style = {styles.field}
+                    placeholder = "Enter Email"
+                    onChangeText = {(text)=> this.setState({emailField: text})}
+                    />
 
-                        <TouchableOpacity style = {styles.button} onPress={this.props.switch} >
-                            <Text>
-                                Back To Login
-                            </Text>
-                        </TouchableOpacity>
+                    <TextInput 
+                    style = {styles.field}
+                    placeholder = "Username"
+                    onChangeText = {(text)=> this.setState({usernameField: text})}
+                    />
 
-                    
+                    <TextInput 
+                    style = {styles.field}
+                    placeholder = "Enter Password"
+                    secureTextEntry
+                    onChangeText = {(text)=> this.setState({passwordField: text})}
+                    />
+
+                    <TextInput 
+                    style = {styles.field}
+                    placeholder = "Reenter Password"
+                    secureTextEntry
+                    onChangeText = {(text)=> this.setState({rePasswordField: text})}
+                    />
+
+                    <OvalButton text = "Register" handler = {this.handleRegister}/>
+                    <OvalButton text = "Back to login" handler = {this.props.switch}/>
+
+                        
+                </View>
             </View>
             </SafeAreaView>
         );

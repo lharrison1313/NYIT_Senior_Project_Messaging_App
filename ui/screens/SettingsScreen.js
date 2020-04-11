@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text,TouchableOpacity,SafeAreaView } from 'react-native';
 import{withNavigation} from "react-navigation"
-
+import { AppStyles, color_a, color_b, color_c } from '../styles/AppStyles';
+import OvalButton from '../components/OvalButton';
 
 
 class SettingsScreen extends Component{
@@ -16,17 +17,14 @@ class SettingsScreen extends Component{
     render() {
         return (
             <SafeAreaView style={{flex:1}}>
-            <View style = {styles.MainPage}>
-                 <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate("ChangePassword")}>
-                    <Text>
-                        Change Password
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate("ChangeEmail")}>
-                    <Text>
-                        Change Email
-                    </Text>
-                </TouchableOpacity>
+            <View style = {AppStyles.screen}>
+                <View style = {styles.content_container}>
+
+                    <OvalButton text = "Change Password" handler = {() => this.props.navigation.navigate("ChangePassword")}/>
+
+                    <OvalButton text = "Change Email" handler = {() => this.props.navigation.navigate("ChangeEmail")}/>
+                    
+                </View>
             </View>
             </SafeAreaView>
         );
@@ -34,20 +32,10 @@ class SettingsScreen extends Component{
 }
 
 const styles = StyleSheet.create({
-    MainPage:{
+    content_container:{
         flex: 1,
-        backgroundColor: "grey",
         alignItems: "center", 
         justifyContent: "center",
-    },
-    button:{
-        backgroundColor: '#00BED6',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-        height: 50,
-        width: 300,
-        margin: 10
     },
 
 
