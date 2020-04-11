@@ -8,7 +8,7 @@ import {getAllGroups} from "../../api/MessagingAppAPI";
 import { FlatList, TextInput } from 'react-native-gesture-handler';
 import Geolocation from '@react-native-community/geolocation';
 import GooglePlacesButton from '../components/GooglePlacesButton';
-import {AppStyles} from "../styles/AppStyles"
+import {AppStyles, color_b, color_c} from "../styles/AppStyles"
 
 
 
@@ -165,7 +165,7 @@ export default class GroupMapScreen extends Component{
 const window = Dimensions.get('window');
 const styles = StyleSheet.create({
     list_container:{
-        backgroundColor: '#00BED6',
+        backgroundColor: color_b,
         position: "absolute",
         height: 120,
         bottom: 5,
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     },
 
     search_bar:{
-        backgroundColor: "#dedede",
+        backgroundColor: color_c,
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",

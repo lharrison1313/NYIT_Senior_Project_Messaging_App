@@ -10,9 +10,10 @@ import ChangeEmailScreen from './ui/screens/ChangeEmailScreen'
 import GroupCreationScreen from "./ui/screens/GroupCreationScreen"
 import {NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator } from '@react-navigation/stack';
-import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {subscribeToAuthChanges,getAllGroups,getCurrentUserGroups,registerAppWithFCM,requestUserPermission} from './api/MessagingAppAPI'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { AppStyles, color_a, color_b, color_c, color_d } from './ui/styles/AppStyles';
 
 
 function myGroupScreen({navigation}){
@@ -106,7 +107,7 @@ export default class App extends React.Component {
     if(this.state.signedIn){
       return(
         <NavigationContainer>
-          <Tab.Navigator tabBarOptions = {{activeBackgroundColor:"grey", inactiveBackgroundColor:"grey", inactiveTintColor:"white", activeTintColor:"#00BED6"}}>
+          <Tab.Navigator tabBarOptions = {{activeBackgroundColor:color_a, inactiveBackgroundColor:color_a, inactiveTintColor:color_c, activeTintColor:color_b} }>
             <Tab.Screen name="MyGroups" component={MyGroupsStackScreen} options={{tabBarIcon: ({ color, size }) => (<Icon name="group" size={size} color={color}/>)}} />
             <Tab.Screen name="GroupMap" component={GroupMapStackScreen} options={{tabBarIcon: ({ color, size }) => (<Icon name="map" size={size} color={color}/>)}} />
             <Tab.Screen name="SearchGroup" component={SearchGroupStackScreen} options={{tabBarIcon: ({ color, size }) => (<Icon name="search" size={size} color={color}/>)}} />

@@ -4,7 +4,7 @@ import{withNavigation} from "react-navigation";
 import OvalButton from "../components/OvalButton";
 import {signOut} from '../../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { AppStyles } from '../styles/AppStyles';
+import { AppStyles, color_c } from '../styles/AppStyles';
 
 
 class ProfilePage extends Component{
@@ -22,7 +22,7 @@ class ProfilePage extends Component{
             <SafeAreaView style={{flex:1}}>
             <View style = {AppStyles.screen}>
                 <View style = {styles.content_container}>
-                    <Icon name="user" size={100} color="white"/>
+                    <Icon name="user" size={100} color={color_c}/>
 
                     <Text style = {{margin: 10,}}>
                         {this.state.name}
