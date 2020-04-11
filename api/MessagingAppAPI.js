@@ -216,7 +216,9 @@ export async function getCurrentUserGroups(groupsRetrieved,filter){
                     Interests: doc.data().Interests,
                     id: doc.id,
                     index: index,
-                    Votes: doc.data().Votes
+                    Votes: doc.data().Votes,
+                    GroupUsers: doc.data().GroupUsers,
+                    GroupOwner: doc.data().GroupOwner
                 });
                 //removing indices of global groups
                 if(doc.data().Coordinates != null){
@@ -265,7 +267,9 @@ export async function getAllGroups(groupsRetrieved,filter){
                     Interests: doc.data().Interests,
                     id: doc.id,
                     index: index,
-                    Votes: doc.data().Votes
+                    Votes: doc.data().Votes,
+                    GroupUsers: doc.data().GroupUsers,
+                    GroupOwner: doc.data().GroupOwner
                 });
                 //removing indices of global groups
                 if(doc.data().Coordinates != null){

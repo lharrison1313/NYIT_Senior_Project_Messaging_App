@@ -1,51 +1,62 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
-import {addUserToGroup,getCurrentUserID,isInGroup,isGroupOwner,getCurrentUserID,removeUserFromGroup,deleteGroup} from "../../api/MessagingAppAPI";
+import {addUserToGroup,isInGroup,isGroupOwner,getCurrentUserID,removeUserFromGroup,deleteGroup} from "../../api/MessagingAppAPI";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MapView from 'react-native-maps';
+import {AppStyles, color_b, color_c} from "../styles/AppStyles"
+import OvalButton from "../components/OvalButton"
+
 
 
 
 export default class GroupInfoScreen extends Component{
     
     constructor(props) {
-        this.state ={
-           
+        super(props)
+        this.state = {
+
         }
+        this.gid = this.props.route.params.id
+    }
+
+    handlejoin = () => {
+        addUserToGroup(getCurrentUserID(),this.gid)
+        this.props.navigation.navigate('Message',{id: this.props.id})
     }
 
     
     render() {
         return (
-            <SafeAreaView>
-            <View>
-                <Icon name="group" size={100} color="white"/>
-                
-                <Text>
-                    Group Name
-                </Text>
+            <SafeAreaView style = {{flex:1}}>
+            <View style = {AppStyles.screen} >
+                <ScrollView contentContainerStyle = {styles.content_container}>
+                    <Icon name="group" size={100} color="white"/>
+                    
+                    <Text>
+                        Group Name
+                    </Text>
 
-                <Text>
-                    Description
-                </Text>
+                    <Text>
+                        Description
+                    </Text>
 
-                <Text>
-                    Interests
-                </Text>
+                    <Text>
+                        Interests
+                    </Text>
 
-                <Text>
-                    Users
-                </Text>
+                    <Text>
+                        Users
+                    </Text>
 
-                <MapView>
+                    <MapView>
 
-                </MapView>
+                    </MapView>
 
-                <TouchableOpacity>
-                    <Text>Join</Text>
-                </TouchableOpacity>
-                
+                    <OvalButton text = "Join Group" handler = {() => this.handlejoin()}/>
+
+                    
+                </ScrollView>
 
             </View>
             </SafeAreaView>
@@ -55,21 +66,10 @@ export default class GroupInfoScreen extends Component{
 
 const styles = StyleSheet.create({
    
-    Container:{
+    content_container:{
         flex: 1,
-        backgroundColor: "grey",
         alignItems: "center", 
         justifyContent: "center",
-    },
-
-    button:{
-        backgroundColor: '#00BED6',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-        height: 50,
-        width: 300,
-        margin: 10
     },
 
 })

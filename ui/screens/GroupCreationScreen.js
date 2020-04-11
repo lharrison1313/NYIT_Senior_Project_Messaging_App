@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, TextInput, StyleSheet, SafeAreaView} from 'react-native';
+import {View, TextInput, StyleSheet, SafeAreaView, Switch} from 'react-native';
 import {createGroup} from  "../../api/MessagingAppAPI"
 import InterestTextInput from "../components/InterestTextInput";
 import GooglePlacesButton from "../components/GooglePlacesButton"

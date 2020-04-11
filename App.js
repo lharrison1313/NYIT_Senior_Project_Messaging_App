@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MessagingScreen from './ui/screens/MessagingScreen';
 import LoginScreen from './ui/screens/LoginScreen';
 import GroupScreen from './ui/screens/GroupScreen';
+import GroupInfoScreen from "./ui/screens/GroupInfoScreen";
 import GroupMapScreen from './ui/screens/GroupMapScreen'
 import ProfileScreen from './ui/screens/ProfileScreen';
 import SettingsScreen from './ui/screens/SettingsScreen';
@@ -26,8 +27,9 @@ function MyGroupsStackScreen(){
   return(
     <MyGroupsStack.Navigator>
       <MyGroupsStack.Screen name="GroupMap" component = {myGroupScreen} options={{headerShown:false}}/>
-      <MyGroupsStack.Screen name="Message" component = {MessagingScreen}/>
+      <MyGroupsStack.Screen name="Message" component = {MessagingScreen} />
       <MyGroupsStack.Screen name="CreateGroup" component = {GroupCreationScreen}/>
+      <MyGroupsStack.Screen name="GroupInfo" component = {GroupInfoScreen}/>
     </MyGroupsStack.Navigator>
   );
 }
@@ -39,6 +41,7 @@ function GroupMapStackScreen(){
       <GroupMapStack.Screen name="GroupMap" component = {GroupMapScreen} options={{headerShown:false}}/>
       <GroupMapStack.Screen name="Message" component = {MessagingScreen}/>
       <GroupMapStack.Screen name="CreateGroup" component = {GroupCreationScreen}/>
+      <GroupMapStack.Screen name="GroupInfo" component = {GroupInfoScreen}/>
     </GroupMapStack.Navigator>
   );
 }
@@ -55,6 +58,7 @@ function SearchGroupStackScreen(){
       <SearchGroupStack.Screen name="GroupScreen" component = {searchGroupScreen} options={{headerShown:false}}/>
       <SearchGroupStack.Screen name="Message" component = {MessagingScreen}/>
       <SearchGroupStack.Screen name="CreateGroup" component = {GroupCreationScreen}/>
+      <SearchGroupStack.Screen name="GroupInfo" component = {GroupInfoScreen}/>
     </SearchGroupStack.Navigator>
   );
 }

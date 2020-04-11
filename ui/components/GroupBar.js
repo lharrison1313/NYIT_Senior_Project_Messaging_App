@@ -11,13 +11,17 @@ export default class GroupBar extends Component{
     constructor(props){
         super(props)
         this.state={
-            count:0
+            
         } 
     }
 
-    handleJoin = () =>{
-        addUserToGroup(getCurrentUserID(),this.props.id)
-        this.props.navigation.navigate('Message',{id: this.props.id})
+    handlePress = () =>{
+        if(this.props.users.includes(getCurrentUserID())){
+            this.props.navigation.navigate('Message',{id: this.props.id})
+        }
+        else{
+            this.props.navigation.navigate('GroupInfo',{id: this.props.id})
+        }
     }
 
     incrementValue = () => {
@@ -32,8 +36,9 @@ export default class GroupBar extends Component{
     
         return(
             
-            <View
+            <TouchableOpacity
             style = {this.props.bar_style} 
+            onPress={() => this.handlePress()}
             >
                
                 <View style={styles.header_container}>
@@ -49,9 +54,6 @@ export default class GroupBar extends Component{
                     </View>
 
                     <View style={styles.right_container}>
-                        <TouchableOpacity style={styles.join_button} onPress={() => this.handleJoin()}>
-                            <Text style ={styles.join_text}>Join</Text>
-                        </TouchableOpacity>
 
                         <View style = {styles.ld_container} >
                             <TouchableOpacity style={styles.like_button} onPress={ this.incrementValue}>
@@ -66,7 +68,7 @@ export default class GroupBar extends Component{
                     </View>
                     
                 </View>
-            </View>
+            </TouchableOpacity>
             
         );
     }
