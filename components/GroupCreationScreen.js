@@ -3,6 +3,7 @@ import {View, TextInput, Text, StyleSheet, TouchableOpacity ,SafeAreaView} from 
 import {createGroup} from  "../api/MessagingAppAPI"
 import InterestTextInput from "./InterestTextInput";
 import GooglePlacesButton from "./GooglePlacesButton"
+import ImagePicker from 'react-native-image-picker';
 
 
 
@@ -13,13 +14,18 @@ export default class GroupCreationScreen extends Component{
         super(props)
         this.state = {
             groupName: "",
+            description:"",
             interests: [],
             place: {},
+            groupImageSource:""
+            
         }
+        
     }
-
+    
+    
     buttonHandler = ()=> {
-        createGroup(this.state.groupName,this.state.interests,this.state.place.name,this.state.place.location)
+        createGroup(this.state.groupName,this.state.description,this.state.interests,this.state.place.name,this.state.place.location)
         this.props.navigation.goBack()
     }
 
@@ -30,6 +36,24 @@ export default class GroupCreationScreen extends Component{
     retrieveLocation = (place) =>{
         this.setState({place: place})
     }
+    imagebuttonHandler = ()=>{
+        ImagePicker.showImagePicker((response)=>{
+          console.log('Response =',response);
+          if (response.didCancel) {
+            console.log('User cancelled image picker');
+          } else if (response.error) {
+            console.log('ImagePicker Error: ', response.error);
+          } else if (response.customButton) {
+            console.log('User tapped custom button: ', response.customButton);
+          } else {
+            const source = { uri: response.uri };
+        
+            this.setState({
+                groupImageSource: source,
+                });
+            }
+        });
+    }
 
     render(){
         return(
@@ -39,13 +63,30 @@ export default class GroupCreationScreen extends Component{
                 style = {styles.textInputContainer} 
                 placeholder="Enter group name"
                 onChangeText = {(text)=>this.setState({groupName: text})}/>
+               
+                 <TextInput
+                style = {styles.DescriptionContainer} 
+                placeholder="Enter Description"
+                multiline={true}
+                numberOfLines={2}
+                onChangeText = {(text)=>this.setState({description: text})}/>
+               
                 <InterestTextInput retrieveInterestList= {this.interestParser} style ={styles.textInputContainer}/>
+               
                 <GooglePlacesButton button_style={styles.button} retrieveLocation = {this.retrieveLocation}/>
+               
                 <TouchableOpacity 
                 style = {styles.button}
                 onPress = {this.buttonHandler}
                 >
                     <Text>Create Group</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                style = {styles.button}
+                onPress = {this.imagebuttonHandler}
+                >
+                    
+                    <Text> Choose Image</Text>
                 </TouchableOpacity>
             </View>
             </SafeAreaView>
@@ -71,6 +112,12 @@ const styles = StyleSheet.create({
 
     textInputContainer:{
         height:50,
+        marginVertical:1,
+        backgroundColor:"white"
+        
+    },
+    DescriptionContainer:{
+        height:70,
         marginVertical:1,
         backgroundColor:"white"
         

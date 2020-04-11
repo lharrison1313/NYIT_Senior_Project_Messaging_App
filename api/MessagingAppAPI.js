@@ -72,7 +72,7 @@ export function addUserToGroup(uid,gid){
 }
 
 //creates a new group on database
-export function createGroup(groupName,interests,locationName,coordinates){
+export function createGroup(groupName,description,interests,locationName,coordinates){
     if(locationName == null){
         locationName = "Anywhere"
     }
@@ -86,6 +86,7 @@ export function createGroup(groupName,interests,locationName,coordinates){
     //creating new group
     firestore().collection("Groups").add({
         GroupName: groupName,
+        Description: description,
         Date: "2/19/2020",
         Interests: interestList,
         Location: locationName,
