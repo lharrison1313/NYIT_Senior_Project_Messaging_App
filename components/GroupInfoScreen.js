@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import {addUserToGroup,getCurrentUserID,isInGroup,isGroupOwner,getCurrentUserID,removeUserFromGroup,deleteGroup} from '../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MapView from 'react-native-maps';
 
 
 
@@ -12,57 +13,39 @@ export default class GroupInfoScreen extends Component{
         this.state ={
            
         }
-        
-        this.uid = getCurrentUserID();
     }
 
-    renderJoinLeave = () => {
-
-        if(isInGroup(this.uid) && isGroupOwner(this.uid)){
-            return(
-                <TouchableOpacity onPress = {this.handleDelete()}>
-                    <Text>Delete Group</Text>
-                </TouchableOpacity>
-            );
-        }
-        else if(isInGroup(this.uid) && !isGroupOwner(this.uid)){
-            return(
-                <TouchableOpacity onPress = {this.handleLeave()}>
-                    <Text>Leave Group</Text>
-                </TouchableOpacity>
-            );
-        }
-        else{
-            return(
-                <TouchableOpacity onPress = {this.handleJoin()}>
-                    <Text>Join Group</Text>
-                </TouchableOpacity>
-            );
-        }
-    }
-
-    handleJoin = () =>{
-        addUserToGroup(getCurrentUserID(),this.props.gid)
-        this.props.navigation.navigate('Message',{id: this.props.gid})
-    }
-
-    handleLeave = () =>{
-        removeUserFromGroup(getCurrentUserID(),this.props.gid)
-        this.props.navigation.goBack()
-    }
-
-    handleDelete = () =>{
-        deleteGroup(this.props.gid)
-        this.props.navigation.goBack()
-    }
-
+    
     render() {
         return (
             <SafeAreaView>
             <View>
                 <Icon name="group" size={100} color="white"/>
                 
-                {this.renderJoinLeave()}
+                <Text>
+                    Group Name
+                </Text>
+
+                <Text>
+                    Description
+                </Text>
+
+                <Text>
+                    Interests
+                </Text>
+
+                <Text>
+                    Users
+                </Text>
+
+                <MapView>
+
+                </MapView>
+
+                <TouchableOpacity>
+                    <Text>Join</Text>
+                </TouchableOpacity>
+                
 
             </View>
             </SafeAreaView>
