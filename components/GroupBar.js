@@ -11,7 +11,7 @@ export default class GroupBar extends Component{
         super(props)
         this.state={
             count:0
-        }  
+        } 
     }
 
     handleJoin = () =>{
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
         
         padding:3
     },
+
     like_button:{
         
         padding:3

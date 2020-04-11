@@ -1,5 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import messaging from '@react-native-firebase/messaging';
 import {PermissionsAndroid} from 'react-native';
 
 export function login(email, password){
@@ -38,17 +39,31 @@ export function signOut(){
     })
 }
 
+//registers the app with firebase cloucd messaging 
+export async function registerAppWithFCM(){
+    await messaging().registerDeviceForRemoteMessages();
+}
+
+//request ios permission for recieving push notifications
+export async function requestUserPermission() {
+    const settings = await messaging().requestPermission();
+  
+    if (settings) {
+      console.log('Permission settings:', settings);
+    }
+  }
+
 //sends messages to group on database
-export function sendMessage(groupID, message, senderName, senderID){
+export function sendMessage(groupID, body, senderName, senderID){
 
     firestore().collection("Groups").doc(groupID).collection("Messages").add({
         SenderName: senderName,
         SenderID: senderID,
-        MessageText: message,
+        MessageText: body,
         TimeStamp: firestore.FieldValue.serverTimestamp()
     })
     .then(function(docRef) {
-        console.log("Message sent with ID: ", docRef.id);
+                
     })
     .catch(function(error) {
         console.error("Error sending message: ", error);
@@ -65,6 +80,7 @@ export function addUserToGroup(uid,gid){
             firestore().collection("Groups").doc(gid).update({
                 GroupUsers: firestore.FieldValue.arrayUnion(uid)
             })
+            messaging().subscribeToTopic(gid).then(()=>console.log("subscribed to group notifications for group: " + gid))
         }
         console.log("Done")
             
@@ -82,6 +98,7 @@ export function removeUserFromGroup(uid,gid){
             firestore().collection("Groups").doc(gid).update({
                 GroupUsers: firestore.FieldValue.arrayRemove(uid)
             })
+            messaging().unsubscribeFromTopic(gid).then(()=>console.log("unsubscribed to group notifications for group: " + gid))
         }
         console.log("Done")
             
@@ -98,6 +115,7 @@ export function deleteGroup(gid,uid){
         var owner = doc.data().GroupOwner
         if(owner==uid){
             ref.delete()
+            messaging().subscribeToTopic(gid).then(()=>console.log("subscribed to group notifications for group: " + gid))
         }
     })
 }
@@ -125,11 +143,12 @@ export function createGroup(groupName,interests,locationName,coordinates){
         GroupUsers: [getCurrentUserID()],
         Votes: 0
     }).then((info)=>{
-        
+        messaging().subscribeToTopic(info.id).then(()=>console.log("subscribed to group notifications for group: " + info.id))
     })
     .catch((error)=>{
         console.log(error)
     })
+    
 
     
 }
@@ -290,22 +309,29 @@ export function addLikeDislike(gid,like){
 
     ref.get().then((snapshot) => {
 
+        var vote = 0
         if(like){
-            var vote = 1
+            vote = 1
         }
         else{
-            var vote = -1
+            vote = -1
         }
 
         if(snapshot.exists){
+            //if the vote is pressed twice in the same direction it is set to 0
+            var currentVote = snapshot.data().vote
+            if(currentVote == vote){
+                vote = 0
+            }
+
             ref.update({
                 vote: vote
             })
         }
         else{
+            //if no vote exists for that user than a new vote is created
             var newRef = firestore().collection("Groups").doc(gid).collection("Votes").doc(getCurrentUserID())
             newRef.set({
-                gid: gid,
                 vote: vote
             })
         }

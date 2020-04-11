@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-
-import { StyleSheet, View, Text, TextInput, Button, Alert,SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text,TouchableOpacity,SafeAreaView } from 'react-native';
 import{withNavigation} from "react-navigation"
-// import * as firebase from 'firebase';
 
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 class SettingsScreen extends Component{

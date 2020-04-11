@@ -16,8 +16,8 @@ export default class GooglePlacesButton extends Component{
         RNGooglePlaces.openAutocompleteModal()
         .then((place) => {
             console.log(place);
-            this.setState({chosenLocation: place.name})
-            this.props.retrieveLocation(place)
+            this.setState({chosenLocation: place.name});
+            this.props.retrieveLocation(place);
         })
         .catch(error => console.log(error.message));  // error is a Javascript Error object
       }

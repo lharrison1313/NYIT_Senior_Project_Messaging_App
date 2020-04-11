@@ -11,7 +11,7 @@ import GroupCreationScreen from "./components/GroupCreationScreen"
 import {NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {subscribeToAuthChanges,getAllGroups,getCurrentUserGroups} from './api/MessagingAppAPI'
+import {subscribeToAuthChanges,getAllGroups,getCurrentUserGroups,registerAppWithFCM,requestUserPermission} from './api/MessagingAppAPI'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -83,6 +83,8 @@ export default class App extends React.Component {
   }
 
   componentDidMount(){
+    registerAppWithFCM()
+    requestUserPermission()
     subscribeToAuthChanges(this.authStateChanged)
   }
 
