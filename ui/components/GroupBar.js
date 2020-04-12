@@ -16,12 +16,9 @@ export default class GroupBar extends Component{
     }
 
     handlePress = () =>{
-        if(this.props.users.includes(getCurrentUserID())){
-            this.props.navigation.navigate('Message',{id: this.props.id})
-        }
-        else{
-            this.props.navigation.navigate('GroupInfo',{id: this.props.id})
-        }
+
+        this.props.navigation.navigate('GroupInfo',{id: this.props.id})
+        
     }
 
     incrementValue = () => {

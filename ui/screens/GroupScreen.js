@@ -14,7 +14,7 @@ export default class GroupScreen extends Component{
         super(props)
         this.state = {
             groupList: [],
-            text: ''
+            text: '',
         }
         this.getGroups = this.props.get_groups_functions
     }
@@ -25,6 +25,7 @@ export default class GroupScreen extends Component{
             this.unsubscribe = unsub
             console.log("subscribe")})
         .catch((error)=> console.log("GroupScreen: ",error))
+        
     }
 
     componentWillUnmount(){

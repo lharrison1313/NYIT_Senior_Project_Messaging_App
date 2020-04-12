@@ -10,10 +10,9 @@ class SettingsScreen extends Component{
         super(props);
         this.state = { 
         };
+        
     }
-
     
-
     render() {
         return (
             <SafeAreaView style={{flex:1}}>

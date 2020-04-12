@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import RNGooglePlaces from 'react-native-google-places';
-import {AppStyles} from "../styles/AppStyles"
+import {AppStyles, color_a} from "../styles/AppStyles"
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const locationIcon = <Icon name="globe" size={25} color="grey" />;
+const locationIcon = <Icon name="globe" size={25} color= {color_a}/>;
 export default class GooglePlacesButton extends Component{
 
     constructor(props){

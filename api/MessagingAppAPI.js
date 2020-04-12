@@ -281,6 +281,14 @@ export async function getAllGroups(groupsRetrieved,filter){
     })
 }
 
+//given a group id and callback function returns all group data
+export async function getGroupInfo(gid,retrieveGroupInfo){
+    var ref = firestore().collection("Groups").doc(gid)
+    ref.get().then((doc) => {
+        retrieveGroupInfo(doc.data());
+    });
+}
+
 //given a group id, gets all messages from that group
 export async function getGroupMessages(gid,messagesRetrieved){
     var ref = firestore().collection("Groups").doc(gid).collection("Messages").orderBy("TimeStamp")

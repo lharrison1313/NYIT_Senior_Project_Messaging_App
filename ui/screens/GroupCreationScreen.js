@@ -4,7 +4,7 @@ import {createGroup} from  "../../api/MessagingAppAPI"
 import InterestTextInput from "../components/InterestTextInput";
 import GooglePlacesButton from "../components/GooglePlacesButton"
 import OvalButton from "../components/OvalButton"
-import {AppStyles} from "../styles/AppStyles"
+import {AppStyles, color_c} from "../styles/AppStyles"
 
 
 
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         height:50,
         marginVertical:5,
         marginHorizontal: 10,
-        backgroundColor:"white"
+        backgroundColor: color_c
         
     },
 })

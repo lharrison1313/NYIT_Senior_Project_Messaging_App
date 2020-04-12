@@ -8,12 +8,12 @@ import {getAllGroups} from "../../api/MessagingAppAPI";
 import { FlatList, TextInput } from 'react-native-gesture-handler';
 import Geolocation from '@react-native-community/geolocation';
 import GooglePlacesButton from '../components/GooglePlacesButton';
-import {AppStyles, color_b, color_c} from "../styles/AppStyles"
+import {AppStyles, color_a, color_b, color_c} from "../styles/AppStyles"
 
 
 
-const currentLocationIcon =<Icon name="map-marker" size={25} color="grey" />
-const plusIcon = <Icon name="plus-circle" size={25} color="grey" />;
+const currentLocationIcon =<Icon name="map-marker" size={25} color={color_a} />
+const plusIcon = <Icon name="plus-circle" size={25} color={color_a} />;
 
 export default class GroupMapScreen extends Component{
 
