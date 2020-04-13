@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text, ScrollView, Alert} from 'reac
 import { SafeAreaView } from 'react-navigation';
 import {addUserToGroup,getCurrentUserID,getGroupInfo, deleteGroup, removeUserFromGroup} from "../../api/MessagingAppAPI";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import MapView from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import {AppStyles, color_b, color_c} from "../styles/AppStyles"
 import OvalButton from "../components/OvalButton"
 
@@ -15,16 +15,10 @@ export default class GroupInfoScreen extends Component{
     constructor(props) {
         super(props)
         this.state = {
-            info: "",
-            users: []
         }
         this.gid = this.props.route.params.id;
+        this.info = this.props.route.params.info
         
-        
-    }
-
-    componentDidMount(){
-        getGroupInfo(this.gid,this.retrieveGroupInfo);
     }
 
     handlejoin = () => {
@@ -69,18 +63,11 @@ export default class GroupInfoScreen extends Component{
         this.props.navigation.navigate('Message',{id: this.gid});
     }
     
-    retrieveGroupInfo = (groupInfo) => {
-        this.setState({
-            info: groupInfo,
-            users: groupInfo.GroupUsers
-        })
-        
-    }
 
     renderButtons = () =>{
         var uid = getCurrentUserID()
-        var users = this.state.users;
-        if(uid == this.state.info.GroupOwner){
+        var users = this.info.GroupUsers;
+        if(uid == this.info.GroupOwner){
             return(
                 <View>
                     <OvalButton text = "Messages" handler = {() => this.handleMessage()}/>
@@ -103,41 +90,60 @@ export default class GroupInfoScreen extends Component{
         }
     }
 
+    renderMap(){
+        if(this.info.Coordinates != null){
+            
+            var initialCoordinates = {
+                latitude: this.info.Coordinates.latitude,
+                longitude: this.info.Coordinates.longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+            }
+            
+            return(
+            <MapView
+                provider = {PROVIDER_GOOGLE}
+                style = {styles.map}
+                scrollEnabled = {false}
+                zoomEnabled = {false}
+                zoomControlEnabled = {false}
+                zoomTapEnabled = {false}
+                pitchEnabled = {false}
+                rotateEnabled = {false}
+                initialRegion={initialCoordinates}
+                
+            >
+                <Marker
+                    coordinate = {this.info.Coordinates}
+                />
+            </MapView>
+            )
+        }
+    }
+
     
     render() {
         return (
             <SafeAreaView style = {{flex:1}}>
-            <View style = {AppStyles.screen} >
+            <ScrollView contentContainerStyle = {AppStyles.screen} >
                 <ScrollView contentContainerStyle = {styles.content_container}>
                     <Icon name="group" size={100} color={color_c}/>
                     
                     <Text>
-                        {this.state.info.GroupName}
+                        {this.info.GroupName}
                     </Text>
 
                     <Text>
-                        Description
+                        {this.info.Interests}
                     </Text>
 
-                    <Text>
-                        {this.state.info.Interests}
-                    </Text>
-
-                    <Text>
-                        Users
-                    </Text>
-
-                    <MapView>
-
-                    </MapView>
-
-                    {this.renderButtons()}
                     
-
+                    {this.renderMap()}
+                    {this.renderButtons()}
                     
                 </ScrollView>
 
-            </View>
+            </ScrollView>
             </SafeAreaView>
         );
     }
@@ -146,10 +152,16 @@ export default class GroupInfoScreen extends Component{
 const styles = StyleSheet.create({
    
     content_container:{
-        flex: 1,
         alignItems: "center", 
         justifyContent: "center",
+        padding: 10
     },
+
+    map:{
+        height: 200,
+        width: 300,
+        marginVertical: 10
+    }
 
 })
 

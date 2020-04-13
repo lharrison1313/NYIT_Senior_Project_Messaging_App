@@ -74,16 +74,11 @@ export default class GroupScreen extends Component{
                     data = {this.state.groupList}
                     renderItem={({ item }) => (
                         <GroupBar
-                            group_name = {item.GroupName} 
+                            info = {item.Info}
                             date = {item.Date}
-                            location = {item.Location}
-                            interests = {item.Interests}
                             id = {item.id}
                             bar_style = {styles.bar_container}
                             navigation = {this.props.navigation}
-                            votes = {item.Votes}
-                            users = {item.GroupUsers}
-                            owner = {item.GroupOwner}
                         />
                         )}
                     keyExtractor = {item => item.id}

@@ -69,7 +69,7 @@ export default class GroupMapScreen extends Component{
     retrieveGroups = (groups) =>{
         var allowedGroups = []
         groups.forEach(element => {
-            if(element.Coordinates != null){
+            if(element.Info.Coordinates != null){
                 allowedGroups.push(element)
             }
         });
@@ -108,7 +108,7 @@ export default class GroupMapScreen extends Component{
                             
                             <Marker
                                 key = {group.id} 
-                                coordinate = {group.Coordinates}
+                                coordinate = {group.Info.Coordinates}
                                 onPress = {() => this.flatListRef.scrollToIndex({index: group.index, animated:true})}
                             />
                             
@@ -124,16 +124,11 @@ export default class GroupMapScreen extends Component{
                         scrollEnabled = {false}
                         renderItem={({ item }) => (
                             <GroupBar
-                                group_name = {item.GroupName} 
+                                info = {item.Info}
                                 date = {item.Date}
-                                location = {item.Location}
-                                interests = {item.Interests}
                                 id = {item.id}
                                 bar_style = {styles.bar_container}
                                 navigation = {this.props.navigation}
-                                votes = {item.Votes}
-                                users = {item.GroupUsers}
-                                owner = {item.GroupOwner}
                             />
                         )}
                         keyExtractor = {item => item.id}
@@ -202,7 +197,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        height:50,
+        height:40,
         width: window.width-120,
         borderRadius: 30,
         top: 10,

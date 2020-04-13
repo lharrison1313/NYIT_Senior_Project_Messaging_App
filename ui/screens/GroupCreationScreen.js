@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import {View, TextInput, StyleSheet, SafeAreaView, Switch} from 'react-native';
+import {View, TextInput, StyleSheet, SafeAreaView, Switch, Text, Picker} from 'react-native';
 import {createGroup} from  "../../api/MessagingAppAPI"
 import InterestTextInput from "../components/InterestTextInput";
 import GooglePlacesButton from "../components/GooglePlacesButton"
 import OvalButton from "../components/OvalButton"
 import {AppStyles, color_c} from "../styles/AppStyles"
+
 
 
 
@@ -15,8 +16,13 @@ export default class GroupCreationScreen extends Component{
         super(props)
         this.state = {
             groupName: "",
+            Description: "",
             interests: [],
             place: {},
+            private: false,
+            visible: true,
+            limit: false,
+            size: 0,
         }
     }
 
@@ -33,6 +39,20 @@ export default class GroupCreationScreen extends Component{
         this.setState({place: place})
     }
 
+
+    renderVisible = () =>{
+        if(this.state.private){
+            return(
+                <View style = {{flexDirection: "row"}}>
+                        <Text style = {{flex:1}}>
+                            Visible:
+                        </Text>
+                        <Switch style = {{flex:1}} value = {this.state.visible} onValueChange = {() => this.setState({visible: !this.state.visible})}  />
+                </View>
+            )
+        }
+    }
+
     render(){
         return(
             <SafeAreaView style={{flex:1}}>
@@ -44,7 +64,30 @@ export default class GroupCreationScreen extends Component{
                     placeholder="Enter group name"
                     onChangeText = {(text)=>this.setState({groupName: text})}/>
 
+                    <TextInput 
+                    style =  {{backgroundColor:"lightgrey" }}
+                    placeholder="Description"
+                    numberOfLines = {3}
+                    multiline
+                    onChangeText = {(text)=>this.setState({groupName: Description})}/>
+
                     <InterestTextInput retrieveInterestList= {this.interestParser} style ={styles.text_input}/>
+
+                    <View style = {{flexDirection: "row"}}>
+                        <Text style = {{flex:1}}>
+                            Private:
+                        </Text>
+                        <Switch style = {{flex:1}} value = {this.state.private} onValueChange = {() => this.setState({private: !this.state.private, visible: true})}  />
+                    </View>
+
+                    {this.renderVisible()}
+
+                    <View style = {{flexDirection: "row"}}>
+                        <Text style = {{flex:1}}>
+                            User Limit:
+                        </Text>
+                        <Switch style = {{flex:1}} value = {this.state.limit} onValueChange = {() => this.setState({limit: !this.state.limit})}  />
+                    </View>
                     
                     <View style = {styles.button_container}>
                         <GooglePlacesButton shape = "oval" retrieveLocation = {this.retrieveLocation}/>
@@ -63,7 +106,7 @@ const styles = StyleSheet.create({
 
     content_container:{
         flex: 1,
-        paddingTop:20
+        padding: 20
     },
 
     button_container:{
@@ -74,8 +117,6 @@ const styles = StyleSheet.create({
     text_input:{
         height:50,
         marginVertical:5,
-        marginHorizontal: 10,
         backgroundColor: color_c
-        
     },
 })
