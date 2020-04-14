@@ -10,6 +10,11 @@ export default class FriendBar extends Component{
         }  
     }
 
+    handleJoin = () =>{
+        addUserToGroup(getCurrentUserID(),this.props.id)
+        this.props.navigation.navigate('FriendScreen',{id: this.props.id})
+    }
+
     render(){
     
         return(
@@ -25,6 +30,9 @@ export default class FriendBar extends Component{
                     <View style={styles.right_container}>
 
                         <Text style ={{flex:.50}}>{this.props.name}</Text>
+                        <TouchableOpacity style={styles.join_button} onPress={() => this.handleJoin()}>
+                            <Text style ={styles.join_text}>Join</Text>
+                        </TouchableOpacity>
                         <Text style ={{flex:.50}}>{this.props.interests}</Text>
                     
                     </View>
