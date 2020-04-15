@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import { AppStyles, color_a, color_b, color_c, color_d } from '../styles/AppStyles';
 
 export default class MessageEditor extends Component{
 
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       paddingLeft: 10,
       paddingRight: 10,
-      backgroundColor: '#5F6362',
+      backgroundColor: color_d,
       marginBottom: 15
     },
 
@@ -81,12 +82,12 @@ const styles = StyleSheet.create({
     },
   
     text_box:{
-      backgroundColor: 'lightgray',
+      backgroundColor: color_c,
       height: 50
     },
   
     send_button:{
-      backgroundColor: '#00BED6',
+      backgroundColor: color_b,
       alignItems: "center",
       justifyContent:"center",
       borderRadius:10,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     },
     
     attatchments_button: {
-      backgroundColor: 'lightgrey',
+      backgroundColor: color_c,
       alignItems: "center",
       justifyContent:"center",
       height: 50

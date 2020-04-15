@@ -39,6 +39,24 @@ export function signOut(){
     })
 }
 
+export function resetPassword(email,alert){
+    auth().sendPasswordResetEmail(email)
+            .then(() => {
+                alert(true,"Password reset email has been sent.");
+            }, (error) => {
+                alert(false,error.message);
+            });
+}
+
+export function resetEmail(email, alert){
+    auth().currentUser.updateEmail(email)
+        .then(() => {
+            alert(true, "Email was successfully changed!")
+        }, (error) => {
+            alert(false,error.message);
+        });
+}
+
 //registers the app with firebase cloucd messaging 
 export async function registerAppWithFCM(){
     await messaging().registerDeviceForRemoteMessages();
@@ -191,14 +209,10 @@ export async function getCurrentUserGroups(groupsRetrieved,filter){
                 var dateString = dateArray.join(" ")
 
                 groups.push({
-                    GroupName: doc.data().GroupName,
+                    Info: doc.data(),
                     Date: dateString,
-                    Location: doc.data().Location,
-                    Coordinates: doc.data().Coordinates,
-                    Interests: doc.data().Interests,
                     id: doc.id,
                     index: index,
-                    Votes: doc.data().Votes
                 });
                 //removing indices of global groups
                 if(doc.data().Coordinates != null){
@@ -240,14 +254,10 @@ export async function getAllGroups(groupsRetrieved,filter){
                 var dateString = dateArray.join(" ")
 
                 groups.push({
-                    GroupName: doc.data().GroupName,
+                    Info: doc.data(),
                     Date: dateString,
-                    Location: doc.data().Location,
-                    Coordinates: doc.data().Coordinates,
-                    Interests: doc.data().Interests,
                     id: doc.id,
                     index: index,
-                    Votes: doc.data().Votes
                 });
                 //removing indices of global groups
                 if(doc.data().Coordinates != null){
@@ -257,6 +267,14 @@ export async function getAllGroups(groupsRetrieved,filter){
             groupsRetrieved(groups);
         }
     })
+}
+
+//given a group id and callback function returns all group data
+export async function getGroupInfo(gid,retrieveGroupInfo){
+    var ref = firestore().collection("Groups").doc(gid)
+    ref.get().then((doc) => {
+        retrieveGroupInfo(doc.data());
+    });
 }
 
 //given a group id, gets all messages from that group
