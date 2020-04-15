@@ -4,6 +4,7 @@ import {createGroup} from  "../api/MessagingAppAPI"
 import InterestTextInput from "./InterestTextInput";
 import GooglePlacesButton from "./GooglePlacesButton"
 import ImagePicker from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 
@@ -85,8 +86,7 @@ export default class GroupCreationScreen extends Component{
                 style = {styles.button}
                 onPress = {this.imagebuttonHandler}
                 >
-                    
-                    <Text> Choose Image</Text>
+                    <Icon name="user" size={50} color="white"/>
                 </TouchableOpacity>
             </View>
             </SafeAreaView>

@@ -4,6 +4,8 @@ import{withNavigation} from "react-navigation"
 import {signOut} from '../api/MessagingAppAPI'
 import {getMyGroups} from "../api/MessagingAppAPI"
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ImagePicker from 'react-native-image-picker';
+
 // import NyitImagePicker from '../components/NyitImagePicker'
 
 
@@ -14,18 +16,39 @@ class ProfilePage extends Component{
         this.state = {
             name: "Default Name",
             status: "Offline",
+            groupImageSource:""
+
         }
     }
-    
-    // setFoodImage = (image) => {
-    //     props.setFieldValue('imageUri', image.uri);
-    //   }
+    imagebuttonHandler = ()=>{
+        ImagePicker.showImagePicker((response)=>{
+          console.log('Response =',response);
+          if (response.didCancel) {
+            console.log('User cancelled image picker');
+          } else if (response.error) {
+            console.log('ImagePicker Error: ', response.error);
+          } else if (response.customButton) {
+            console.log('User tapped custom button: ', response.customButton);
+          } else {
+            const source = { uri: response.uri };
+        
+            this.setState({
+                groupImageSource: source,
+                });
+            }
+        });
+    }
+            
     render(){
         return(
             <SafeAreaView style={{flex:1}}>
             <View style = {styles.MainPage}>
-                <Icon name="user" size={100} color="white"/>
-
+            <TouchableOpacity
+                
+                onPress = {this.imagebuttonHandler}
+                >
+                    <Icon name="user" size={100} color="white"/>
+                </TouchableOpacity>
                 <Text style = {{margin: 10,}}>
                     {this.state.name}
                 </Text>
@@ -33,11 +56,7 @@ class ProfilePage extends Component{
                 <Text style = {{margin: 10,}}>
                     {this.state.status}
                 </Text>
-                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('ChangeProfile')}>
-                    <Text>
-                        Add Image
-                    </Text>
-                </TouchableOpacity>
+                
 
                 <TouchableOpacity style = {styles.button}>
                     <Text>

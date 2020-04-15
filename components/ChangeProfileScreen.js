@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Button, Alert,TouchableOpacity} from 'react-native';
 import{withNavigation} from "react-navigation"
-import NyitImagePicker from'./NyitImagePicker'
         
 
 
@@ -14,13 +13,7 @@ class ChangeProfileScreen extends Component{
         };
 
     }
-    onImagePicked=(image)=>{
-        this.setState({
-            imageuri: image.uri
-        })
-
-        
-    }
+   
    
    
 
@@ -28,8 +21,7 @@ class ChangeProfileScreen extends Component{
         return (
             <View style={styles.login_container}>
 
-                <NyitImagePicker onImagePicked={this.onImagePicked}/>
-               
+                
             </View>
         );
     }
