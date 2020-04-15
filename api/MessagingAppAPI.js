@@ -72,6 +72,23 @@ export function addUserToGroup(uid,gid){
     .catch((error) =>{console.log("error adding user to group", error)})
 }
 
+//adds a specific user to a friendList
+export function addUserToFriend(uid,fid){
+    
+    var ref = firestore().collection("Users").doc(uid)
+    ref.get().then((doc) =>{
+        var friends = doc.data().UserFriends
+        //if(!friends.includes(uid)){
+            firestore().collection("Users").doc(uid).update({
+                UserFriends: firestore.FieldValue.arrayUnion(fid)
+            })
+        //}
+        console.log("Done")
+            
+    })
+    .catch((error) =>{console.log("error adding user to friend list", error)})
+}
+
 //removes a specific user from a specific group
 //input: uid = user id, gid = group id 
 export function removeUserFromGroup(uid,gid){
@@ -86,7 +103,24 @@ export function removeUserFromGroup(uid,gid){
         console.log("Done")
             
     })
-    .catch((error) =>{console.log("error deletting user to group", error)})
+    .catch((error) =>{console.log("error deletting user from group", error)})
+
+}
+
+//removes a specific user from a friend list
+export function removeUserFromFriend(uid,gid){
+    var ref = firestore().collection("Friends").doc(gid)
+    ref.get().then((doc) =>{
+        var users = doc.data().UserFriend
+        if(users.includes(uid)){
+            firestore().collection("Friends").doc(gid).update({
+                UserFriend: firestore.FieldValue.arrayRemove(uid)
+            })
+        }
+        console.log("Done")
+            
+    })
+    .catch((error) =>{console.log("error deletting user from friend list", error)})
 
 }
 

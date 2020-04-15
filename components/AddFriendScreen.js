@@ -55,6 +55,7 @@ class FriendScreen extends Component{
                     renderItem={({ item }) => (
                         <FriendBar
                             name = {item.UserName} 
+                            id = {item.id}
                             //interests = {item.Interests}
                         />
                         )}

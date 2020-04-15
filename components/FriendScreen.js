@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import{withNavigation} from "react-navigation"
 import { FlatList, TextInput} from 'react-native-gesture-handler';
-//import {getUsers} from "../api/MessagingAppAPI"
+import {getUsers} from "../api/MessagingAppAPI"
 import FriendBar from "./FriendBar"
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -12,12 +12,13 @@ class FriendScreen extends Component{
     constructor(props) {
         super(props);
         this.state = { 
-            friendList: []
+            friendList: [],
+            text: ''
         };
     }
 
     // componentDidMount(){
-    //     getUsers(this.retrieveUsers,null)
+    //     getFriendss(this.retrieveFriends,null)
     //     .then((unsub) => {
     //         this.unsubscribe = unsub
     //         console.log("subscribe")})
@@ -33,7 +34,7 @@ class FriendScreen extends Component{
 
     retrieveUsers = (users) => {
         this.setState({
-            friendList: users
+            // friendList: Friends
         });
     }
 
@@ -61,7 +62,7 @@ class FriendScreen extends Component{
                     renderItem={({ item }) => (
                         <FriendBar
                             name = {item.UserName} 
-                            //interests = {item.Interests}
+                            interests = {item.Interests}
                         />
                         )}
                     keyExtractor = {item => item.id}
