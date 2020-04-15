@@ -77,10 +77,10 @@ export function addUserToFriend(uid,fid){
     
     var ref = firestore().collection("Users").doc(uid)
     ref.get().then((doc) =>{
-        var friends = doc.data().UserFriends
+        var friends = doc.data().Friends
         //if(!friends.includes(uid)){
             firestore().collection("Users").doc(uid).update({
-                UserFriends: firestore.FieldValue.arrayUnion(fid)
+                Friends: firestore.FieldValue.arrayUnion(fid)
             })
         //}
         console.log("Done")
@@ -108,15 +108,15 @@ export function removeUserFromGroup(uid,gid){
 }
 
 //removes a specific user from a friend list
-export function removeUserFromFriend(uid,gid){
-    var ref = firestore().collection("Friends").doc(gid)
+export function removeUserFromFriend(uid,fid){
+    var ref = firestore().collection("Users").doc(uid)
     ref.get().then((doc) =>{
-        var users = doc.data().UserFriend
-        if(users.includes(uid)){
-            firestore().collection("Friends").doc(gid).update({
-                UserFriend: firestore.FieldValue.arrayRemove(uid)
+        var friends = doc.data().Friends
+        //if(users.includes(uid)){
+            firestore().collection("Users").doc(uid).update({
+                Friends: firestore.FieldValue.arrayRemove(fid)
             })
-        }
+        //}
         console.log("Done")
             
     })
@@ -179,26 +179,22 @@ export async function getUserInfo(uid,userInfoRetrieved){
     userInfoRetrieved(document.data())
 }
 
-export async function getUsers(usersRetrieved, filter){
-    if(filter == null){
-        //given no filter get all groups in database
-        var ref = firestore().collection("Users").orderBy("UserName")
-    }
-    else{
-        //filter by group name
-        var ref = firestore().collection("Users").where("UserName","==",filter)
-    }
+export async function getUsers(usersRetrieved){
+    var ref = firestore().collection(Users)
 
     return ref.onSnapshot((querySnapshot)=>{
         if(querySnapshot !== null){
             var users = []
+            var myid = getCurrentUserID();
             querySnapshot.forEach((doc)=>{
-                users.push({
-                    UserName: doc.data().UserName,
-                    id: doc.id
-                    //Interests: doc.data().Interests
-                    //Location: doc.data().Location
-                })
+                if(myid != doc.id){
+                    users.push({
+                        UserName: doc.data().UserName,
+                        id: doc.id
+                        //Interests: doc.data().Interests
+                        //Location: doc.data().Location
+                    })
+                }
             })
             usersRetrieved(users)
         }

@@ -17,7 +17,7 @@ class FriendScreen extends Component{
     }
 
     componentDidMount(){
-        getUsers(this.retrieveUsers,null)
+        getUsers(this.retrieveUsers)
         .then((unsub) => {
             this.unsubscribe = unsub
             console.log("subscribe")})
@@ -56,6 +56,7 @@ class FriendScreen extends Component{
                         <FriendBar
                             name = {item.UserName} 
                             id = {item.id}
+                            navigation = {this.props.navigation}
                             //interests = {item.Interests}
                         />
                         )}

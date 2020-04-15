@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, TouchableHighlightBase } from 'react-native';
-import {addUserToFriend,getCurrentUserID, getUserInfo} from '../api/MessagingAppAPI';
+import {addUserToFriend,getCurrentUserID,removeUserFromFriend, getUserInfo} from '../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class FriendBar extends Component{
@@ -11,8 +11,15 @@ export default class FriendBar extends Component{
         }  
     }
 
-    handleJoin = () =>{
+    handleAddFriend = () =>{
         addUserToFriend(getCurrentUserID(),this.props.id)
+    }
+
+    handleRemoveFriend = () =>{
+        removeUserFromFriend(getCurrentUserID(), this.props.id)
+    }
+
+    handleNavigateToInfoScreen = () =>{
         
     }
 
@@ -20,7 +27,7 @@ export default class FriendBar extends Component{
     
         return(
             
-            <TouchableOpacity style = {styles.bar_container}>
+            <TouchableOpacity style = {styles.bar_container} onPress = {}>
                 <View style = {{flexDirection:"row", flex:1 }}>
 
                     <View style={styles.left_container}>
@@ -36,10 +43,10 @@ export default class FriendBar extends Component{
                     </View>
 
                     <View style={styles.right_container}>
-                        <TouchableOpacity style={styles.add_button} onPress={() => this.handleJoin()}>
+                        <TouchableOpacity style={styles.add_button} onPress={() => this.handleAddFriend()}>
                             <Text style ={styles.add_text}>Add</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.remove_button} onPress={() => this.handleJoin()}>
+                        <TouchableOpacity style={styles.remove_button} onPress={() => this.handleRemoveFriend}>
                             <Text style ={styles.add_text}>Remove</Text>
                         </TouchableOpacity>
                     </View>
