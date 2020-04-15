@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import{withNavigation} from "react-navigation"
 import { FlatList, TextInput} from 'react-native-gesture-handler';
-import {getUsers} from "../api/MessagingAppAPI"
+import {getUsers} from "../../api/MessagingAppAPI"
 import FriendBar from "./FriendBar"
 import Icon from 'react-native-vector-icons/FontAwesome';
 

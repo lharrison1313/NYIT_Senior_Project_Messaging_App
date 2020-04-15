@@ -32,7 +32,7 @@ class ProfilePage extends Component{
                         {this.state.status}
                     </Text>
 
-                    <OvalButton text="Friends"/>
+                    <OvalButton text="Friends" onPress={() => this.props.navigation.navigate('Friends')}/>
 
                     <OvalButton text="Settings" handler ={() => this.props.navigation.navigate('Settings')}/>
                     

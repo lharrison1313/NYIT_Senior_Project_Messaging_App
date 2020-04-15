@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, TouchableHighlightBase } from 'react-native';
-import {addUserToFriend,getCurrentUserID,removeUserFromFriend, getUserInfo} from '../api/MessagingAppAPI';
+import {addUserToFriend,getCurrentUserID,removeUserFromFriend, getUserInfo} from '../../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class FriendBar extends Component{
