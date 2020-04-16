@@ -16,18 +16,18 @@ export default class GroupCreationScreen extends Component{
         super(props)
         this.state = {
             groupName: "",
-            Description: "",
+            description: "",
             interests: [],
             place: {},
             private: false,
             visible: true,
-            limit: false,
+            //limit: false,
             size: 0,
         }
     }
 
     buttonHandler = ()=> {
-        createGroup(this.state.groupName,this.state.interests,this.state.place.name,this.state.place.location)
+        createGroup(this.state.groupName,this.state.interests,this.state.place.name,this.state.place.location,this.state.description,this.state.private,this.state.visible)
         this.props.navigation.goBack()
     }
 
@@ -69,7 +69,7 @@ export default class GroupCreationScreen extends Component{
                     placeholder="Description"
                     numberOfLines = {3}
                     multiline
-                    onChangeText = {(text)=>this.setState({groupName: Description})}/>
+                    onChangeText = {(text)=>this.setState({description: text})}/>
 
                     <InterestTextInput retrieveInterestList= {this.interestParser} style ={styles.text_input}/>
 
@@ -82,12 +82,12 @@ export default class GroupCreationScreen extends Component{
 
                     {this.renderVisible()}
 
-                    <View style = {{flexDirection: "row"}}>
+                    {/* <View style = {{flexDirection: "row"}}>
                         <Text style = {{flex:1}}>
                             User Limit:
                         </Text>
                         <Switch style = {{flex:1}} value = {this.state.limit} onValueChange = {() => this.setState({limit: !this.state.limit})}  />
-                    </View>
+                    </View> */}
                     
                     <View style = {styles.button_container}>
                         <GooglePlacesButton shape = "oval" retrieveLocation = {this.retrieveLocation}/>

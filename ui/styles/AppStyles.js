@@ -5,6 +5,7 @@ const color_a = "white"
 const color_b = '#00BED6'
 const color_c = "lightgrey"
 const color_d = "grey"
+const color_e = "orange"
 
 const AppStyles = StyleSheet.create({
 
@@ -37,4 +38,4 @@ const AppStyles = StyleSheet.create({
 
 })
 
-export {AppStyles, color_a, color_b, color_c, color_d}
+export {AppStyles, color_a, color_b, color_c, color_d,color_e}

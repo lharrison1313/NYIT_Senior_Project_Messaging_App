@@ -18,6 +18,7 @@ export default class GroupInfoScreen extends Component{
         }
         this.gid = this.props.route.params.id;
         this.info = this.props.route.params.info
+        this.date = this.props.route.params.date
         
     }
 
@@ -83,6 +84,13 @@ export default class GroupInfoScreen extends Component{
                 </View>
             )
         }
+        else if(this.info.Private){
+            return(
+            <View>
+                <OvalButton text = "Send a Join Request" />
+            </View>
+            );
+        }
         else{
             return(
                 <OvalButton text = "Join Group" handler = {() => this.handlejoin()}/>
@@ -134,10 +142,21 @@ export default class GroupInfoScreen extends Component{
                     </Text>
 
                     <Text>
+                        {this.info.Location}
+                    </Text>
+
+                    <Text>
+                        {this.date}
+                    </Text>
+                   
+                    <Text>
                         {this.info.Interests}
                     </Text>
 
-                    
+                    <Text>
+                        {this.info.Description}
+                    </Text>
+
                     {this.renderMap()}
                     {this.renderButtons()}
                     
@@ -154,7 +173,7 @@ const styles = StyleSheet.create({
     content_container:{
         alignItems: "center", 
         justifyContent: "center",
-        padding: 10
+        padding: 20
     },
 
     map:{

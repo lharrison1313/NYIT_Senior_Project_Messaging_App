@@ -14,7 +14,11 @@ export function signUp(email, password, userName){
         console.log(userInfo)
         //adding user to user collection
         firestore().collection("Users").doc(userInfo.user.uid).set({
-            UserName: userName
+            UserName: userName,
+            uid: userInfo.user.uid,
+            Friends: [],
+            Interests: []
+
         }).then(function() {
             console.log("User added to database");
         })
@@ -139,7 +143,7 @@ export function deleteGroup(gid,uid){
 }
 
 //creates a new group on database
-export function createGroup(groupName,interests,locationName,coordinates){
+export function createGroup(groupName,interests,locationName,coordinates,description,privategroup,visible){
     if(locationName == null){
         locationName = "Anywhere"
     }
@@ -159,7 +163,10 @@ export function createGroup(groupName,interests,locationName,coordinates){
         Coordinates: coordinates,
         GroupOwner: getCurrentUserID(),
         GroupUsers: [getCurrentUserID()],
-        Votes: 0
+        Votes: 0,
+        Private: privategroup,
+        Visible: visible,
+        Description: description
     }).then((info)=>{
         messaging().subscribeToTopic(info.id).then(()=>console.log("subscribed to group notifications for group: " + info.id))
     })
@@ -178,8 +185,12 @@ export function getCurrentUserID(){
 
 //gets any users public info
 export async function getUserInfo(uid,userInfoRetrieved){
-    var document = await firestore().collection("Users").doc(uid).get()
-    userInfoRetrieved(document.data())
+    var ref = firestore().collection("Users").doc(uid)
+    ref.get().then((doc) => {
+        userInfoRetrieved(doc.data());
+
+    })
+    
 }
 
 //gets the groups the user is in
@@ -244,24 +255,25 @@ export async function getAllGroups(groupsRetrieved,filter){
             var index = 0;
 
             querySnapshot.forEach((doc) =>{
+                if(doc.data().Visible){
+                    var date = Date(doc.data().TimeStamp)
+                    //removing certain date info
+                    var dateArray = date.toString().split(" ")
+                    dateArray.pop()
+                    dateArray.pop()
+                    dateArray.pop()
+                    var dateString = dateArray.join(" ")
 
-                var date = Date(doc.data().TimeStamp)
-                //removing certain date info
-                var dateArray = date.toString().split(" ")
-                dateArray.pop()
-                dateArray.pop()
-                dateArray.pop()
-                var dateString = dateArray.join(" ")
-
-                groups.push({
-                    Info: doc.data(),
-                    Date: dateString,
-                    id: doc.id,
-                    index: index,
-                });
-                //removing indices of global groups
-                if(doc.data().Coordinates != null){
-                    index++
+                    groups.push({
+                        Info: doc.data(),
+                        Date: dateString,
+                        id: doc.id,
+                        index: index,
+                    });
+                    //removing indices of global groups
+                    if(doc.data().Coordinates != null){
+                        index++
+                    }
                 }
             });
             groupsRetrieved(groups);

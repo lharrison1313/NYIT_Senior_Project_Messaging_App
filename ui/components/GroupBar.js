@@ -11,12 +11,12 @@ export default class GroupBar extends Component{
     constructor(props){
         super(props)
         this.state={
-
+            
         } 
     }
 
     handlePress = () =>{
-        this.props.navigation.navigate('GroupInfo',{id: this.props.id, info: this.props.info})
+        this.props.navigation.navigate('GroupInfo',{id: this.props.id, info: this.props.info, date: this.props.date})
     }
 
     incrementValue = () => {
@@ -92,14 +92,6 @@ const styles = StyleSheet.create({
     body_container:{
         flexDirection:"row",
         flex: .70,
-    },
-    join_button:{
-        flex: .20,
-        backgroundColor: color_a,
-        padding:5,
-        borderRadius:10,
-        alignItems:"center",
-        justifyContent: "center"
     },
 
     ld_container:{

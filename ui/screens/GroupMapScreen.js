@@ -8,7 +8,7 @@ import {getAllGroups} from "../../api/MessagingAppAPI";
 import { FlatList, TextInput } from 'react-native-gesture-handler';
 import Geolocation from '@react-native-community/geolocation';
 import GooglePlacesButton from '../components/GooglePlacesButton';
-import {AppStyles, color_a, color_b, color_c} from "../styles/AppStyles"
+import {AppStyles, color_a, color_b, color_c, color_e} from "../styles/AppStyles"
 
 
 
@@ -91,6 +91,56 @@ export default class GroupMapScreen extends Component{
         }
     }
 
+    renderBar = (item) =>{
+        var style = {}
+        if(item.Info.Private){
+            style = {
+                flexDirection:'column',
+                flex:1,
+                padding:10,
+                width: window.width,
+                height:120,
+                backgroundColor: color_e,
+            }
+        }
+        else{
+            style = {
+                flexDirection:'column',
+                flex:1,
+                padding:10,
+                width: window.width,
+                height:120,
+                backgroundColor: color_b,
+                
+            }
+        }
+        return(<GroupBar
+            info = {item.Info}
+            date = {item.Date}
+            id = {item.id}
+            bar_style = {style}
+            navigation = {this.props.navigation}
+        />)
+    }
+
+    renderMarker = (group) =>{
+        var color = ""
+        if(group.Info.Private){
+            color = color_e
+        }
+        else{
+            color = color_b
+        }
+
+        return(
+        <Marker
+            key = {group.id} 
+            coordinate = {group.Info.Coordinates}
+            onPress = {() => this.flatListRef.scrollToIndex({index: group.index, animated:true})}
+            pinColor = {color}
+        />)
+    }
+
     render(){
         return(
             
@@ -106,11 +156,7 @@ export default class GroupMapScreen extends Component{
                     >
                         {this.state.groups.map( group =>(
                             
-                            <Marker
-                                key = {group.id} 
-                                coordinate = {group.Info.Coordinates}
-                                onPress = {() => this.flatListRef.scrollToIndex({index: group.index, animated:true})}
-                            />
+                            this.renderMarker(group)
                             
                         ))}
 
@@ -123,13 +169,7 @@ export default class GroupMapScreen extends Component{
                         data = {this.state.groups}
                         scrollEnabled = {false}
                         renderItem={({ item }) => (
-                            <GroupBar
-                                info = {item.Info}
-                                date = {item.Date}
-                                id = {item.id}
-                                bar_style = {styles.bar_container}
-                                navigation = {this.props.navigation}
-                            />
+                            this.renderBar(item)
                         )}
                         keyExtractor = {item => item.id}
                     />
