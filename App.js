@@ -9,6 +9,7 @@ import SettingsScreen from './ui/screens/SettingsScreen';
 import ForgetPasswordScreen from './ui/screens/ForgetPasswordScreen'
 import ChangeEmailScreen from './ui/screens/ChangeEmailScreen'
 import GroupCreationScreen from "./ui/screens/GroupCreationScreen"
+import RequestScreen from "./ui/screens/RequestScreen" 
 import {NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -71,6 +72,7 @@ function MyProfileStackScreen(){
       <MyProfileStack.Screen name="Settings" component = {SettingsScreen} />
       <MyProfileStack.Screen name="ChangePassword"  component = {ForgetPasswordScreen}/>
       <MyProfileStack.Screen name="ChangeEmail"  component = {ChangeEmailScreen}/>
+      <MyProfileStack.Screen name="Requests"  component = {RequestScreen}/>
     </MyProfileStack.Navigator>
   );
 }

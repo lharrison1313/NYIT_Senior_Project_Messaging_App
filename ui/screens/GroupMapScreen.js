@@ -90,30 +90,25 @@ export default class GroupMapScreen extends Component{
             getAllGroups(this.retrieveGroups,input).then((unsub) => this.unsubscribe = unsub )
         }
     }
-
+    
     renderBar = (item) =>{
-        var style = {}
+        var color = ""
         if(item.Info.Private){
-            style = {
-                flexDirection:'column',
-                flex:1,
-                padding:10,
-                width: window.width,
-                height:120,
-                backgroundColor: color_e,
-            }
+            color = color_e   
         }
         else{
-            style = {
-                flexDirection:'column',
-                flex:1,
-                padding:10,
-                width: window.width,
-                height:120,
-                backgroundColor: color_b,
-                
-            }
+            color = color_b
         }
+        var style = {
+            flexDirection:'column',
+            flex:1,
+            padding:10,
+            width: window.width,
+            height:120,
+            backgroundColor: color,
+            
+        }
+
         return(<GroupBar
             info = {item.Info}
             date = {item.Date}
@@ -122,6 +117,7 @@ export default class GroupMapScreen extends Component{
             navigation = {this.props.navigation}
         />)
     }
+
 
     renderMarker = (group) =>{
         var color = ""

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, ScrollView, Alert} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
-import {addUserToGroup,getCurrentUserID,getGroupInfo, deleteGroup, removeUserFromGroup} from "../../api/MessagingAppAPI";
+import {addUserToGroup,getCurrentUserID, createGroupRequest, deleteGroup, removeUserFromGroup} from "../../api/MessagingAppAPI";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import {AppStyles, color_b, color_c} from "../styles/AppStyles"
@@ -17,14 +17,18 @@ export default class GroupInfoScreen extends Component{
         this.state = {
         }
         this.gid = this.props.route.params.id;
-        this.info = this.props.route.params.info
-        this.date = this.props.route.params.date
+        this.info = this.props.route.params.info;
+        this.date = this.props.route.params.date;
         
     }
 
     handlejoin = () => {
         addUserToGroup(getCurrentUserID(),this.gid)
         this.props.navigation.navigate('Message',{id: this.gid});
+    }
+
+    handleSendRequest = () =>{
+        createGroupRequest(getCurrentUserID(),this.gid,this.info.GroupOwner);
     }
 
     handleDelete = () =>{
@@ -87,7 +91,7 @@ export default class GroupInfoScreen extends Component{
         else if(this.info.Private){
             return(
             <View>
-                <OvalButton text = "Send a Join Request" />
+                <OvalButton text = "Send a Join Request" handler = {() => this.handleSendRequest()} />
             </View>
             );
         }

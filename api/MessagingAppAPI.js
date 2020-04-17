@@ -104,7 +104,6 @@ export function addUserToGroup(uid,gid){
             })
             messaging().subscribeToTopic(gid).then(()=>console.log("subscribed to group notifications for group: " + gid))
         }
-        console.log("Done")
             
     })
     .catch((error) =>{console.log("error adding user to group", error)})
@@ -368,6 +367,41 @@ export function addLikeDislike(gid,like){
 
     })
     .catch((error) => {console.log(error)})       
+}
+
+export function retreiveRequests(uid,retrieveRequests){
+    var ref = firestore().collection("Users").doc(uid).collection("Requests")
+    ref.onSnapshot((querrySnapshot) =>{
+        const requestList = [];
+        querrySnapshot.forEach((doc) =>{
+            requestList.push({
+                info: doc.data(),
+                docID: doc.id
+            })
+        })
+        retrieveRequests(requestList);
+        
+    })
+
+}
+
+export function createGroupRequest(uid,gid,goid){
+    var ref = firestore().collection("Users").doc(goid).collection("Requests").add({
+        user: uid,
+        group: gid,
+        type: "group",
+    })
+
+}
+
+export function acceptGroupRequest(uid,gid,goid,docID){
+    addUserToGroup(uid,gid)
+    firestore().collection("Users").doc(goid).collection("Requests").doc(docID).delete();
+    console.log(docID)
+}
+
+export function rejectGroupRequest(goid,docID){
+    firestore().collection("Users").doc(goid).collection("Requests").doc(docID).delete();
 }
 
 

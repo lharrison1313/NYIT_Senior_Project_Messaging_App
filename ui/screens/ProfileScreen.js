@@ -12,7 +12,7 @@ export default class ProfileScreen extends Component{
         super(props)
         this.state = {
             name: "Default Name",
-            status: "Offline",
+            status: "Online",
         }
     }
 
@@ -41,6 +41,8 @@ export default class ProfileScreen extends Component{
                     </Text>
 
                     <OvalButton text="Friends"/>
+
+                    <OvalButton text="Requests" handler = {() => this.props.navigation.navigate("Requests")}/>
 
                     <OvalButton text="Settings" handler ={() => this.props.navigation.navigate('Settings')}/>
                     

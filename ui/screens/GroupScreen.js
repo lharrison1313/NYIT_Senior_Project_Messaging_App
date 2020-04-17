@@ -54,27 +54,22 @@ export default class GroupScreen extends Component{
     }
 
     renderBar = (item) =>{
-        var style = {}
+        var color = ""
         if(item.Info.Private){
-            style = {
-                flexDirection:'column',
-                backgroundColor: color_e,
-                height: 120,
-                padding: 10,
-                borderColor: color_a,
-                borderBottomWidth: 1
-            }
+            color = color_e   
         }
         else{
-            style = {
-                flexDirection:'column',
-                backgroundColor: color_b,
-                height: 120,
-                padding: 10,
-                borderColor: color_a,
-                borderBottomWidth: 1
-            }
+            color = color_b
         }
+        var style = {
+            flexDirection:'column',
+            backgroundColor: color,
+            height: 120,
+            padding: 10,
+            borderColor: color_a,
+            borderBottomWidth: 1
+        }
+
         return(<GroupBar
             info = {item.Info}
             date = {item.Date}
