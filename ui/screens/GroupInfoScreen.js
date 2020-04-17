@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, ScrollView, Alert} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
-import {addUserToGroup,getCurrentUserID, createGroupRequest, deleteGroup, removeUserFromGroup} from "../../api/MessagingAppAPI";
+import {addUserToGroup,getCurrentUserID, createGroupRequest, deleteGroup, removeUserFromGroup, getUserInfo} from "../../api/MessagingAppAPI";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import {AppStyles, color_b, color_c} from "../styles/AppStyles"
@@ -15,11 +15,20 @@ export default class GroupInfoScreen extends Component{
     constructor(props) {
         super(props)
         this.state = {
+            name: ""
         }
         this.gid = this.props.route.params.id;
         this.info = this.props.route.params.info;
         this.date = this.props.route.params.date;
         
+    }
+
+    componentDidMount(){
+        getUserInfo(getCurrentUserID(), this.userInfoRetrieved)
+    }
+ 
+    userInfoRetrieved = (info) =>{
+        this.setState({name: info.UserName});
     }
 
     handlejoin = () => {
@@ -28,7 +37,9 @@ export default class GroupInfoScreen extends Component{
     }
 
     handleSendRequest = () =>{
-        createGroupRequest(getCurrentUserID(),this.gid,this.info.GroupOwner);
+        console.log(this.state.name)
+        createGroupRequest(getCurrentUserID(),this.gid,this.info.GroupOwner,this.info.GroupName,this.state.name);
+        this.props.navigation.goBack()
     }
 
     handleDelete = () =>{
@@ -72,6 +83,7 @@ export default class GroupInfoScreen extends Component{
     renderButtons = () =>{
         var uid = getCurrentUserID()
         var users = this.info.GroupUsers;
+        //the user is the owner
         if(uid == this.info.GroupOwner){
             return(
                 <View>
@@ -80,6 +92,7 @@ export default class GroupInfoScreen extends Component{
                 </View>
             );
         }
+        // the user is  a member
         else if(users.includes(uid)){
             return(
                 <View>
@@ -88,6 +101,15 @@ export default class GroupInfoScreen extends Component{
                 </View>
             )
         }
+        //the user is pending for group membership
+        else if(this.info.PendingGroupUsers.includes(getCurrentUserID())){
+            return(
+            <View>
+                <OvalButton text = "Request is pending" />
+            </View>
+            )
+        }
+        //the group is private
         else if(this.info.Private){
             return(
             <View>
@@ -95,6 +117,7 @@ export default class GroupInfoScreen extends Component{
             </View>
             );
         }
+        //the group is public
         else{
             return(
                 <OvalButton text = "Join Group" handler = {() => this.handlejoin()}/>

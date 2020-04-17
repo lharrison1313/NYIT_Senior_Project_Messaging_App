@@ -23,14 +23,13 @@ export default class GroupScreen extends Component{
         this.getGroups(this.retrieveGroups)
         .then((unsub) => {
             this.unsubscribe = unsub
-            console.log("subscribe")})
+        })
         .catch((error)=> console.log("GroupScreen: ",error))
         
     }
 
     componentWillUnmount(){
         if(this.unsubscribe != null){
-            console.log("unsubscribe")
             this.unsubscribe()
         }
     }

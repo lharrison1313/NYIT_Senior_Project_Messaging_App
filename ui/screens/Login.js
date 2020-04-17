@@ -22,12 +22,16 @@ export default class LoginForm extends Component{
         requestLocationPermission()
     }
 
+    alertDialog = () =>{
+        alert("Incorrect Username or Password")
+    }
+    
     handleLogin = () =>{
         if(this.state.emailField === '' || this.state.usernameField == '' || this.state.passwordField == '' || this.state.rePasswordField == ''){
             alert('one or more fields are empty')
         }
         else{
-            this.props.login(this.state.emailField,this.state.passwordField);
+            this.props.login(this.state.emailField,this.state.passwordField,this.alertDialog);
         }
     }
     

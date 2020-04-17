@@ -8,31 +8,52 @@ import RequestBar from '../components/RequestBar'
 
 
 
-const group =<Icon name="group" size={25} color={color_a} />
+const group =<Icon name="group" size={25} color={color_a} />;
 const friend = <Icon name="user" size={25} color={color_a} />;
 
 export default class RequestScreen extends Component{    
     constructor(props){
         super(props)
         this.state = {
-            request_list: []
+            friendRequestList: [],
+            groupRequestList: [],
+            requestSwitch: true
         }
         
     }
 
     componentDidMount(){
-        retreiveRequests(getCurrentUserID(),this.retrieveRequestList)
+        retreiveRequests(getCurrentUserID(),this.retrieveRequestList).then((unsub)=>{
+            this.unsbscribe = unsub;
+        })
     }
 
-    retrieveRequestList = (requests) => {
+    componentWillUnmount(){
+        if(this.unsubscribe != null){
+            this.unsubscribe();
+        }
+    }
+
+    retrieveRequestList = (groupRequests, friendRequests) => {
         this.setState({
-            request_list: requests
+            friendRequestList: friendRequests,
+            groupRequestList: groupRequests
         })
-        //console.log(this.state.request_list)
     }
 
     render(){
-    
+        var data = [];
+        var group = <Icon name="group" size={25} color={color_d} />;
+        var friend =  <Icon name="user" size={25} color={color_d} />;
+        if(this.state.requestSwitch == true){
+            data = this.state.groupRequestList;
+            group = <Icon name="group" size={25} color={color_a} />;
+        }
+        else{
+            data = this.state.friendRequestList;
+            friend =  <Icon name="user" size={25} color={color_a} />;
+        }
+
         return(
             <SafeAreaView style={{flex:1}}>
             <View style ={AppStyles.screen}>
@@ -40,16 +61,16 @@ export default class RequestScreen extends Component{
 
                     <View style = {{flexDirection: "row", backgroundColor: color_d, paddingVertical: 20}}>
                         <View style = {{flex: 1, alignItems: "center"}}>
-                            <CircleButton icon = {group}/>
+                            <CircleButton icon = {group} handler = {() => this.setState({requestSwitch: true})}/>
                         </View>
                         <View style = {{flex: 1, alignItems: "center"}}>
-                            <CircleButton icon = {friend}/>
+                            <CircleButton icon = {friend} handler = {() => this.setState({requestSwitch: false})}/>
                         </View>
                         
                     </View>
 
                     <FlatList
-                    data = {this.state.request_list}
+                    data = {data}
                     renderItem={({ item }) => (
                         <RequestBar
                             info = {item.info}

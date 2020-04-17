@@ -26,7 +26,7 @@ export default class RequestBar extends Component{
                         </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style = {styles.button} onpress = {() => rejectGroupRequest(getCurrentUserGroups(),this.docID)}>
+                    <TouchableOpacity style = {styles.button} onPress = {() => rejectGroupRequest(getCurrentUserID(),this.info.group,this.docID, this.info.user)}>
                         <Text>
                             reject
                         </Text>
@@ -59,10 +59,10 @@ export default class RequestBar extends Component{
 
         var message = " "
         if(this.info.type == "group"){
-           message =  this.info.user + " wants to join " + this.info.group;
+           message =  "User: " + this.info.userName + " wants to join Group: " + this.info.groupName;
         }
         else{
-            message = this.info.user + " wants to be your friend"
+            message = "User: " + this.info.userName + " wants to be your friend"
         }
 
 
