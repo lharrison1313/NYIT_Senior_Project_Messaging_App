@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View} from 'react-native';
+import { AppStyles, color_a, color_b, color_c, color_d } from '../styles/AppStyles';
 
 export default class Message extends Component{
 
@@ -7,14 +8,14 @@ export default class Message extends Component{
         if(this.props.sent){
             return(
                 <View style={styles.sent_message_container}>
-                    <Text style={{color:"white"}}>{this.props.sender_name}: {this.props.message_text}</Text>
+                    <Text style={{color:color_d}}>{this.props.sender_name}: {this.props.message_text}</Text>
                 </View>
             );
         }
         else{
             return(
                 <View style={styles.recieved_message_container}>
-                    <Text style={{color:"white"}}>{this.props.sender_name}: {this.props.message_text}</Text>
+                    <Text style={{color:color_c}}>{this.props.sender_name}: {this.props.message_text}</Text>
                 </View>
             );
         }
@@ -24,7 +25,7 @@ export default class Message extends Component{
 const styles = StyleSheet.create({
     sent_message_container:{
         alignSelf: 'flex-end',
-        backgroundColor: "#5F6362",
+        backgroundColor: color_c,
         padding: 20,
         marginLeft:120,
         marginRight:20,
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
 
     recieved_message_container:{
         alignSelf: 'flex-start',
-        backgroundColor: "#00BED6",
+        backgroundColor: color_b,
         padding: 20,
         marginLeft: 20,
         marginRight:120,
