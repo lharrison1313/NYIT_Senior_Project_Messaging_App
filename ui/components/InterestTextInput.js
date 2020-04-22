@@ -7,9 +7,10 @@ export default class InterestTextInput extends Component{
     constructor(props){
         super(props)
         this.state = {
-            interestBlips: []
+            interestBlips: [],
+            keys: 0
         }
-        
+        this.keys = 0;
     }
 
     interestParser = (text)=> {
@@ -19,8 +20,12 @@ export default class InterestTextInput extends Component{
             text.split(/[,\s]/).forEach(element => {
                 var hash = "#"
                 //creates little interest blips
-                interestBlipsList.push(<Text style = {styles.interestBlipsText}>{hash.concat(element)}</Text>)
+                interestBlipsList.push(<Text key = {this.keys} style = {styles.interestBlipsText}>{hash.concat(element)}</Text>)
+                this.keys = this.keys+1
             });
+        }
+        else{
+            this.keys = 0;
         }
         this.setState({
             interestBlips:  interestBlipsList

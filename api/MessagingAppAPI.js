@@ -1,25 +1,33 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import messaging from '@react-native-firebase/messaging';
 import {PermissionsAndroid} from 'react-native';
 
-export function login(email, password){
+export function login(email, password, alert){
     auth().signInWithEmailAndPassword(email,password)
     .then((value) => console.log(value))
+    .catch((error) =>{ alert()})
 }
 
-export function signUp(email, password, userName){
+export function signUp(email, password, userName, alert){
     auth().createUserWithEmailAndPassword(email, password)
     .then((userInfo)=>{
         console.log(userInfo)
         //adding user to user collection
         firestore().collection("Users").doc(userInfo.user.uid).set({
-            UserName: userName
-        }).then(function() {
+            UserName: userName,
+            uid: userInfo.user.uid,
+            Friends: [],
+            Interests: []
+
+        }).then(() => {
             console.log("User added to database");
         })
-        .catch(function(error) {
-            console.error("Error adding user to database: ", error);
+        .catch((error) => {
+           alert(error)
         });
+    }).catch((error) =>{
+        alert(error)
     })
 }
 
@@ -38,23 +46,56 @@ export function signOut(){
     })
 }
 
+export function resetPassword(email,alert){
+    auth().sendPasswordResetEmail(email)
+            .then(() => {
+                alert(true,"Password reset email has been sent.");
+            }, (error) => {
+                alert(false,error.message);
+            });
+}
+
+export function resetEmail(email, alert){
+    auth().currentUser.updateEmail(email)
+        .then(() => {
+            alert(true, "Email was successfully changed!")
+        }, (error) => {
+            alert(false,error.message);
+        });
+}
+
+//registers the app with firebase cloucd messaging 
+export async function registerAppWithFCM(){
+    await messaging().registerDeviceForRemoteMessages();
+}
+
+//request ios permission for recieving push notifications
+export async function requestUserPermission() {
+    const settings = await messaging().requestPermission();
+  
+    if (settings) {
+      console.log('Permission settings:', settings);
+    }
+  }
+
 //sends messages to group on database
-export function sendMessage(groupID, message, senderName, senderID){
+export function sendMessage(groupID, body, senderName, senderID){
 
     firestore().collection("Groups").doc(groupID).collection("Messages").add({
         SenderName: senderName,
         SenderID: senderID,
-        MessageText: message,
+        MessageText: body,
         TimeStamp: firestore.FieldValue.serverTimestamp()
     })
     .then(function(docRef) {
-        console.log("Message sent with ID: ", docRef.id);
+                
     })
     .catch(function(error) {
         console.error("Error sending message: ", error);
     });
 }
 
+//adds a specific user to a specific group
 export function addUserToGroup(uid,gid){
     
     var ref = firestore().collection("Groups").doc(gid)
@@ -64,15 +105,51 @@ export function addUserToGroup(uid,gid){
             firestore().collection("Groups").doc(gid).update({
                 GroupUsers: firestore.FieldValue.arrayUnion(uid)
             })
+            messaging().subscribeToTopic(gid).then(()=>console.log("subscribed to group notifications for group: " + gid))
         }
-        console.log("Done")
             
     })
     .catch((error) =>{console.log("error adding user to group", error)})
 }
 
+//removes a specific user from a specific group
+//input: uid = user id, gid = group id 
+export function removeUserFromGroup(uid,gid){
+    var ref = firestore().collection("Groups").doc(gid)
+    ref.get().then((doc) =>{
+        var users = doc.data().GroupUsers
+        if(users.includes(uid)){
+            firestore().collection("Groups").doc(gid).update({
+                GroupUsers: firestore.FieldValue.arrayRemove(uid)
+            })
+            messaging().unsubscribeFromTopic(gid).then(()=>console.log("unsubscribed to group notifications for group: " + gid))
+        }
+        console.log("Done")
+            
+    })
+    .catch((error) =>{console.log("error deletting user to group", error)})
+
+}
+
+//deletes a group from the database
+//input: uid = user id, gid = group id
+export function deleteGroup(gid,uid){
+    var ref = firestore().collection("Groups").doc(gid)
+    ref.get().then((doc)=>{
+        var owner = doc.data().GroupOwner
+        if(owner==uid){
+            ref.delete()
+            messaging().subscribeToTopic(gid).then(()=>console.log("subscribed to group notifications for group: " + gid))
+        }
+    })
+}
+
 //creates a new group on database
+<<<<<<< HEAD
 export function createGroup(groupName,description,interests,locationName,coordinates){
+=======
+export function createGroup(groupName,interests,locationName,coordinates,description,privategroup,visible){
+>>>>>>> master
     if(locationName == null){
         locationName = "Anywhere"
     }
@@ -86,22 +163,30 @@ export function createGroup(groupName,description,interests,locationName,coordin
     //creating new group
     firestore().collection("Groups").add({
         GroupName: groupName,
+<<<<<<< HEAD
         Description: description,
         Date: "2/19/2020",
+=======
+        TimeStamp: firestore.FieldValue.serverTimestamp(),
+>>>>>>> master
         Interests: interestList,
         Location: locationName,
         Coordinates: coordinates,
         GroupOwner: getCurrentUserID(),
-        GroupUsers: [getCurrentUserID()]
+        GroupUsers: [getCurrentUserID()],
+        PendingGroupUsers: [],
+        Votes: 0,
+        Private: privategroup,
+        Visible: visible,
+        Description: description
+        
     }).then((info)=>{
-        firestore().collection("Users").doc(getCurrentUserID()).collection("Groups").add({
-            GroupID: info.id,
-            GroupOwner: true
-        })
+        messaging().subscribeToTopic(info.id).then(()=>console.log("subscribed to group notifications for group: " + info.id))
     })
     .catch((error)=>{
         console.log(error)
     })
+    
 
     
 }
@@ -112,9 +197,13 @@ export function getCurrentUserID(){
 }
 
 //gets any users public info
-export async function getUserInfo(uid,userInfoRetrieved){
-    var document = await firestore().collection("Users").doc(uid).get()
-    userInfoRetrieved(document.data())
+export function getUserInfo(uid,userInfoRetrieved){
+    var ref = firestore().collection("Users").doc(uid)
+    ref.get().then((doc) => {
+        userInfoRetrieved(doc.data());
+
+    })
+    
 }
 
 //gets the groups the user is in
@@ -135,15 +224,19 @@ export async function getCurrentUserGroups(groupsRetrieved,filter){
             var index = 0;
             querySnapshot.forEach((doc) =>{
                 
+                var date = Date(doc.data().TimeStamp)
+                //removing certain date info
+                var dateArray = date.toString().split(" ")
+                dateArray.pop()
+                dateArray.pop()
+                dateArray.pop()
+                var dateString = dateArray.join(" ")
+
                 groups.push({
-                    GroupName: doc.data().GroupName,
-                    Date: doc.data().Date,
-                    Location: doc.data().Location,
-                    Coordinates: doc.data().Coordinates,
-                    Interests: doc.data().Interests,
+                    Info: doc.data(),
+                    Date: dateString,
                     id: doc.id,
-                    index: index
-                   
+                    index: index,
                 });
                 //removing indices of global groups
                 if(doc.data().Coordinates != null){
@@ -173,24 +266,40 @@ export async function getAllGroups(groupsRetrieved,filter){
         const groups = []
         if(querySnapshot !== null){
             var index = 0;
+
             querySnapshot.forEach((doc) =>{
-                groups.push({
-                    GroupName: doc.data().GroupName,
-                    Date: doc.data().Date,
-                    Location: doc.data().Location,
-                    Coordinates: doc.data().Coordinates,
-                    Interests: doc.data().Interests,
-                    id: doc.id,
-                    index: index
-                });
-                //removing indices of global groups
-                if(doc.data().Coordinates != null){
-                    index++
+                if(doc.data().Visible){
+                    var date = Date(doc.data().TimeStamp)
+                    //removing certain date info
+                    var dateArray = date.toString().split(" ")
+                    dateArray.pop()
+                    dateArray.pop()
+                    dateArray.pop()
+                    var dateString = dateArray.join(" ")
+
+                    groups.push({
+                        Info: doc.data(),
+                        Date: dateString,
+                        id: doc.id,
+                        index: index,
+                    });
+                    //removing indices of global groups
+                    if(doc.data().Coordinates != null){
+                        index++
+                    }
                 }
             });
             groupsRetrieved(groups);
         }
     })
+}
+
+//given a group id and callback function returns all group data
+export async function getGroupInfo(gid,retrieveGroupInfo){
+    var ref = firestore().collection("Groups").doc(gid)
+    ref.get().then((doc) => {
+        retrieveGroupInfo(doc.data());
+    });
 }
 
 //given a group id, gets all messages from that group
@@ -234,4 +343,130 @@ export async function requestLocationPermission() {
     } catch (err) {
       console.warn(err);
     }
-  }
+}
+
+// adds a like or a dislike to the current group
+// inputs gid = group id, like = if true adds 1 to database if false adds -1
+export function addLikeDislike(gid,like){
+    var ref = firestore().collection("Groups").doc(gid).collection("Votes").doc(getCurrentUserID())
+
+    ref.get().then((snapshot) => {
+
+        var vote = 0
+        if(like){
+            vote = 1
+        }
+        else{
+            vote = -1
+        }
+
+        if(snapshot.exists){
+            //if the vote is pressed twice in the same direction it is set to 0
+            var currentVote = snapshot.data().vote
+            if(currentVote == vote){
+                vote = 0
+            }
+
+            ref.update({
+                vote: vote
+            })
+        }
+        else{
+            //if no vote exists for that user than a new vote is created
+            var newRef = firestore().collection("Groups").doc(gid).collection("Votes").doc(getCurrentUserID())
+            newRef.set({
+                vote: vote
+            })
+        }
+
+    })
+    .catch((error) => {console.log(error)})       
+}
+
+
+export async function retreiveRequests(uid,retrieveRequests){
+    var ref = firestore().collection("Users").doc(uid).collection("Requests")
+    return ref.onSnapshot((querrySnapshot) =>{
+        const groupRequestList = [];
+        const friendRequestList = [];
+        if (querrySnapshot != null){
+            querrySnapshot.forEach((doc) =>{
+                if(doc.data().type == "group"){
+                    groupRequestList.push({
+                        info: doc.data(),
+                        docID: doc.id
+                    })
+                }
+                else{
+                    friendRequestList.push({
+                        info: doc.data(),
+                        docID: doc.id
+                    })
+                }   
+                
+            })
+        }
+        retrieveRequests(groupRequestList,friendRequestList);
+        
+    })
+
+}
+
+//creates a group entry request
+//inputs uid: current user id, gid: groups id, goid: group owner id
+export function createGroupRequest(uid,gid,goid,groupName,userName){
+    
+
+    //checking if user is in group
+    firestore().collection("Groups").doc(gid).get().then((doc) =>{
+        
+        var pending = doc.data().PendingGroupUsers;
+        if(!pending.includes(uid)){
+
+            //placing request in users request collection
+            firestore().collection("Users").doc(goid).collection("Requests").add({
+                user: uid,
+                userName: userName,
+                group: gid,
+                groupName: groupName,
+                type: "group",
+            })
+
+            //placing user in pending queue
+            firestore().collection("Groups").doc(gid).update({
+                PendingGroupUsers: firestore.FieldValue.arrayUnion(uid)
+            })
+        }
+        else{
+             console.log("already in group")
+        }
+    })
+    
+
+
+
+}
+
+//accept user group request for private groups
+//inputs uid: user id who sent request, gid: group id for request, goid: group owner id, 
+//docID: the request document id for firebase
+export function acceptGroupRequest(uid,gid,goid,docID){
+    addUserToGroup(uid,gid)
+    firestore().collection("Groups").doc(gid).update({
+        PendingGroupUsers: firestore.FieldValue.arrayRemove(uid)
+    })
+    firestore().collection("Users").doc(goid).collection("Requests").doc(docID).delete();
+    
+}
+
+//rejects user join request for a specific private group
+//inputs uid: user id who sent request, gid: group id for request, goid: group owner id, 
+//docID: the request document id for firebase
+export function rejectGroupRequest(goid,gid,docID,uid){
+    firestore().collection("Users").doc(goid).collection("Requests").doc(docID).delete();
+    firestore().collection("Groups").doc(gid).update({
+        PendingGroupUsers: firestore.FieldValue.arrayRemove(uid)
+    })
+}
+
+

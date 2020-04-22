@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, StyleSheet,SafeAreaView} from 'react-native';
-import MessageEditor from './MessageEditor'
-import Message from './Message'
+import MessageEditor from '../components/MessageEditor'
+import Message from '../components/Message'
 import { FlatList } from 'react-native-gesture-handler';
-import{getGroupMessages} from "../api/MessagingAppAPI"
-import{sendMessage,getUserInfo,getCurrentUserID} from "../api/MessagingAppAPI"
+import{sendMessage,getUserInfo,getCurrentUserID,getGroupMessages} from "../../api/MessagingAppAPI"
+import { AppStyles, color_a, color_b, color_c, color_d } from '../styles/AppStyles';
 
 export default class MessagingScreen extends Component {
 
@@ -48,20 +48,22 @@ export default class MessagingScreen extends Component {
 
     return (
       <SafeAreaView style={{flex:1}}>
-      <View style={styles.content_container}>
-        <FlatList
-          style={styles.message_area_container} 
-          data = {this.state.messageList}
-          renderItem = {({item}) => (
-            <Message
-              sender_name = {item.SenderName}
-              message_text = {item.MessageText}
-              sent = {this.uid === item.SenderID}
-            />
-          )}
-          keyExtractor = {item => item.GroupID}
-        />
-        <MessageEditor button_handler={this.sendMessage} update_text ={this.updateText}/>
+      <View style = {AppStyles.screen}>
+        <View style={styles.content_container}>
+          <FlatList
+            style={styles.message_area_container} 
+            data = {this.state.messageList}
+            renderItem = {({item}) => (
+              <Message
+                sender_name = {item.SenderName}
+                message_text = {item.MessageText}
+                sent = {this.uid === item.SenderID}
+              />
+            )}
+            keyExtractor = {item => item.GroupID}
+          />
+          <MessageEditor button_handler={this.sendMessage} update_text ={this.updateText}/>
+        </View>
       </View>
       </SafeAreaView>
     );
@@ -72,12 +74,12 @@ const styles = StyleSheet.create({
   content_container:{
     flex:1,
     flexDirection: 'column',
-    backgroundColor: '#5F6362',
+    backgroundColor: color_d,
   },
   message_area_container:{
     flex: 1,
     flexDirection: "column",
-    backgroundColor: 'lightgrey',
+    backgroundColor: color_a,
     marginBottom: 15
   }
 })
