@@ -336,6 +336,81 @@ export async function requestLocationPermission() {
     }
 }
 
+//requests Camera Library permission
+export async function requestCameraPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: "Camera Permission",
+          message:
+            "This App needs access to your camera " +
+            "so you can take awesome pictures.",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK"
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can use the camera");
+      } else {
+        console.log("Camera permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
+  //requetss Writing to External Storage
+  export async function requestWriteExternalPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: "Write External Permission",
+          message:
+            "This App needs access to your writing " +
+            "so you can store docs..",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK"
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can write");
+      } else {
+        console.log("Writing permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+  
+   //requetss Read to External Storage
+   export async function requestReadExternalPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        {
+          title: "Read External Permission",
+          message:
+            "This App needs access to your reading " +
+            "so you can read docs..",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK"
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can read");
+      } else {
+        console.log("Reading permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
 // adds a like or a dislike to the current group
 // inputs gid = group id, like = if true adds 1 to database if false adds -1
 export function addLikeDislike(gid,like){
