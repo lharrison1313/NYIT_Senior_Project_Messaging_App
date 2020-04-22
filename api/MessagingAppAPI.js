@@ -184,7 +184,7 @@ export async function getUsers(usersRetrieved, filter){
         var ref = firestore().collection("Users").orderBy("UserName")
     }
     else{
-        //filter by group name
+        //filter by user name
         var ref = firestore().collection("Users").where("UserName","==",filter)
     }
 

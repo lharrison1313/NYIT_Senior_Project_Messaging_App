@@ -27,7 +27,7 @@ export default class FriendBar extends Component{
     
         return(
             
-            <TouchableOpacity style = {styles.bar_container} onPress = {}>
+            <TouchableOpacity style = {styles.bar_container} onPress = {() => this.NavigateToInfoScreen()}>
                 <View style = {{flexDirection:"row", flex:1 }}>
 
                     <View style={styles.left_container}>
