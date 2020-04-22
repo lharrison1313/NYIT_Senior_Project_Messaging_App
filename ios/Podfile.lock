@@ -573,6 +573,7 @@ PODS:
     - React
     - RNFBApp
 <<<<<<< HEAD
+<<<<<<< HEAD
   - RNFBMessaging (6.4.0):
     - Firebase/Core (~> 6.13.0)
     - Firebase/Messaging (~> 6.13.0)
@@ -583,6 +584,13 @@ PODS:
   - RNReanimated (1.7.1):
     - React
   - RNScreens (2.4.0):
+=======
+  - RNGestureHandler (1.6.1):
+    - React
+  - RNReanimated (1.8.0):
+    - React
+  - RNScreens (2.5.0):
+>>>>>>> parent of 6b28116... pod files
 =======
   - RNGestureHandler (1.6.1):
     - React
@@ -811,11 +819,16 @@ SPEC CHECKSUMS:
   react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
   react-native-google-maps: 4b3f95cf4f50ad53a198a8e5fe0c55a241fdc8cc
 <<<<<<< HEAD
+<<<<<<< HEAD
   react-native-google-places: 978bcc6ec4bd1d9b0ab3693e3705d4f1f2459caf
 <<<<<<< HEAD
   react-native-image-picker: 668e72d0277dc8c12ae90e835507c1eddd2e4f85
 =======
 >>>>>>> master
+=======
+  react-native-google-places: 34e976a0e13cb55cc9603ef2fa6764ed534af806
+  react-native-image-picker: 6a850c41f57f0848d918c2a77aedd7aa272ffa30
+>>>>>>> parent of 6b28116... pod files
 =======
   react-native-google-places: 34e976a0e13cb55cc9603ef2fa6764ed534af806
   react-native-image-picker: 6a850c41f57f0848d918c2a77aedd7aa272ffa30
@@ -834,6 +847,7 @@ SPEC CHECKSUMS:
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   RNCAsyncStorage: 00bdf63f7f1e0f11d3323533dba4f222e58bf092
 =======
   RNCAsyncStorage: b16697280b08bab4b5f2f67f752d93d13a52e9ed
@@ -846,6 +860,16 @@ SPEC CHECKSUMS:
   RNGestureHandler: dde546180bf24af0b5f737c8ad04b6f3fa51609a
   RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
   RNScreens: 03bf608b92ac0acf323f47d8f5b63a8f829340c8
+=======
+  RNCAsyncStorage: 453cd7c335ec9ba3b877e27d02238956b76f3268
+  RNCMaskedView: 71fc32d971f03b7f03d6ab6b86b730c4ee64f5b6
+  RNFBApp: 69781cf10ce41f6f6db789e6264dd80119ef2fb7
+  RNFBAuth: 50fcc7826344dc96caad8bc4f5b40a64904297b8
+  RNFBFirestore: 69e59e5266927857fa3629715111ee65f4de1cd0
+  RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
+  RNReanimated: 955cf4068714003d2f1a6e2bae3fb1118f359aff
+  RNScreens: ac02d0e4529f08ced69f5580d416f968a6ec3a1d
+>>>>>>> parent of 6b28116... pod files
 =======
   RNCAsyncStorage: 453cd7c335ec9ba3b877e27d02238956b76f3268
   RNCMaskedView: 71fc32d971f03b7f03d6ab6b86b730c4ee64f5b6
