@@ -145,7 +145,11 @@ export function deleteGroup(gid,uid){
 }
 
 //creates a new group on database
+<<<<<<< HEAD
 export function createGroup(groupName,description,interests,locationName,coordinates){
+=======
+export function createGroup(groupName,interests,locationName,coordinates,description,privategroup,visible){
+>>>>>>> master
     if(locationName == null){
         locationName = "Anywhere"
     }
@@ -159,8 +163,12 @@ export function createGroup(groupName,description,interests,locationName,coordin
     //creating new group
     firestore().collection("Groups").add({
         GroupName: groupName,
+<<<<<<< HEAD
         Description: description,
         Date: "2/19/2020",
+=======
+        TimeStamp: firestore.FieldValue.serverTimestamp(),
+>>>>>>> master
         Interests: interestList,
         Location: locationName,
         Coordinates: coordinates,
