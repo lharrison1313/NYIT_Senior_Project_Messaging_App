@@ -11,10 +11,11 @@ import SettingsScreen from './ui/screens/SettingsScreen';
 import ForgetPasswordScreen from './ui/screens/ForgetPasswordScreen'
 import ChangeEmailScreen from './ui/screens/ChangeEmailScreen'
 import GroupCreationScreen from "./ui/screens/GroupCreationScreen"
+import RequestScreen from "./ui/screens/RequestScreen" 
 import {NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {subscribeToAuthChanges,getAllGroups,getCurrentUserGroups,registerAppWithFCM,requestUserPermission} from './api/MessagingAppAPI'
+import {subscribeToAuthChanges,getAllGroups,getCurrentUserGroups,registerAppWithFCM,requestUserPermission,requestCameraLibraryPermission} from './api/MessagingAppAPI'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AppStyles, color_a, color_b, color_c, color_d } from './ui/styles/AppStyles';
 
@@ -73,8 +74,7 @@ function MyProfileStackScreen(){
       <MyProfileStack.Screen name="Settings" component = {SettingsScreen} />
       <MyProfileStack.Screen name="ChangePassword"  component = {ForgetPasswordScreen}/>
       <MyProfileStack.Screen name="ChangeEmail"  component = {ChangeEmailScreen}/>
-      <MyProfileStack.Screen name="Friends"  component = {FriendScreen}/>
-      <MyProfileStack.Screen name="AddFriends"  component = {AddFriendScreen}/>
+      <MyProfileStack.Screen name="Requests"  component = {RequestScreen}/>
     </MyProfileStack.Navigator>
   );
 }

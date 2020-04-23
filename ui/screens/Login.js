@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import {View, TextInput, Text, TouchableOpacity, Image,SafeAreaView} from 'react-native';
-import {requestLocationPermission} from "../../api/MessagingAppAPI";
+import {requestLocationPermission,requestCameraLibraryPermission,requestCameraPermission,requestReadExternalPermission,requestWriteExternalPermission} from "../../api/MessagingAppAPI";
 import OvalButton from "../components/OvalButton";
 import {AppStyles,color_a,color_b,color_c} from "../styles/AppStyles";
 import MapView from 'react-native-maps';
@@ -20,14 +20,21 @@ export default class LoginForm extends Component{
 
     componentDidMount(){
         requestLocationPermission()
+        requestCameraPermission()
+        requestWriteExternalPermission()
+        requestReadExternalPermission()
     }
 
+    alertDialog = () =>{
+        alert("Incorrect Username or Password")
+    }
+    
     handleLogin = () =>{
         if(this.state.emailField === '' || this.state.usernameField == '' || this.state.passwordField == '' || this.state.rePasswordField == ''){
             alert('one or more fields are empty')
         }
         else{
-            this.props.login(this.state.emailField,this.state.passwordField);
+            this.props.login(this.state.emailField,this.state.passwordField,this.alertDialog);
         }
     }
     

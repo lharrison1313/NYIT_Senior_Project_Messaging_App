@@ -1,25 +1,32 @@
-import auth from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {PermissionsAndroid} from 'react-native';
 
-export function login(email, password){
+export function login(email, password, alert){
     auth().signInWithEmailAndPassword(email,password)
     .then((value) => console.log(value))
+    .catch((error) =>{ alert()})
 }
 
-export function signUp(email, password, userName){
+export function signUp(email, password, userName, alert){
     auth().createUserWithEmailAndPassword(email, password)
     .then((userInfo)=>{
         console.log(userInfo)
         //adding user to user collection
         firestore().collection("Users").doc(userInfo.user.uid).set({
-            UserName: userName
-        }).then(function() {
+            UserName: userName,
+            uid: userInfo.user.uid,
+            Friends: [],
+            Interests: []
+
+        }).then(() => {
             console.log("User added to database");
         })
-        .catch(function(error) {
-            console.error("Error adding user to database: ", error);
+        .catch((error) => {
+           alert(error)
         });
+    }).catch((error) =>{
+        alert(error)
     })
 }
 
@@ -66,7 +73,6 @@ export function addUserToGroup(uid,gid){
                 GroupUsers: firestore.FieldValue.arrayUnion(uid)
             })
         }
-        console.log("Done")
             
     })
     .catch((error) =>{console.log("error adding user to group", error)})
@@ -137,7 +143,7 @@ export function deleteGroup(gid,uid){
 }
 
 //creates a new group on database
-export function createGroup(groupName,interests,locationName,coordinates){
+export function createGroup(groupName,interests,locationName,coordinates,description,privategroup,visible){
     if(locationName == null){
         locationName = "Anywhere"
     }
@@ -157,7 +163,12 @@ export function createGroup(groupName,interests,locationName,coordinates){
         Coordinates: coordinates,
         GroupOwner: getCurrentUserID(),
         GroupUsers: [getCurrentUserID()],
-        Votes: 0
+        PendingGroupUsers: [],
+        Votes: 0,
+        Private: privategroup,
+        Visible: visible,
+        Description: description
+        
     }).then((info)=>{
         
     })
@@ -173,9 +184,13 @@ export function getCurrentUserID(){
 }
 
 //gets any users public info
-export async function getUserInfo(uid,userInfoRetrieved){
-    var document = await firestore().collection("Users").doc(uid).get()
-    userInfoRetrieved(document.data())
+export function getUserInfo(uid,userInfoRetrieved){
+    var ref = firestore().collection("Users").doc(uid)
+    ref.get().then((doc) => {
+        userInfoRetrieved(doc.data());
+
+    })
+    
 }
 
 export async function getUsers(usersRetrieved, filter){
@@ -271,28 +286,25 @@ export async function getAllGroups(groupsRetrieved,filter){
             var index = 0;
 
             querySnapshot.forEach((doc) =>{
+                if(doc.data().Visible){
+                    var date = Date(doc.data().TimeStamp)
+                    //removing certain date info
+                    var dateArray = date.toString().split(" ")
+                    dateArray.pop()
+                    dateArray.pop()
+                    dateArray.pop()
+                    var dateString = dateArray.join(" ")
 
-                var date = Date(doc.data().TimeStamp)
-                //removing certain date info
-                var dateArray = date.toString().split(" ")
-                dateArray.pop()
-                dateArray.pop()
-                dateArray.pop()
-                var dateString = dateArray.join(" ")
-
-                groups.push({
-                    GroupName: doc.data().GroupName,
-                    Date: dateString,
-                    Location: doc.data().Location,
-                    Coordinates: doc.data().Coordinates,
-                    Interests: doc.data().Interests,
-                    id: doc.id,
-                    index: index,
-                    Votes: doc.data().Votes
-                });
-                //removing indices of global groups
-                if(doc.data().Coordinates != null){
-                    index++
+                    groups.push({
+                        Info: doc.data(),
+                        Date: dateString,
+                        id: doc.id,
+                        index: index,
+                    });
+                    //removing indices of global groups
+                    if(doc.data().Coordinates != null){
+                        index++
+                    }
                 }
             });
             groupsRetrieved(groups);
@@ -343,6 +355,81 @@ export async function requestLocationPermission() {
     }
 }
 
+//requests Camera Library permission
+export async function requestCameraPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: "Camera Permission",
+          message:
+            "This App needs access to your camera " +
+            "so you can take awesome pictures.",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK"
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can use the camera");
+      } else {
+        console.log("Camera permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
+  //requetss Writing to External Storage
+  export async function requestWriteExternalPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: "Write External Permission",
+          message:
+            "This App needs access to your writing " +
+            "so you can store docs..",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK"
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can write");
+      } else {
+        console.log("Writing permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+  
+   //requetss Read to External Storage
+   export async function requestReadExternalPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        {
+          title: "Read External Permission",
+          message:
+            "This App needs access to your reading " +
+            "so you can read docs..",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK"
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can read");
+      } else {
+        console.log("Reading permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
 // adds a like or a dislike to the current group
 // inputs gid = group id, like = if true adds 1 to database if false adds -1
 export function addLikeDislike(gid,like){
@@ -372,6 +459,92 @@ export function addLikeDislike(gid,like){
 
     })
     .catch((error) => {console.log(error)})       
+}
+
+
+export async function retreiveRequests(uid,retrieveRequests){
+    var ref = firestore().collection("Users").doc(uid).collection("Requests")
+    return ref.onSnapshot((querrySnapshot) =>{
+        const groupRequestList = [];
+        const friendRequestList = [];
+        if (querrySnapshot != null){
+            querrySnapshot.forEach((doc) =>{
+                if(doc.data().type == "group"){
+                    groupRequestList.push({
+                        info: doc.data(),
+                        docID: doc.id
+                    })
+                }
+                else{
+                    friendRequestList.push({
+                        info: doc.data(),
+                        docID: doc.id
+                    })
+                }   
+                
+            })
+        }
+        retrieveRequests(groupRequestList,friendRequestList);
+        
+    })
+
+}
+
+//creates a group entry request
+//inputs uid: current user id, gid: groups id, goid: group owner id
+export function createGroupRequest(uid,gid,goid,groupName,userName){
+    
+
+    //checking if user is in group
+    firestore().collection("Groups").doc(gid).get().then((doc) =>{
+        
+        var pending = doc.data().PendingGroupUsers;
+        if(!pending.includes(uid)){
+
+            //placing request in users request collection
+            firestore().collection("Users").doc(goid).collection("Requests").add({
+                user: uid,
+                userName: userName,
+                group: gid,
+                groupName: groupName,
+                type: "group",
+            })
+
+            //placing user in pending queue
+            firestore().collection("Groups").doc(gid).update({
+                PendingGroupUsers: firestore.FieldValue.arrayUnion(uid)
+            })
+        }
+        else{
+             console.log("already in group")
+        }
+    })
+    
+
+
+
+}
+
+//accept user group request for private groups
+//inputs uid: user id who sent request, gid: group id for request, goid: group owner id, 
+//docID: the request document id for firebase
+export function acceptGroupRequest(uid,gid,goid,docID){
+    addUserToGroup(uid,gid)
+    firestore().collection("Groups").doc(gid).update({
+        PendingGroupUsers: firestore.FieldValue.arrayRemove(uid)
+    })
+    firestore().collection("Users").doc(goid).collection("Requests").doc(docID).delete();
+    
+}
+
+//rejects user join request for a specific private group
+//inputs uid: user id who sent request, gid: group id for request, goid: group owner id, 
+//docID: the request document id for firebase
+export function rejectGroupRequest(goid,gid,docID,uid){
+    firestore().collection("Users").doc(goid).collection("Requests").doc(docID).delete();
+    firestore().collection("Groups").doc(gid).update({
+        PendingGroupUsers: firestore.FieldValue.arrayRemove(uid)
+    })
 }
 
 

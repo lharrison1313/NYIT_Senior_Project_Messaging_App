@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     
     field:{
         width: 200, height:40, 
-        borderWidth: 1,
         marginVertical: 5, 
         backgroundColor: color_c, 
         width:300

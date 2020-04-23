@@ -16,6 +16,10 @@ export default class RegisterForm extends Component{
         }
     }
 
+    alertDialog = (error) =>{
+        alert(error)
+    }
+    
     handleRegister = () =>{
         if(this.state.passwordField !== this.state.rePasswordField){
             alert('Password fields dont match')
@@ -24,7 +28,7 @@ export default class RegisterForm extends Component{
             alert('one or more fields are empty')
         }
         else{
-            this.props.signUp(this.state.emailField,this.state.passwordField,this.state.usernameField);
+            this.props.signUp(this.state.emailField,this.state.passwordField,this.state.usernameField,this.alertDialog);
         }
     }
 

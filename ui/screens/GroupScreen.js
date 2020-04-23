@@ -4,7 +4,7 @@ import GroupBar from '../components/GroupBar';
 import { FlatList, TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CircleButton from '../components/CircleButton';
-import {AppStyles, color_a, color_b, color_c} from '../styles/AppStyles'
+import {AppStyles, color_a, color_b, color_c, color_d, color_e} from '../styles/AppStyles'
 
 
 const plus = <Icon name="plus-circle" size={25} color= {color_a} />;
@@ -23,14 +23,13 @@ export default class GroupScreen extends Component{
         this.getGroups(this.retrieveGroups)
         .then((unsub) => {
             this.unsubscribe = unsub
-            console.log("subscribe")})
+        })
         .catch((error)=> console.log("GroupScreen: ",error))
         
     }
 
     componentWillUnmount(){
         if(this.unsubscribe != null){
-            console.log("unsubscribe")
             this.unsubscribe()
         }
     }
@@ -42,15 +41,41 @@ export default class GroupScreen extends Component{
     }
 
     textChanged = (input) =>{
-            this.setState({groupList:[]})
-            if(input == ""){
-                this.unsubscribe()
-                this.getGroups(this.retrieveGroups).then((unsub) => this.unsubscribe = unsub )
-            }
-            else{
-                this.unsubscribe()
-                this.getGroups(this.retrieveGroups,input).then((unsub) => this.unsubscribe = unsub )
-            }
+        this.setState({groupList:[]})
+        if(input == ""){
+            this.unsubscribe()
+            this.getGroups(this.retrieveGroups).then((unsub) => this.unsubscribe = unsub )
+        }
+        else{
+            this.unsubscribe()
+            this.getGroups(this.retrieveGroups,input).then((unsub) => this.unsubscribe = unsub )
+        }
+    }
+
+    renderBar = (item) =>{
+        var color = ""
+        if(item.Info.Private){
+            color = color_e   
+        }
+        else{
+            color = color_b
+        }
+        var style = {
+            flexDirection:'column',
+            backgroundColor: color,
+            height: 120,
+            padding: 10,
+            borderColor: color_a,
+            borderBottomWidth: 1
+        }
+
+        return(<GroupBar
+            info = {item.Info}
+            date = {item.Date}
+            id = {item.id}
+            bar_style = {style}
+            navigation = {this.props.navigation}
+        />)
     }
 
     render(){
@@ -73,13 +98,7 @@ export default class GroupScreen extends Component{
                 <FlatList
                     data = {this.state.groupList}
                     renderItem={({ item }) => (
-                        <GroupBar
-                            info = {item.Info}
-                            date = {item.Date}
-                            id = {item.id}
-                            bar_style = {styles.bar_container}
-                            navigation = {this.props.navigation}
-                        />
+                        this.renderBar(item)
                         )}
                     keyExtractor = {item => item.id}
                 />

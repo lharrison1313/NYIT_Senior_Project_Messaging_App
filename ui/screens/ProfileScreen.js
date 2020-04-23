@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity,SafeAreaView } from 'react-native';
-import{withNavigation} from "react-navigation";
+import {StyleSheet, View, Text, SafeAreaView } from 'react-native';
+import {getUserInfo, getCurrentUserID} from "../../api/MessagingAppAPI"
 import OvalButton from "../components/OvalButton";
 import {signOut} from '../../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AppStyles, color_c } from '../styles/AppStyles';
 
 
-class ProfilePage extends Component{
+export default class ProfileScreen extends Component{
     constructor(props){
         super(props)
         this.state = {
             name: "Default Name",
-            status: "Offline",
+            status: "Online",
         }
+    }
+
+    componentDidMount(){
+       getUserInfo(getCurrentUserID(), this.userInfoRetrieved)
+    }
+
+    userInfoRetrieved = (info) =>{
+        this.setState({name: info.UserName});
     }
 
     render(){
@@ -33,6 +41,8 @@ class ProfilePage extends Component{
                     </Text>
 
                     <OvalButton text="Friends" onPress={() => this.props.navigation.navigate('Friends')}/>
+
+                    <OvalButton text="Requests" handler = {() => this.props.navigation.navigate("Requests")}/>
 
                     <OvalButton text="Settings" handler ={() => this.props.navigation.navigate('Settings')}/>
                     
@@ -57,4 +67,3 @@ const styles = StyleSheet.create({
 
 })
 
-export default withNavigation(ProfilePage)
