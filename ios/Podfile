@@ -35,10 +35,11 @@ target 'NYIT_Messaging_App' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
-  target 'NYIT_Messaging_AppTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+  # target 'NYIT_Messaging_App' do
+  #   inherit! :search_paths
+  #   # Pods for testing
+  # end
+  
   # React Native Maps dependencies
   rn_maps_path = '../node_modules/react-native-maps'
   pod 'react-native-google-maps', :path => rn_maps_path
@@ -50,9 +51,9 @@ end
 target 'NYIT_Messaging_App-tvOS' do
   # Pods for NYIT_Messaging_App-tvOS
 
-  target 'NYIT_Messaging_App-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+  # target 'NYIT_Messaging_App-tvOS' do
+  #   inherit! :search_paths
+  #   # Pods for testing
+  # end
 
 end
