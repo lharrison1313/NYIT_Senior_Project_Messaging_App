@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import {View, TextInput, Text, TouchableOpacity, Image,SafeAreaView} from 'react-native';
-import {requestLocationPermission} from "../../api/MessagingAppAPI";
+import {requestLocationPermission,requestCameraLibraryPermission,requestCameraPermission,requestReadExternalPermission,requestWriteExternalPermission} from "../../api/MessagingAppAPI";
 import OvalButton from "../components/OvalButton";
 import {AppStyles,color_a,color_b,color_c} from "../styles/AppStyles";
 import MapView from 'react-native-maps';
@@ -20,6 +20,9 @@ export default class LoginForm extends Component{
 
     componentDidMount(){
         requestLocationPermission()
+        requestCameraPermission()
+        requestWriteExternalPermission()
+        requestReadExternalPermission()
     }
 
     alertDialog = () =>{
