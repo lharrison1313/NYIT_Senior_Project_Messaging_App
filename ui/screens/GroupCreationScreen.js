@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 
-
+// add a clear state
 
 
 export default class GroupCreationScreen extends Component{
@@ -61,9 +61,13 @@ export default class GroupCreationScreen extends Component{
         else {
             
             return(
-                <View style={{alignItems:'center',marginVertical:10}}>
-                    <Image source={this.state.groupImageSource} style={{height:100,width:100}} />
-                </View>
+                
+                <TouchableOpacity 
+                style = {{marginVertical:50,alignItems:'center'}}
+                onPress = {this.imagebuttonHandler}>
+                     <Image source={this.state.groupImageSource} style={{height:100,width:100}}  onPress = {this.imagebuttonHandler}/>
+                </TouchableOpacity>
+                
             )
 
         }
