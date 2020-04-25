@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, View, Text, SafeAreaView ,TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, SafeAreaView ,TouchableOpacity, Image} from 'react-native';
 import {getUserInfo, getCurrentUserID} from "../../api/MessagingAppAPI"
 import OvalButton from "../components/OvalButton";
 import {signOut} from '../../api/MessagingAppAPI';
@@ -15,6 +15,28 @@ export default class ProfileScreen extends Component{
             name: "Default Name",
             status: "Online",
             groupImageSource:""
+
+        }
+    }
+    renderImage = ()=>{
+        if(this.state.groupImageSource == ""){
+             return(
+                <TouchableOpacity 
+                style = {{marginVertical:50,alignItems:'center'}}
+                onPress = {this.imagebuttonHandler}>
+                    <Icon name="user" size={90} color={color_c} />
+                </TouchableOpacity>
+             )
+        }
+        else {
+            
+            return(
+                <TouchableOpacity 
+                style = {{marginVertical:50,alignItems:'center'}}
+                onPress = {this.imagebuttonHandler}>
+                    <Image source={this.state.groupImageSource} style={{height:100,width:100}} onPress = {this.imagebuttonHandler} />
+                </TouchableOpacity>
+            )
 
         }
     }
@@ -52,12 +74,7 @@ export default class ProfileScreen extends Component{
                 <View style = {styles.content_container}>
 
                     {/* <Icon name="user" size={100} color={color_c}/> */}
-                <TouchableOpacity
-               
-               onPress = {this.imagebuttonHandler}
-               >
-                   <Icon name="user" size={100} color={color_c} />
-               </TouchableOpacity>
+                    {this.renderImage()}
 
 
                     <Text style = {{margin: 10,}}>
