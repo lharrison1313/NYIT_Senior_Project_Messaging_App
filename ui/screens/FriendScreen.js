@@ -3,7 +3,7 @@ import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import{withNavigation} from "react-navigation"
 import { FlatList, TextInput} from 'react-native-gesture-handler';
 import {getUsers} from "../../api/MessagingAppAPI"
-import FriendBar from "./FriendBar"
+import FriendBar from '../components/FriendBar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const plus = <Icon name="plus-circle" size={40} color="#00BED6" />;

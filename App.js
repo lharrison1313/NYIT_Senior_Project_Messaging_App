@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import AddFriendScreen from './ui/screens/AddFriendScreen'
-import FriendScreen from "./ui/screens/FriendScreen"
+import FriendScreen from "./ui/screens/FriendScreen";
 import MessagingScreen from './ui/screens/MessagingScreen';
 import GroupScreen from './ui/screens/GroupScreen';
 import GroupInfoScreen from "./ui/screens/GroupInfoScreen";
@@ -71,10 +71,12 @@ function MyProfileStackScreen(){
   return(
     <MyProfileStack.Navigator>
       <MyProfileStack.Screen name="Profile" component = {ProfileScreen} options={{headerShown:false}}/>
-      <MyProfileStack.Screen name="Settings" component = {SettingsScreen} />
+      <MyProfileStack.Screen name="Settings" component = {SettingsScreen}/>
       <MyProfileStack.Screen name="ChangePassword"  component = {ForgetPasswordScreen}/>
       <MyProfileStack.Screen name="ChangeEmail"  component = {ChangeEmailScreen}/>
       <MyProfileStack.Screen name="Requests"  component = {RequestScreen}/>
+      <MyProfileStack.Screen name="Friend"  component = {FriendScreen}/>
+      <MyProfileStack.Screen name="AddFriend"  component = {AddFriendScreen}/>
     </MyProfileStack.Navigator>
   );
 }
