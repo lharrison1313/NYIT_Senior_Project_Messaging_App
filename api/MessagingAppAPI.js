@@ -535,5 +535,26 @@ export function rejectGroupRequest(goid,gid,docID,uid){
     })
 }
 
+export function addInterest(uid,userInterest){
+    var ref = firestore().collection("Users").doc(uid)
+    ref.update({
+        Interests: firestore.FieldValue.arrayUnion(userInterest)
+    })
+}
+
+export function removeInterest(uid,userInterest){
+    firestore().collection("Users").doc(uid).update({
+        Interests: firestore.FieldValue.arrayRemove(userInterest)
+    })
+}
+
+export function retrieveInterests(uid,retrieveInterests){
+
+    firestore().collection("Users").doc(uid).get().then((doc)=>{
+        retrieveInterests(doc.data().Interests)
+    })
+
+}
+
 
 

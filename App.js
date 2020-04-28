@@ -6,10 +6,11 @@ import GroupInfoScreen from "./ui/screens/GroupInfoScreen";
 import GroupMapScreen from './ui/screens/GroupMapScreen'
 import ProfileScreen from './ui/screens/ProfileScreen';
 import SettingsScreen from './ui/screens/SettingsScreen';
-import ForgetPasswordScreen from './ui/screens/ForgetPasswordScreen'
-import ChangeEmailScreen from './ui/screens/ChangeEmailScreen'
-import GroupCreationScreen from "./ui/screens/GroupCreationScreen"
-import RequestScreen from "./ui/screens/RequestScreen" 
+import ForgetPasswordScreen from './ui/screens/ForgetPasswordScreen';
+import ChangeEmailScreen from './ui/screens/ChangeEmailScreen';
+import GroupCreationScreen from "./ui/screens/GroupCreationScreen";
+import RequestScreen from "./ui/screens/RequestScreen"; 
+import UserInterestScreen from "./ui/screens/UserInterestScreen";
 import {NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -73,6 +74,7 @@ function MyProfileStackScreen(){
       <MyProfileStack.Screen name="ChangePassword"  component = {ForgetPasswordScreen}/>
       <MyProfileStack.Screen name="ChangeEmail"  component = {ChangeEmailScreen}/>
       <MyProfileStack.Screen name="Requests"  component = {RequestScreen}/>
+      <MyProfileStack.Screen name="Interests"  component = {UserInterestScreen}/>
     </MyProfileStack.Navigator>
   );
 }
