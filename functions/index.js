@@ -70,3 +70,9 @@ exports.sendNotificationToGroup = functions.firestore
         console.log('Error sending message:', error);
         }); 
     })
+
+exports.sendGroupInterestNotification = functions.firestore
+    .document("Group/{Groups}")
+    .onCreate((snap,context) =>{
+        //remember group hashtags must be removed and replaced with _
+    })

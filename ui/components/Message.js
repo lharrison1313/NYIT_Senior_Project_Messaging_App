@@ -25,7 +25,7 @@ export default class Message extends Component{
 const styles = StyleSheet.create({
     sent_message_container:{
         alignSelf: 'flex-end',
-        backgroundColor: color_c,
+        backgroundColor: color_d,
         padding: 20,
         marginLeft:120,
         marginRight:20,

@@ -538,14 +538,20 @@ export function rejectGroupRequest(goid,gid,docID,uid){
 export function addInterest(uid,userInterest){
     var ref = firestore().collection("Users").doc(uid)
 
+    //adding hashtags
     var hashInterest = []
     userInterest.forEach((item)=>{
         hashInterest.push("#"+item)
+        messaging().subscribeToTopic("_"+item).then(()=>console.log("subscribed to group notifications for group: " + "_"+item))
     })
-
 
     ref.update({
         Interests: firestore.FieldValue.arrayUnion.apply(null,hashInterest)
+    })
+
+    //subscribing user to push notifications
+    hashInterest.forEach((interest) =>{
+        
     })
 }
 
@@ -554,6 +560,9 @@ export function removeInterest(uid,userInterest){
     ref.update({
         Interests: firestore.FieldValue.arrayRemove(userInterest)
     })
+
+    var topic = "_"+userInterest.substring(1);
+    messaging().unsubscribeFromTopic(topic).then(()=>console.log("unsubscribed to group notifications for group: " + topic ))
 }
 
 export async function retrieveInterests(uid,retrieveInterests){
