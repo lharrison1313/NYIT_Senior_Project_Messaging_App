@@ -537,20 +537,28 @@ export function rejectGroupRequest(goid,gid,docID,uid){
 
 export function addInterest(uid,userInterest){
     var ref = firestore().collection("Users").doc(uid)
+
+    var hashInterest = []
+    userInterest.forEach((item)=>{
+        hashInterest.push("#"+item)
+    })
+
+
     ref.update({
-        Interests: firestore.FieldValue.arrayUnion(userInterest)
+        Interests: firestore.FieldValue.arrayUnion.apply(null,hashInterest)
     })
 }
 
 export function removeInterest(uid,userInterest){
-    firestore().collection("Users").doc(uid).update({
+    var ref = firestore().collection("Users").doc(uid)
+    ref.update({
         Interests: firestore.FieldValue.arrayRemove(userInterest)
     })
 }
 
-export function retrieveInterests(uid,retrieveInterests){
+export async function retrieveInterests(uid,retrieveInterests){
 
-    firestore().collection("Users").doc(uid).get().then((doc)=>{
+    return firestore().collection("Users").doc(uid).onSnapshot((doc)=>{
         retrieveInterests(doc.data().Interests)
     })
 

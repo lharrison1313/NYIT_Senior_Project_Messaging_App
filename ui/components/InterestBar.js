@@ -3,6 +3,7 @@ import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AppStyles, color_a, color_b, color_c, color_d } from '../styles/AppStyles';
 import { round } from 'react-native-reanimated';
+import {removeInterest, getCurrentUserID} from "../../api/MessagingAppAPI"
 
 const deleteIcon = <Icon name="trash" size={25} color= {color_a} />;
 
@@ -27,7 +28,7 @@ export default class InterestBar extends Component{
                 </View>
 
                 <View style = {{flex:.20, flexDirection: "row"}}>
-                    <TouchableOpacity style={{flex:1, marginHorizontal: 5}} onclick = {() => this.props.onclick}>
+                    <TouchableOpacity style={{flex:1, marginHorizontal: 5}} onPress = {() => this.props.handleDelete(this.props.interest)}>
                         {deleteIcon}
                     </TouchableOpacity>
                 </View>

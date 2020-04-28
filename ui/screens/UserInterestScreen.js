@@ -22,25 +22,35 @@ export default class UserInterestScreen extends Component{
     }
 
     componentDidMount(){
-        retrieveInterests(getCurrentUserID(),this.retriveInterestCallBack)
+        retrieveInterests(getCurrentUserID(),this.retriveInterestCallBack).then((unsubscribe)=>{
+            this.unsubscribe = unsubscribe;
+        })
+    }
+
+    componentWillUnmount(){
+        this.unsubscribe();
     }
 
     retriveInterestCallBack = (interests) =>{
+
         this.setState({
             currentInterests: interests
         })
-        console.log(interests)
     }
 
+    handleAddInterest(){
+        addInterest(getCurrentUserID(),this.state.interests)
+        this.InterestTextInput.clear();
+    }
 
-    buttonHandler = () =>{
-        const uid = getCurrentUserID();
-        this.state.interests.forEach((item) =>{
-            addInterest(uid,item);
+    handleRemoveinterest = (interest) =>{
+        removeInterest(getCurrentUserID(),interest)
+        var index = this.state.currentInterests.indexOf(interest)
+        this.setState({
+            currentInterests: this.state.currentInterests.splice(index,1)
         })
         
     }
-
 
     render(){
     
@@ -48,10 +58,10 @@ export default class UserInterestScreen extends Component{
             <SafeAreaView style={{flex:1}}>
             <View style = {AppStyles.screen}>
                 <View style = {styles.content_container}>
-                    <InterestTextInput style = {styles.text_input} retrieveInterestList= {this.interestParser}/>
+                    <InterestTextInput ref = {ref => {this.InterestTextInput = ref}} style = {styles.text_input} retrieveInterestList= {this.interestParser} />
                     
                     <View style = {{alignItems: "center", justifyContent: "center"}}>
-                        <OvalButton text = "Add Interests" handler={()=>this.buttonHandler()}/>
+                        <OvalButton text = "Add Interests" handler={() => this.handleAddInterest()}/>
                     </View>
 
                     <Text>
@@ -61,7 +71,7 @@ export default class UserInterestScreen extends Component{
                     <FlatList
                     data = {this.state.currentInterests}
                     renderItem={({ item }) => (
-                            <InterstBar interest={item}/>
+                            <InterstBar interest={item} handleDelete={this.handleRemoveinterest}/>
                         )}
                     keyExtractor = {item => item}
                     />
