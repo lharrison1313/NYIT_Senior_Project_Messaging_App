@@ -206,7 +206,7 @@ export async function getCurrentUserGroups(groupsRetrieved,filter){
     }
     else{
         //filter by group name
-        var ref = firestore().collection("Groups").where("GroupUsers","array-contains",getCurrentUserID()).where("GroupName","==",filter).orderBy("GroupName")
+        var ref = firestore().collection("Groups").where("GroupUsers","array-contains",getCurrentUserID()).where("GroupName","==",filter)
     }
 
     return ref.onSnapshot((querySnapshot) => {
@@ -250,7 +250,7 @@ export async function getAllGroups(groupsRetrieved,filter){
     }
     else{
         //filter by interest
-        var ref = firestore().collection("Groups").where("Interests","array-contains",filter).orderBy("GroupName")
+        var ref = firestore().collection("Groups").where("Interests","array-contains","#"+filter).orderBy("GroupName")
     }
 
     return ref.onSnapshot((querySnapshot) => {

@@ -43,8 +43,8 @@ export default class RequestScreen extends Component{
 
     render(){
         var data = [];
-        var group = <Icon name="group" size={25} color={color_d} />;
-        var friend =  <Icon name="user" size={25} color={color_d} />;
+        var group = <Icon name="group" size={25} color={color_c} />;
+        var friend =  <Icon name="user" size={25} color={color_c} />;
         if(this.state.requestSwitch == true){
             data = this.state.groupRequestList;
             group = <Icon name="group" size={25} color={color_a} />;
@@ -59,7 +59,7 @@ export default class RequestScreen extends Component{
             <View style ={AppStyles.screen}>
                 <View Style = {styles.content_container}>
 
-                    <View style = {{flexDirection: "row", backgroundColor: color_d, paddingVertical: 20}}>
+                    <View style = {{flexDirection: "row", backgroundColor: color_c, paddingVertical: 20}}>
                         <View style = {{flex: 1, alignItems: "center"}}>
                             <CircleButton icon = {group} handler = {() => this.setState({requestSwitch: true})}/>
                         </View>
