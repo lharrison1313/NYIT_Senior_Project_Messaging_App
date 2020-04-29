@@ -573,5 +573,30 @@ export async function retrieveInterests(uid,retrieveInterests){
 
 }
 
+export async function getUsers(usersRetrieved, filter){
+    if(filter == null){
+        //given no filter get all groups in database
+        var ref = firestore().collection("Users").orderBy("UserName")
+    }
+    else{
+        //filter by user name
+        var ref = firestore().collection("Users").where("UserName","==",filter)
+    }
 
+    return ref.onSnapshot((querySnapshot)=>{
+        if(querySnapshot !== null){
+            var users = []
+            querySnapshot.forEach((doc)=>{
+                users.push({
+                    UserName: doc.data().UserName,
+                    id: doc.id
+                    //Interests: doc.data().Interests
+                    //Location: doc.data().Location
+                })
+            })
+            usersRetrieved(users)
+        }
+
+    })
+}
 
