@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, TouchableHighlightBase } from 'react-native';
-import {addUserToFriend,getCurrentUserID,removeUserFromFriend, getUserInfo} from '../../api/MessagingAppAPI';
+import {createFriendRequest,getCurrentUserID,removeUserFromFriend, getUserInfo} from '../../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class FriendBar extends Component{
@@ -12,7 +12,7 @@ export default class FriendBar extends Component{
     }
 
     handleAddFriend = () =>{
-        addUserToFriend(getCurrentUserID(),this.props.id)
+        createFriendRequest(getCurrentUserID(), "test", this.props.id)
     }
 
     handleRemoveFriend = () =>{
@@ -27,7 +27,7 @@ export default class FriendBar extends Component{
     
         return(
             
-            <TouchableOpacity style = {styles.bar_container} onPress = {() => this.NavigateToInfoScreen()}>
+            <TouchableOpacity style = {styles.bar_container} >
                 <View style = {{flexDirection:"row", flex:1 }}>
 
                     <View style={styles.left_container}>
@@ -43,12 +43,12 @@ export default class FriendBar extends Component{
                     </View>
 
                     <View style={styles.right_container}>
-                        <TouchableOpacity style={styles.add_button} onPress={() => this.handleAddFriend()}>
+                        <TouchableOpacity style={styles.add_button} onPress ={() => this.handleAddFriend()} > 
                             <Text style ={styles.add_text}>Add</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.remove_button} onPress={() => this.handleRemoveFriend}>
+                        {/* <TouchableOpacity style={styles.remove_button} onPress={() => this.handleRemoveFriend}>
                             <Text style ={styles.add_text}>Remove</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
 
                     

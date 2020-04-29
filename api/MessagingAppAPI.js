@@ -508,9 +508,41 @@ export function createGroupRequest(uid,gid,goid,groupName,userName){
         }
     })
     
+}
 
+export function createFriendRequest(uid,userName,fid){
+    //placing request in users request collection
+    firestore().collection("Users").doc(fid).collection("Requests").add({
+        user: uid,
+        userName: userName,
+        type: "friend",
+    })
 
+    //placing user in pending queue
+    firestore().collection("Users").doc(fid).update({
+        PendingFriends: firestore.FieldValue.arrayUnion(uid)
+    })
+}
 
+//accept user friend request 
+//inputs uid: user id who sent request, sid: friend request sender id, docID: request document id
+export function acceptFriendRequest(uid,sid,docID){
+    firestore().collection("Users").doc(uid).update({
+        PendingFriends: firestore.FieldValue.arrayRemove(sid),
+        Friends: firestore.FieldValue.arrayUnion(sid)
+    })
+    firestore().collection("Users").doc(uid).collection("Requests").doc(docID).delete();
+    
+}
+
+//reject user friend request 
+//inputs uid: user id who sent request, sid: friend request sender id, docID: request document id
+export function rejectFriendRequest(uid,sid,docID){
+    firestore().collection("Users").doc(uid).update({
+        PendingFriends: firestore.FieldValue.arrayRemove(sid)
+    })
+    firestore().collection("Users").doc(uid).collection("Requests").doc(docID).delete();
+    
 }
 
 //accept user group request for private groups
