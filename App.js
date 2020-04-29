@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import messaging from '@react-native-firebase/messaging';
 import MessagingScreen from './ui/screens/MessagingScreen';
+import FriendScreen from './ui/screens/FriendScreen';
+import AddFriendScreen from './ui/screens/AddFriendScreen';
 import LoginScreen from './ui/screens/LoginScreen';
 import GroupScreen from './ui/screens/GroupScreen';
 import GroupInfoScreen from "./ui/screens/GroupInfoScreen";
@@ -77,6 +79,8 @@ function MyProfileStackScreen(){
       <MyProfileStack.Screen name="ChangeEmail"  component = {ChangeEmailScreen}/>
       <MyProfileStack.Screen name="Requests"  component = {RequestScreen}/>
       <MyProfileStack.Screen name="Interests"  component = {UserInterestScreen}/>
+      <MyProfileStack.Screen name="Friends"  component = {FriendScreen}/>
+      <MyProfileStack.Screen name="AddFriends"  component = {AddFriendScreen}/>
     </MyProfileStack.Navigator>
   );
 }

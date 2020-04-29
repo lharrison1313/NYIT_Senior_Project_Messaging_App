@@ -61,7 +61,7 @@ export default class ProfileScreen extends Component{
                         {this.state.name}
                     </Text>
 
-                    <OvalButton text="Friends"/>
+                    <OvalButton text="Friends" handler = {()=> this.props.navigation.navigate("Friends")}/>
 
                     <OvalButton text="Interests" handler= {()=> this.props.navigation.navigate("Interests")}/>
 

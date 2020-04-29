@@ -106,4 +106,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default withNavigation(FriendScreen)
+export default withNavigation(AddFriendScreen)
