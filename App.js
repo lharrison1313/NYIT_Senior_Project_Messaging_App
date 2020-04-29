@@ -3,22 +3,25 @@ import React, { Component } from 'react';
 import AddFriendScreen from './ui/screens/AddFriendScreen'
 import LoginScreen from './ui/screens/LoginScreen'
 import FriendScreen from "./ui/screens/FriendScreen";
+import messaging from '@react-native-firebase/messaging';
 import MessagingScreen from './ui/screens/MessagingScreen';
 import GroupScreen from './ui/screens/GroupScreen';
 import GroupInfoScreen from "./ui/screens/GroupInfoScreen";
 import GroupMapScreen from './ui/screens/GroupMapScreen'
 import ProfileScreen from './ui/screens/ProfileScreen';
 import SettingsScreen from './ui/screens/SettingsScreen';
-import ForgetPasswordScreen from './ui/screens/ForgetPasswordScreen'
-import ChangeEmailScreen from './ui/screens/ChangeEmailScreen'
-import GroupCreationScreen from "./ui/screens/GroupCreationScreen"
-import RequestScreen from "./ui/screens/RequestScreen" 
-import {NavigationContainer } from '@react-navigation/native';
+import ForgetPasswordScreen from './ui/screens/ForgetPasswordScreen';
+import ChangeEmailScreen from './ui/screens/ChangeEmailScreen';
+import GroupCreationScreen from "./ui/screens/GroupCreationScreen";
+import RequestScreen from "./ui/screens/RequestScreen"; 
+import UserInterestScreen from "./ui/screens/UserInterestScreen";
+import {NavigationContainer, useNavigation } from '@react-navigation/native';
 import {createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {subscribeToAuthChanges,getAllGroups,getCurrentUserGroups,registerAppWithFCM,requestUserPermission,requestCameraLibraryPermission} from './api/MessagingAppAPI'
+import {subscribeToAuthChanges,getAllGroups,getCurrentUserGroups,registerAppWithFCM,requestUserPermission,requestCameraLibraryPermission, getUserInfo} from './api/MessagingAppAPI'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AppStyles, color_a, color_b, color_c, color_d } from './ui/styles/AppStyles';
+import { withNavigation } from 'react-navigation';
 
 
 function myGroupScreen({navigation}){
@@ -78,9 +81,11 @@ function MyProfileStackScreen(){
       <MyProfileStack.Screen name="Requests"  component = {RequestScreen}/>
       <MyProfileStack.Screen name="Friend"  component = {FriendScreen}/>
       <MyProfileStack.Screen name="AddFriend"  component = {AddFriendScreen}/>
+      <MyProfileStack.Screen name="Interests"  component = {UserInterestScreen}/>
     </MyProfileStack.Navigator>
   );
 }
+
 
 const AuthStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -92,12 +97,31 @@ export default class App extends React.Component {
     this.state = {
         signedIn: false
     }
+    this.initialRoute = "MyGroups"
+    
   }
 
   componentDidMount(){
+
     registerAppWithFCM()
     requestUserPermission()
     subscribeToAuthChanges(this.authStateChanged)
+    
+    
+    // messaging().setBackgroundMessageHandler((remoteMessage)=>{
+    //   if(remoteMessage.data.type == "message"){
+    //     this.initialRoute = "GroupMap"
+    //   }
+    //   else if(remoteMessage.data.type == "group"){
+    //     this.initialRoute = "MyProfile"
+    //   }
+    //   else{
+    //     this.initialRoute = "MyProfile"
+    //   }
+    // })
+    
+    
+
   }
 
   authStateChanged = (user) =>{
@@ -118,7 +142,7 @@ export default class App extends React.Component {
     if(this.state.signedIn){
       return(
         <NavigationContainer>
-          <Tab.Navigator tabBarOptions = {{activeBackgroundColor:color_a, inactiveBackgroundColor:color_a, inactiveTintColor:color_c, activeTintColor:color_b} }>
+          <Tab.Navigator initialRouteName={this.initialRoute} tabBarOptions = {{activeBackgroundColor:color_a, inactiveBackgroundColor:color_a, inactiveTintColor:color_c, activeTintColor:color_b} }>
             <Tab.Screen name="MyGroups" component={MyGroupsStackScreen} options={{tabBarIcon: ({ color, size }) => (<Icon name="group" size={size} color={color}/>)}} />
             <Tab.Screen name="GroupMap" component={GroupMapStackScreen} options={{tabBarIcon: ({ color, size }) => (<Icon name="map" size={size} color={color}/>)}} />
             <Tab.Screen name="SearchGroup" component={SearchGroupStackScreen} options={{tabBarIcon: ({ color, size }) => (<Icon name="search" size={size} color={color}/>)}} />

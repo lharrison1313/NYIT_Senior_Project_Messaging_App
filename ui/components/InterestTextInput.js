@@ -8,7 +8,8 @@ export default class InterestTextInput extends Component{
         super(props)
         this.state = {
             interestBlips: [],
-            keys: 0
+            keys: 0,
+            text: ""
         }
         this.keys = 0;
     }
@@ -28,9 +29,17 @@ export default class InterestTextInput extends Component{
             this.keys = 0;
         }
         this.setState({
-            interestBlips:  interestBlipsList
+            interestBlips:  interestBlipsList,
+            text: text
         })
         this.props.retrieveInterestList(text)
+    }
+
+    clear = () =>{
+        this.setState({
+            interestBlips: [],
+            text: ""
+        })
     }
 
     render(){
@@ -40,6 +49,7 @@ export default class InterestTextInput extends Component{
                 <TextInput
                 style = {this.props.style} 
                 onChangeText = {(text) => this.interestParser(text)}
+                value = {this.state.text}
                 placeholder = {"Enter Interests"}
                 />
                 <View style = {{flexDirection:"row"}}>

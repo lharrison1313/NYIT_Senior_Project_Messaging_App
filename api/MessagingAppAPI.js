@@ -229,7 +229,7 @@ export async function getCurrentUserGroups(groupsRetrieved,filter){
     }
     else{
         //filter by group name
-        var ref = firestore().collection("Groups").where("GroupUsers","array-contains",getCurrentUserID()).where("GroupName","==",filter).orderBy("GroupName")
+        var ref = firestore().collection("Groups").where("GroupUsers","array-contains",getCurrentUserID()).where("GroupName","==",filter)
     }
 
     return ref.onSnapshot((querySnapshot) => {
@@ -277,7 +277,7 @@ export async function getAllGroups(groupsRetrieved,filter){
     }
     else{
         //filter by interest
-        var ref = firestore().collection("Groups").where("Interests","array-contains",filter).orderBy("GroupName")
+        var ref = firestore().collection("Groups").where("Interests","array-contains","#"+filter).orderBy("GroupName")
     }
 
     return ref.onSnapshot((querySnapshot) => {
@@ -545,6 +545,44 @@ export function rejectGroupRequest(goid,gid,docID,uid){
     firestore().collection("Groups").doc(gid).update({
         PendingGroupUsers: firestore.FieldValue.arrayRemove(uid)
     })
+}
+
+export function addInterest(uid,userInterest){
+    var ref = firestore().collection("Users").doc(uid)
+
+    //adding hashtags
+    var hashInterest = []
+    userInterest.forEach((item)=>{
+        hashInterest.push("#"+item)
+        messaging().subscribeToTopic("_"+item).then(()=>console.log("subscribed to group notifications for group: " + "_"+item))
+    })
+
+    ref.update({
+        Interests: firestore.FieldValue.arrayUnion.apply(null,hashInterest)
+    })
+
+    //subscribing user to push notifications
+    hashInterest.forEach((interest) =>{
+        
+    })
+}
+
+export function removeInterest(uid,userInterest){
+    var ref = firestore().collection("Users").doc(uid)
+    ref.update({
+        Interests: firestore.FieldValue.arrayRemove(userInterest)
+    })
+
+    var topic = "_"+userInterest.substring(1);
+    messaging().unsubscribeFromTopic(topic).then(()=>console.log("unsubscribed to group notifications for group: " + topic ))
+}
+
+export async function retrieveInterests(uid,retrieveInterests){
+
+    return firestore().collection("Users").doc(uid).onSnapshot((doc)=>{
+        retrieveInterests(doc.data().Interests)
+    })
+
 }
 
 

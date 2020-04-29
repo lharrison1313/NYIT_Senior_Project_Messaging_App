@@ -13,7 +13,6 @@ export default class ProfileScreen extends Component{
         super(props)
         this.state = {
             name: "Default Name",
-            status: "Online",
             groupImageSource:""
 
         }
@@ -51,13 +50,11 @@ export default class ProfileScreen extends Component{
             <View style = {AppStyles.screen}>
                 <View style = {styles.content_container}>
 
-                    {/* <Icon name="user" size={100} color={color_c}/> */}
-                <TouchableOpacity
-               
-               onPress = {this.imagebuttonHandler}
-               >
-                   <Icon name="user" size={100} color={color_c} />
-               </TouchableOpacity>
+                    <TouchableOpacity
+                    onPress = {this.imagebuttonHandler}
+                    >
+                        <Icon name="user" size={100} color={color_c} />
+                    </TouchableOpacity>
 
 
                     <Text style = {{margin: 10,}}>
@@ -69,6 +66,8 @@ export default class ProfileScreen extends Component{
                     </Text>
 
                     <OvalButton text="Friends" onPress={() => this.props.navigation.navigate('Friends')}/>
+
+                    <OvalButton text="Interests" handler= {()=> this.props.navigation.navigate("Interests")}/>
 
                     <OvalButton text="Requests" handler = {() => this.props.navigation.navigate("Requests")}/>
 

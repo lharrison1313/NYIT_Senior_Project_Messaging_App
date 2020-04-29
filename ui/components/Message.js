@@ -8,14 +8,14 @@ export default class Message extends Component{
         if(this.props.sent){
             return(
                 <View style={styles.sent_message_container}>
-                    <Text style={{color:color_d}}>{this.props.sender_name}: {this.props.message_text}</Text>
+                    <Text style={{color:color_a}}>{this.props.sender_name}: {this.props.message_text}</Text>
                 </View>
             );
         }
         else{
             return(
                 <View style={styles.recieved_message_container}>
-                    <Text style={{color:color_c}}>{this.props.sender_name}: {this.props.message_text}</Text>
+                    <Text style={{color:color_a}}>{this.props.sender_name}: {this.props.message_text}</Text>
                 </View>
             );
         }
@@ -25,7 +25,7 @@ export default class Message extends Component{
 const styles = StyleSheet.create({
     sent_message_container:{
         alignSelf: 'flex-end',
-        backgroundColor: color_c,
+        backgroundColor: color_d,
         padding: 20,
         marginLeft:120,
         marginRight:20,
