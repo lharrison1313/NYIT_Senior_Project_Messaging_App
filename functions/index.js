@@ -54,7 +54,10 @@ exports.sendNotificationToGroup = functions.firestore
         const sender = snap.data().SenderName
 
         const message = {
-            data: {},
+            data: {
+                type: "message",
+                gid: gid
+            },
             notification:{
                 body: body,
                 title: sender,
@@ -72,7 +75,30 @@ exports.sendNotificationToGroup = functions.firestore
     })
 
 exports.sendGroupInterestNotification = functions.firestore
-    .document("Group/{Groups}")
+    .document("Groups/{Group}")
     .onCreate((snap,context) =>{
         //remember group hashtags must be removed and replaced with _
+        const interests = snap.data().Interests;
+        console.log(interests)
+
+        interests.forEach((element) => {
+            var body = "A group matching your interest " + element + " has been created.";
+
+            var message = {
+                data: {},
+                notification:{
+                    body: body,
+                    title: "Check out this group!",
+                },
+                topic: "_"+element.substring(1)
+            }
+
+            admin.messaging().send(message).then(response => {
+                console.log('Successfully sent message:', response);
+            })
+            .catch(error => {
+                console.log('Error sending message:', error);
+            }); 
+        });
+        
     })
