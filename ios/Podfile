@@ -35,7 +35,7 @@ target 'NYIT_Messaging_App' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
-  # target 'NYIT_Messaging_App' do
+  # target 'NYIT_Messaging_AppTests' do
   #   inherit! :search_paths
   #   # Pods for testing
   # end
@@ -53,6 +53,6 @@ target 'NYIT_Messaging_App-tvOS' do
   # target 'NYIT_Messaging_App-tvOS' do
   #   inherit! :search_paths
   #   # Pods for testing
-  # end
+ # end
 
 end
