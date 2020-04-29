@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import AddFriendScreen from './ui/screens/AddFriendScreen'
+import LoginScreen from './ui/screens/LoginScreen'
 import FriendScreen from "./ui/screens/FriendScreen";
 import MessagingScreen from './ui/screens/MessagingScreen';
 import GroupScreen from './ui/screens/GroupScreen';
