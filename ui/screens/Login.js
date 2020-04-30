@@ -61,7 +61,7 @@ export default class LoginForm extends Component{
 
                     <OvalButton text = "Login" handler = {this.handleLogin}/>
                     <OvalButton text = "Register" handler = {this.props.switch}/>
-                    <OvalButton text = "forgot password" handler = {() => this.props.navigation.navigate('ForgetPassword')}/>
+                    <OvalButton text = "Forgot Password" handler = {() => this.props.navigation.navigate('ForgetPassword')}/>
                 
                 </View>
             </View>
