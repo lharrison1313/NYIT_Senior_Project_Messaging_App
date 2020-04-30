@@ -18,6 +18,7 @@ const AppStyles = StyleSheet.create({
         backgroundColor: color_b,
         justifyContent: 'center',
         alignItems: 'center',
+        padding:3,
         borderRadius: 100,
         height: 50,
         width: 300,

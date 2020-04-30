@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, View, Text, SafeAreaView ,TouchableOpacity} from 'react-native';
-import {getUserInfo, getCurrentUserID} from "../../api/MessagingAppAPI"
+import {getUserInfo, getCurrentUserID, getCurrentUserName} from "../../api/MessagingAppAPI"
 import OvalButton from "../components/OvalButton";
 import {signOut} from '../../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -36,12 +36,13 @@ export default class ProfileScreen extends Component{
         });
     }
     componentDidMount(){
-       getUserInfo(getCurrentUserID(), this.userInfoRetrieved)
+       //getUserInfo(getCurrentUserID(), this.userInfoRetrieved)
+       this.setState({name: getCurrentUserName()})
     }
 
-    userInfoRetrieved = (info) =>{
-        this.setState({name: info.UserName});
-    }
+    // userInfoRetrieved = (info) =>{
+    //     this.setState({name: info.UserName});
+    // }
 
     render(){
     
