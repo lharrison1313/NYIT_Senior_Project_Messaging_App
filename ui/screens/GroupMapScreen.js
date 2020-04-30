@@ -106,6 +106,7 @@ export default class GroupMapScreen extends Component{
             width: window.width,
             height:120,
             backgroundColor: color,
+            borderRadius: 20
             
         }
 
@@ -204,14 +205,6 @@ const styles = StyleSheet.create({
         bottom: 5,
         borderRadius: 20,
         marginHorizontal: 2,
-    },
-
-    bar_container:{
-        flexDirection:'column',
-        flex:1,
-        padding:10,
-        width: window.width,
-        height:120
     },
 
     map:{

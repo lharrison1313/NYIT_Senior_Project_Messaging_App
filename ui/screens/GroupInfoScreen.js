@@ -163,26 +163,27 @@ export default class GroupInfoScreen extends Component{
             <ScrollView contentContainerStyle = {AppStyles.screen} >
                 <ScrollView contentContainerStyle = {styles.content_container}>
                     <Icon name="group" size={100} color={color_c}/>
+                    <View style = {{margin:30}}>
+                        <Text style = {styles.text}>
+                            Group: {this.info.GroupName}
+                        </Text>
+
+                        <Text style = {styles.text}>
+                            Location: {this.info.Location}
+                        </Text>
+
+                        <Text style = {styles.text}>
+                           Date: {this.date}
+                        </Text>
                     
-                    <Text>
-                        {this.info.GroupName}
-                    </Text>
+                        <Text style = {styles.text}>
+                            Interests: {this.info.Interests.join(" ")}
+                        </Text>
 
-                    <Text>
-                        {this.info.Location}
-                    </Text>
-
-                    <Text>
-                        {this.date}
-                    </Text>
-                   
-                    <Text>
-                        {this.info.Interests}
-                    </Text>
-
-                    <Text>
-                        {this.info.Description}
-                    </Text>
+                        <Text style = {styles.text}>
+                            Description: {this.info.Description}
+                        </Text>
+                    </View>
 
                     {this.renderMap()}
                     {this.renderButtons()}
@@ -201,6 +202,10 @@ const styles = StyleSheet.create({
         alignItems: "center", 
         justifyContent: "center",
         padding: 20
+    },
+
+    text: {
+        margin: 3
     },
 
     map:{

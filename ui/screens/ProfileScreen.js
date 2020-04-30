@@ -12,7 +12,8 @@ export default class ProfileScreen extends Component{
     constructor(props){
         super(props)
         this.state = {
-            name: "Default Name",
+            name: "",
+            id: "",
             groupImageSource:""
 
         }
@@ -36,13 +37,12 @@ export default class ProfileScreen extends Component{
         });
     }
     componentDidMount(){
-       //getUserInfo(getCurrentUserID(), this.userInfoRetrieved)
-       this.setState({name: getCurrentUserName()})
+       this.setState({
+           name: getCurrentUserName(),
+           id: getCurrentUserID()
+        
+        })
     }
-
-    // userInfoRetrieved = (info) =>{
-    //     this.setState({name: info.UserName});
-    // }
 
     render(){
     
@@ -58,8 +58,11 @@ export default class ProfileScreen extends Component{
                     </TouchableOpacity>
 
 
-                    <Text style = {{margin: 10,}}>
+                    <Text style = {{margin: 5,}}>
                         {this.state.name}
+                    </Text>
+                    <Text style = {{margin: 5,}}>
+                        {this.state.id}
                     </Text>
 
                     <OvalButton text="Friends" handler = {()=> this.props.navigation.navigate("Friends")}/>
