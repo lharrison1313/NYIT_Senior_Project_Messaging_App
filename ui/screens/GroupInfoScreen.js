@@ -102,7 +102,7 @@ export default class GroupInfoScreen extends Component{
             )
         }
         //the user is pending for group membership
-        else if(this.info.PendingGroupUsers.includes(getCurrentUserID())){
+        else if(this.info.PendingGroupUsers.includes(getCurrentUserID()) && this.info.Private){
             return(
             <View>
                 <OvalButton text = "Request is pending" />
