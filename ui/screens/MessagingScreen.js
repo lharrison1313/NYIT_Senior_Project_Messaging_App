@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   content_container:{
     flex:1,
     flexDirection: 'column',
-    backgroundColor: color_d,
+    backgroundColor: color_a,
   },
   message_area_container:{
     flex: 1,

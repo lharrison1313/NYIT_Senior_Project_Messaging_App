@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import messaging from '@react-native-firebase/messaging';
+import InviteFriendScreen from "./ui/screens/InviteFriendScreen"
 import MessagingScreen from './ui/screens/MessagingScreen';
 import FriendScreen from './ui/screens/FriendScreen';
 import AddFriendScreen from './ui/screens/AddFriendScreen';
@@ -36,6 +37,7 @@ function MyGroupsStackScreen(){
       <MyGroupsStack.Screen name="Message" component = {MessagingScreen} />
       <MyGroupsStack.Screen name="CreateGroup" component = {GroupCreationScreen}/>
       <MyGroupsStack.Screen name="GroupInfo" component = {GroupInfoScreen}/>
+      <MyGroupsStack.Screen name="InviteFriend" component = {InviteFriendScreen}/>
     </MyGroupsStack.Navigator>
   );
 }
@@ -48,6 +50,7 @@ function GroupMapStackScreen(){
       <GroupMapStack.Screen name="Message" component = {MessagingScreen}/>
       <GroupMapStack.Screen name="CreateGroup" component = {GroupCreationScreen}/>
       <GroupMapStack.Screen name="GroupInfo" component = {GroupInfoScreen}/>
+      <GroupMapStack.Screen name="InviteFriend" component = {InviteFriendScreen}/>
     </GroupMapStack.Navigator>
   );
 }
@@ -65,6 +68,7 @@ function SearchGroupStackScreen(){
       <SearchGroupStack.Screen name="Message" component = {MessagingScreen}/>
       <SearchGroupStack.Screen name="CreateGroup" component = {GroupCreationScreen}/>
       <SearchGroupStack.Screen name="GroupInfo" component = {GroupInfoScreen}/>
+      <SearchGroupStack.Screen name="InviteFriend" component = {InviteFriendScreen}/>
     </SearchGroupStack.Navigator>
   );
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, TouchableHighlightBase } from 'react-native';
-import {createFriendRequest,getCurrentUserID, removeFriend, getCurrentUserName} from '../../api/MessagingAppAPI';
+import {createFriendRequest,getCurrentUserID, removeFriend, getCurrentUserName, sendGroupInviteRequest} from '../../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {AppStyles, color_a, color_b, color_c, color_e} from "../styles/AppStyles"
 
@@ -20,6 +20,10 @@ export default class FriendBar extends Component{
         removeFriend(getCurrentUserID(),this.props.id)
     }
 
+    handleInviteFriend = () =>{
+        sendGroupInviteRequest(this.props.id, this.props.gid, getCurrentUserID(), this.props.groupName,getCurrentUserName())
+    }
+
     handleNavigateToInfoScreen = () =>{
         
     }
@@ -31,6 +35,13 @@ export default class FriendBar extends Component{
                     <Text style ={styles.add_text}>Remove</Text>
                 </TouchableOpacity>
             );
+        }
+        if(this.props.isInvite){
+           return(
+            <TouchableOpacity style={styles.add_remove_button} onPress ={() => this.handleInviteFriend()} > 
+                    <Text style ={styles.add_text}>Invite</Text>
+                </TouchableOpacity>
+            )
         }
         else{
             return(
@@ -49,7 +60,7 @@ export default class FriendBar extends Component{
                 <View style = {{flexDirection:"row", flex:1 }}>
 
                     <View style={styles.left_container}>
-                        <Icon name="user" size={80} color="white"/>
+                        <Icon name="user" size={80} color={color_c}/>
                             
                     </View>
 

@@ -187,6 +187,8 @@ export default class GroupInfoScreen extends Component{
 
                     {this.renderMap()}
                     {this.renderButtons()}
+
+                    <OvalButton text = "Invite Friends" handler={() => this.props.navigation.navigate('InviteFriend',{id: this.gid, groupName: this.info.GroupName})}/>
                     
                 </ScrollView>
 

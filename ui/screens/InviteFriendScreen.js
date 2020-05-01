@@ -5,11 +5,10 @@ import { FlatList, TextInput} from 'react-native-gesture-handler';
 import {getFriends, getCurrentUserID} from "../../api/MessagingAppAPI"
 import FriendBar from '../components/FriendBar';
 import {AppStyles, color_a, color_b, color_c, color_e} from "../styles/AppStyles"
-import Icon from 'react-native-vector-icons/FontAwesome';
 
-const plus = <Icon name="plus-circle" size={30} color = {color_a} />;
 
-export default class FriendScreen extends Component{
+
+export default class InviteFriendScreen extends Component{
     constructor(props) {
         super(props);
         this.state = { 
@@ -46,15 +45,12 @@ export default class FriendScreen extends Component{
             <View style ={AppStyles.screen}>
 
                 <View style={styles.header_container}>
+
                     <TextInput 
                     style = {styles.search_bar}
                     onChangeText = {(input)=>{this.setState({text: input})}}
                     placeholder = {"Search"}
                     />
-                    
-                    <View style = {styles.new_friend_button} >
-                    <CircleButton icon={plus} handler ={ () => this.props.navigation.navigate('AddFriends')}/>
-                    </View>
 
                 </View>
 
@@ -65,7 +61,10 @@ export default class FriendScreen extends Component{
                             name = {item.UserName} 
                             id = {item.id}
                             interests = {item.Interests}
-                            isFriend = {true}
+                            isInvite = {true}
+                            isFriend = {false}
+                            gid = {this.props.route.params.id}
+                            groupName = {this.props.route.params.groupName}
                         />
                         )}
                     keyExtractor = {item => item.id}
@@ -106,5 +105,3 @@ const styles = StyleSheet.create({
     
 
 })
-
-

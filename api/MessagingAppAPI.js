@@ -483,6 +483,38 @@ export async function retreiveRequests(uid,retrieveRequests){
 
 }
 
+export function sendGroupInviteRequest(rid,gid,sid,groupName,userName){
+    firestore().collection("Groups").doc(gid).update({
+        PendingGroupUsers: firestore.FieldValue.arrayUnion(rid)
+    })
+
+    //placing request in users request collection
+    firestore().collection("Users").doc(rid).collection("Requests").add({
+        user: sid,
+        userName: userName,
+        group: gid,
+        groupName: groupName,
+        type: "group",
+        invite: true
+    })
+}
+
+export function acceptGroupInvite(uid,gid,docID){
+    addUserToGroup(uid,gid)
+    firestore().collection("Groups").doc(gid).update({
+        PendingGroupUsers: firestore.FieldValue.arrayRemove(uid),  
+    })
+    firestore().collection("Users").doc(uid).collection("Requests").doc(docID).delete();
+}
+
+export function rejectGroupInvite(uid,gid,docID){
+    firestore().collection("Groups").doc(gid).update({
+        PendingGroupUsers: firestore.FieldValue.arrayRemove(uid),  
+    })
+    firestore().collection("Users").doc(uid).collection("Requests").doc(docID).delete();
+}
+
+
 //creates a group entry request
 //inputs uid: current user id, gid: groups id, goid: group owner id
 export function createGroupRequest(uid,gid,goid,groupName,userName){
@@ -501,6 +533,7 @@ export function createGroupRequest(uid,gid,goid,groupName,userName){
                 group: gid,
                 groupName: groupName,
                 type: "group",
+                invite: false
             })
 
             //placing user in pending queue
@@ -689,4 +722,5 @@ export async function getFriends(friendsRetrieved, uid ,filter){
 
     })
 }
+
 

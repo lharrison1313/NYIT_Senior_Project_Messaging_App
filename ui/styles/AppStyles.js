@@ -1,11 +1,11 @@
 import {StyleSheet} from 'react-native';
 
 
-const color_a = "white"
+const color_a = "grey"
 const color_b = '#00BED6'
 const color_c = "lightgrey"
-const color_d = "grey"
-const color_e = "orange"
+const color_d = "white"
+const color_e = "#ad0c95"
 
 const AppStyles = StyleSheet.create({
 

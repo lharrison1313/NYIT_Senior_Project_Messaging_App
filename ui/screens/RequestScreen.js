@@ -6,11 +6,6 @@ import {AppStyles, color_a, color_b, color_c, color_d, color_e} from '../styles/
 import Icon from 'react-native-vector-icons/FontAwesome';
 import RequestBar from '../components/RequestBar'
 
-
-
-const group =<Icon name="group" size={25} color={color_a} />;
-const friend = <Icon name="user" size={25} color={color_a} />;
-
 export default class RequestScreen extends Component{    
     constructor(props){
         super(props)
