@@ -2,26 +2,29 @@ import React, { Component } from 'react';
 import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import{withNavigation} from "react-navigation"
 import { FlatList, TextInput} from 'react-native-gesture-handler';
-import {getUsers} from "../../api/MessagingAppAPI"
+import {getUsers, getCurrentUserID, getUserInfo} from "../../api/MessagingAppAPI"
 import FriendBar from "../components/FriendBar"
+import {AppStyles, color_a, color_b, color_c, color_e} from "../styles/AppStyles"
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const plus = <Icon name="plus-circle" size={40} color="#00BED6" />;
 
-class AddFriendScreen extends Component{
+export default class AddFriendScreen extends Component{
     constructor(props) {
         super(props);
         this.state = { 
-            friendList: []
+            friendList: [],
+            name: ""
         };
     }
 
     componentDidMount(){
-        getUsers(this.retrieveUsers)
+        getUsers(this.retrieveUsers,getCurrentUserID(),null)
         .then((unsub) => {
             this.unsubscribe = unsub
             console.log("subscribe")})
         .catch((error)=> console.log("FriendScreen: ",error))
+        
     }
 
     componentWillUnmount(){
@@ -40,7 +43,7 @@ class AddFriendScreen extends Component{
     render() {
         return (
             <SafeAreaView style={{flex:1}}>
-            <View style ={styles.container}>
+            <View style ={AppStyles.screen}>
 
                 <View style={styles.header_container}>
                     <TextInput 
@@ -57,7 +60,7 @@ class AddFriendScreen extends Component{
                             name = {item.UserName} 
                             id = {item.id}
                             navigation = {this.props.navigation}
-                            //interests = {item.Interests}
+                            interests = {item.Interests}
                         />
                         )}
                     keyExtractor = {item => item.id}
@@ -95,9 +98,9 @@ const styles = StyleSheet.create({
     },
 
     search_bar:{
-        flex:.85,
+        flex:1,
         height:40, 
-        backgroundColor: "white",
+        backgroundColor: color_c,
         borderRadius:30,
         marginHorizontal:5
     }
@@ -105,5 +108,3 @@ const styles = StyleSheet.create({
 
 })
 
-
-export default withNavigation(AddFriendScreen)

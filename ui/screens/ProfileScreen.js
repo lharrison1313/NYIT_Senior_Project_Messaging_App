@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, View, Text, SafeAreaView ,TouchableOpacity} from 'react-native';
-import {getUserInfo, getCurrentUserID} from "../../api/MessagingAppAPI"
+import {getUserInfo, getCurrentUserID, getCurrentUserName} from "../../api/MessagingAppAPI"
 import OvalButton from "../components/OvalButton";
 import {signOut} from '../../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -12,7 +12,8 @@ export default class ProfileScreen extends Component{
     constructor(props){
         super(props)
         this.state = {
-            name: "Default Name",
+            name: "",
+            id: "",
             groupImageSource:""
 
         }
@@ -36,11 +37,11 @@ export default class ProfileScreen extends Component{
         });
     }
     componentDidMount(){
-       getUserInfo(getCurrentUserID(), this.userInfoRetrieved)
-    }
-
-    userInfoRetrieved = (info) =>{
-        this.setState({name: info.UserName});
+       this.setState({
+           name: getCurrentUserName(),
+           id: getCurrentUserID()
+        
+        })
     }
 
     render(){
@@ -57,8 +58,11 @@ export default class ProfileScreen extends Component{
                     </TouchableOpacity>
 
 
-                    <Text style = {{margin: 10,}}>
+                    <Text style = {{margin: 5,}}>
                         {this.state.name}
+                    </Text>
+                    <Text style = {{margin: 5,}}>
+                        {this.state.id}
                     </Text>
 
                     <OvalButton text="Friends" handler = {()=> this.props.navigation.navigate("Friends")}/>

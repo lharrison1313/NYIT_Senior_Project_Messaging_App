@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, TouchableHighlightBase } from 'react-native';
-import {createFriendRequest,getCurrentUserID,removeUserFromFriend, getUserInfo} from '../../api/MessagingAppAPI';
+import {createFriendRequest,getCurrentUserID, removeFriend, getCurrentUserName, sendGroupInviteRequest} from '../../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {AppStyles, color_a, color_b, color_c, color_e} from "../styles/AppStyles"
 
 export default class FriendBar extends Component{
     constructor(props){
@@ -12,15 +13,43 @@ export default class FriendBar extends Component{
     }
 
     handleAddFriend = () =>{
-        createFriendRequest(getCurrentUserID(), "test", this.props.id)
+        createFriendRequest(getCurrentUserID(), getCurrentUserName(), this.props.id)
     }
 
     handleRemoveFriend = () =>{
-        removeUserFromFriend(getCurrentUserID(), this.props.id)
+        removeFriend(getCurrentUserID(),this.props.id)
+    }
+
+    handleInviteFriend = () =>{
+        sendGroupInviteRequest(this.props.id, this.props.gid, getCurrentUserID(), this.props.groupName,getCurrentUserName())
     }
 
     handleNavigateToInfoScreen = () =>{
         
+    }
+
+    renderAddRemove = () =>{
+        if(this.props.isFriend){
+            return(
+                <TouchableOpacity style={styles.add_remove_button} onPress={() => this.handleRemoveFriend()}>
+                    <Text style ={styles.add_text}>Remove</Text>
+                </TouchableOpacity>
+            );
+        }
+        if(this.props.isInvite){
+           return(
+            <TouchableOpacity style={styles.add_remove_button} onPress ={() => this.handleInviteFriend()} > 
+                    <Text style ={styles.add_text}>Invite</Text>
+                </TouchableOpacity>
+            )
+        }
+        else{
+            return(
+            <TouchableOpacity style={styles.add_remove_button} onPress ={() => this.handleAddFriend()} > 
+                <Text style ={styles.add_text}>Add</Text>
+            </TouchableOpacity>
+            );
+        }
     }
 
     render(){
@@ -31,24 +60,19 @@ export default class FriendBar extends Component{
                 <View style = {{flexDirection:"row", flex:1 }}>
 
                     <View style={styles.left_container}>
-                        <Icon name="user" size={80} color="white"/>
+                        <Icon name="user" size={80} color={color_c}/>
                             
                     </View>
 
                     <View style={styles.mid_container}>
 
                         <Text style ={{flex:.50, fontSize:25, fontWeight: "bold"}}>{this.props.name}</Text>
-                        <Text style ={{flex:.50}}>{this.props.interests}</Text>
+                        <Text style ={{flex:.50}}>{this.props.id}</Text>
                     
                     </View>
 
                     <View style={styles.right_container}>
-                        <TouchableOpacity style={styles.add_button} onPress ={() => this.handleAddFriend()} > 
-                            <Text style ={styles.add_text}>Add</Text>
-                        </TouchableOpacity>
-                        {/* <TouchableOpacity style={styles.remove_button} onPress={() => this.handleRemoveFriend}>
-                            <Text style ={styles.add_text}>Remove</Text>
-                        </TouchableOpacity> */}
+                        {this.renderAddRemove()}
                     </View>
 
                     
@@ -66,37 +90,26 @@ const styles = StyleSheet.create({
 
     left_container:{
         flexDirection:"column",
-        flex: .30,
+        flex: .15,
     },
 
     mid_container:{
         flexDirection:"column",
         alignItems:"center",
         justifyContent:"center",
-        flex: .60,
+        flex: .65,
+        padding: 5
 
     },
 
     right_container:{
-        flexDirection:"column",
-        flex: .30,
-
-    },
-
-    add_button:{
-        flex: .50,
-        flexDirection:"column",
-        backgroundColor:"grey",
-        padding:5,
-        borderRadius:10,
-        alignItems:"center",
+        flex: .20,
         justifyContent: "center"
     },
 
-    remove_button:{
-        flex: .50,
-        flexDirection:"column",
-        backgroundColor:"grey",
+    add_remove_button:{
+        flex: .5,
+        backgroundColor: color_a ,
         padding:5,
         borderRadius:10,
         alignItems:"center",
@@ -108,7 +121,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#00BED6',
         height: 100,
         padding: 10,
-        borderColor:"grey",
+        borderColor:color_a,
         borderBottomWidth: 1
     },
 })

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, TextInput, StyleSheet, SafeAreaView, Switch, Text, Picker,TouchableOpacity,Image} from 'react-native';
+import {View, ScrollView, TextInput, StyleSheet, SafeAreaView, Switch, Text, Picker,TouchableOpacity,Image} from 'react-native';
 import {createGroup} from  "../../api/MessagingAppAPI"
 import InterestTextInput from "../components/InterestTextInput";
 import GooglePlacesButton from "../components/GooglePlacesButton"
@@ -7,10 +7,6 @@ import OvalButton from "../components/OvalButton"
 import ImagePicker from 'react-native-image-picker';
 import {AppStyles, color_c} from "../styles/AppStyles"
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-
-
-// add a clear state
 
 
 export default class GroupCreationScreen extends Component{
@@ -65,7 +61,7 @@ export default class GroupCreationScreen extends Component{
                 <TouchableOpacity 
                 style = {{marginVertical:50,alignItems:'center'}}
                 onPress = {this.imagebuttonHandler}>
-                     <Image source={this.state.groupImageSource} style={{height:100,width:100}}  onPress = {this.imagebuttonHandler}/>
+                     <Image source={this.state.groupImageSource} style={{height:300,width:400}}  onPress = {this.imagebuttonHandler}/>
                 </TouchableOpacity>
                 
             )
@@ -104,7 +100,8 @@ export default class GroupCreationScreen extends Component{
     render(){
         return(
             <SafeAreaView style={{flex:1}}>
-            <View style = {AppStyles.screen} >
+            <ScrollView style = {AppStyles.screen} >
+            
                 <View style = {styles.content_container}>
 
                     <TextInput
@@ -132,13 +129,6 @@ export default class GroupCreationScreen extends Component{
                     </View>
                     {this.renderVisible()}
                     {this.renderImage()}
-
-                    {/* <View style = {{flexDirection: "row"}}>
-                        <Text style = {{flex:1}}>
-                            User Limit:
-                        </Text>
-                        <Switch style = {{flex:1}} value = {this.state.limit} onValueChange = {() => this.setState({limit: !this.state.limit})}  />
-                    </View> */}
                     
                     <View style = {styles.button_container}>
                         <GooglePlacesButton shape = "oval" retrieveLocation = {this.retrieveLocation}/>
@@ -146,7 +136,7 @@ export default class GroupCreationScreen extends Component{
                     </View>
 
                 </View>
-            </View>
+            </ScrollView>
             </SafeAreaView>
         );
     }

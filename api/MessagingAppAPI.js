@@ -13,6 +13,7 @@ export function signUp(email, password, userName, alert){
     auth().createUserWithEmailAndPassword(email, password)
     .then((userInfo)=>{
         console.log(userInfo)
+        userInfo.user.updateProfile({displayName: userName})
         //adding user to user collection
         firestore().collection("Users").doc(userInfo.user.uid).set({
             UserName: userName,
@@ -185,6 +186,10 @@ export function createGroup(groupName,interests,locationName,coordinates,descrip
 //gets the current users id
 export function getCurrentUserID(){
     return auth().currentUser.uid;
+}
+
+export function getCurrentUserName(){
+    return auth().currentUser.displayName;
 }
 
 //gets any users public info
@@ -478,6 +483,38 @@ export async function retreiveRequests(uid,retrieveRequests){
 
 }
 
+export function sendGroupInviteRequest(rid,gid,sid,groupName,userName){
+    firestore().collection("Groups").doc(gid).update({
+        PendingGroupUsers: firestore.FieldValue.arrayUnion(rid)
+    })
+
+    //placing request in users request collection
+    firestore().collection("Users").doc(rid).collection("Requests").add({
+        user: sid,
+        userName: userName,
+        group: gid,
+        groupName: groupName,
+        type: "group",
+        invite: true
+    })
+}
+
+export function acceptGroupInvite(uid,gid,docID){
+    addUserToGroup(uid,gid)
+    firestore().collection("Groups").doc(gid).update({
+        PendingGroupUsers: firestore.FieldValue.arrayRemove(uid),  
+    })
+    firestore().collection("Users").doc(uid).collection("Requests").doc(docID).delete();
+}
+
+export function rejectGroupInvite(uid,gid,docID){
+    firestore().collection("Groups").doc(gid).update({
+        PendingGroupUsers: firestore.FieldValue.arrayRemove(uid),  
+    })
+    firestore().collection("Users").doc(uid).collection("Requests").doc(docID).delete();
+}
+
+
 //creates a group entry request
 //inputs uid: current user id, gid: groups id, goid: group owner id
 export function createGroupRequest(uid,gid,goid,groupName,userName){
@@ -496,6 +533,7 @@ export function createGroupRequest(uid,gid,goid,groupName,userName){
                 group: gid,
                 groupName: groupName,
                 type: "group",
+                invite: false
             })
 
             //placing user in pending queue
@@ -518,9 +556,23 @@ export function createFriendRequest(uid,userName,fid){
         type: "friend",
     })
 
-    //placing user in pending queue
+    //placing user in their pending queue
     firestore().collection("Users").doc(fid).update({
         PendingFriends: firestore.FieldValue.arrayUnion(uid)
+    })
+
+    //placing user in your pending queue
+    firestore().collection("Users").doc(uid).update({
+        PendingFriends: firestore.FieldValue.arrayUnion(fid)
+    })
+}
+
+export function removeFriend(uid,fid){
+    firestore().collection("Users").doc(fid).update({
+        Friends: firestore.FieldValue.arrayRemove(uid)
+    })
+    firestore().collection("Users").doc(uid).update({
+        Friends: firestore.FieldValue.arrayRemove(fid)
     })
 }
 
@@ -531,6 +583,10 @@ export function acceptFriendRequest(uid,sid,docID){
         PendingFriends: firestore.FieldValue.arrayRemove(sid),
         Friends: firestore.FieldValue.arrayUnion(sid)
     })
+    firestore().collection("Users").doc(sid).update({
+        PendingFriends: firestore.FieldValue.arrayRemove(uid),
+        Friends: firestore.FieldValue.arrayUnion(uid)
+    })
     firestore().collection("Users").doc(uid).collection("Requests").doc(docID).delete();
     
 }
@@ -540,6 +596,9 @@ export function acceptFriendRequest(uid,sid,docID){
 export function rejectFriendRequest(uid,sid,docID){
     firestore().collection("Users").doc(uid).update({
         PendingFriends: firestore.FieldValue.arrayRemove(sid)
+    })
+    firestore().collection("Users").doc(sid).update({
+        PendingFriends: firestore.FieldValue.arrayRemove(uid),
     })
     firestore().collection("Users").doc(uid).collection("Requests").doc(docID).delete();
     
@@ -605,7 +664,7 @@ export async function retrieveInterests(uid,retrieveInterests){
 
 }
 
-export async function getUsers(usersRetrieved, filter){
+export async function getUsers(usersRetrieved, uid, filter){
     if(filter == null){
         //given no filter get all groups in database
         var ref = firestore().collection("Users").orderBy("UserName")
@@ -619,16 +678,49 @@ export async function getUsers(usersRetrieved, filter){
         if(querySnapshot !== null){
             var users = []
             querySnapshot.forEach((doc)=>{
-                users.push({
-                    UserName: doc.data().UserName,
-                    id: doc.id
-                    //Interests: doc.data().Interests
-                    //Location: doc.data().Location
-                })
+
+                if(doc.id != uid){
+                    if(!((doc.data().Friends != null && doc.data().Friends.includes(uid)) || (doc.data().PendingFriends != null && doc.data().PendingFriends.includes(uid)))){
+                        users.push({
+                            UserName: doc.data().UserName,
+                            id: doc.id,
+                            Interests: doc.data().Interests
+                            //Location: doc.data().Location
+                        })
+                    }
+                }
             })
             usersRetrieved(users)
         }
 
     })
 }
+
+export async function getFriends(friendsRetrieved, uid ,filter){
+    if(filter == null){
+        //given no filter get all groups in database
+        var ref = firestore().collection("Users").where("Friends","array-contains",uid).orderBy("UserName")
+    }
+    else{
+        //filter by user name
+        var ref = firestore().collection("Users").where("UserName","==",filter).where("Friends","array-contains",uid)
+    }
+
+    return ref.onSnapshot((querySnapshot)=>{
+        if(querySnapshot !== null){
+            var users = []
+            querySnapshot.forEach((doc)=>{
+                users.push({
+                    UserName: doc.data().UserName,
+                    id: doc.id,
+                    Interests: doc.data().Interests
+                    //Location: doc.data().Location
+                })
+            })
+            friendsRetrieved(users)
+        }
+
+    })
+}
+
 
