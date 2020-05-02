@@ -9,6 +9,7 @@ import GroupScreen from './ui/screens/GroupScreen';
 import GroupInfoScreen from "./ui/screens/GroupInfoScreen";
 import GroupMapScreen from './ui/screens/GroupMapScreen'
 import ProfileScreen from './ui/screens/ProfileScreen';
+import UserInfoScreen from "./ui/screens/UserInfoScreen";
 import SettingsScreen from './ui/screens/SettingsScreen';
 import ForgetPasswordScreen from './ui/screens/ForgetPasswordScreen';
 import ChangeEmailScreen from './ui/screens/ChangeEmailScreen';
@@ -84,6 +85,7 @@ function MyProfileStackScreen(){
       <MyProfileStack.Screen name="Requests"  component = {RequestScreen}/>
       <MyProfileStack.Screen name="Interests"  component = {UserInterestScreen}/>
       <MyProfileStack.Screen name="Friends"  component = {FriendScreen}/>
+      <MyProfileStack.Screen name="UserInfo" component = {UserInfoScreen}/>
       <MyProfileStack.Screen name="AddFriends"  component = {AddFriendScreen}/>
     </MyProfileStack.Navigator>
   );

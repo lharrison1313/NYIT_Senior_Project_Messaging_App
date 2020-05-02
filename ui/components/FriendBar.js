@@ -25,7 +25,7 @@ export default class FriendBar extends Component{
     }
 
     handleNavigateToInfoScreen = () =>{
-        
+        this.props.navigation.navigate('UserInfo',{id: this.props.id, info: this.props.info, date: this.props.date})
     }
 
     renderAddRemove = () =>{
@@ -56,7 +56,7 @@ export default class FriendBar extends Component{
     
         return(
             
-            <TouchableOpacity style = {styles.bar_container} >
+            <TouchableOpacity style = {styles.bar_container} onPress ={() => this.handleNavigateToInfoScreen()} >
                 <View style = {{flexDirection:"row", flex:1 }}>
 
                     <View style={styles.left_container}>
