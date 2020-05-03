@@ -13,7 +13,6 @@ export function signUp(email, password, userName, alert){
     auth().createUserWithEmailAndPassword(email, password)
     .then((userInfo)=>{
         console.log(userInfo)
-        userInfo.user.updateProfile({displayName: userName})
         //adding user to user collection
         firestore().collection("Users").doc(userInfo.user.uid).set({
             UserName: userName,

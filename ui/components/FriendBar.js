@@ -24,10 +24,6 @@ export default class FriendBar extends Component{
         sendGroupInviteRequest(this.props.id, this.props.gid, getCurrentUserID(), this.props.groupName,getCurrentUserName())
     }
 
-    handleNavigateToInfoScreen = () =>{
-        this.props.navigation.navigate('UserInfo',{id: this.props.id, info: this.props.info, date: this.props.date})
-    }
-
     renderAddRemove = () =>{
         if(this.props.isFriend){
             return(
@@ -56,7 +52,7 @@ export default class FriendBar extends Component{
     
         return(
             
-            <TouchableOpacity style = {styles.bar_container} onPress ={() => this.handleNavigateToInfoScreen()} >
+            <TouchableOpacity style = {styles.bar_container} onPress ={() => this.props.navigation.navigate("UserInfo")} >
                 <View style = {{flexDirection:"row", flex:1 }}>
 
                     <View style={styles.left_container}>
