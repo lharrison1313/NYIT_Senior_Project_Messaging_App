@@ -3,7 +3,6 @@ import { StyleSheet, View, TouchableOpacity, Text, ScrollView, Alert} from 'reac
 import { SafeAreaView } from 'react-navigation';
 import {addUserToGroup,getCurrentUserID, createGroupRequest, deleteGroup, removeUserFromGroup, getUserInfo} from "../../api/MessagingAppAPI";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import {AppStyles, color_b, color_c} from "../styles/AppStyles"
 import OvalButton from "../components/OvalButton"
 
@@ -19,7 +18,6 @@ export default class GroupInfoScreen extends Component{
         }
         this.gid = this.props.route.params.id;
         this.info = this.props.route.params.info;
-        this.date = this.props.route.params.date;
         
     }
 
