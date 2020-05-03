@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import {StyleSheet, View, Text, SafeAreaView ,TouchableOpacity} from 'react-native';
 import {getUserInfo, getCurrentUserID, getCurrentUserName} from "../../api/MessagingAppAPI"
 import OvalButton from "../components/OvalButton";
-import {signOut} from '../../api/MessagingAppAPI';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ImagePicker from 'react-native-image-picker';
-import { AppStyles, color_c } from '../styles/AppStyles';
+import { AppStyles, color_c, color_a } from '../styles/AppStyles';
 
 
 export default class UserInfoScreen extends Component{
@@ -14,34 +12,53 @@ export default class UserInfoScreen extends Component{
         this.state = {
             name: "",
             id: "",
-            groupImageSource:""
 
         }
     }
-    imagebuttonHandler = ()=>{
-        ImagePicker.showImagePicker((response)=>{
-          console.log('Response =',response);
-          if (response.didCancel) {
-            console.log('User cancelled image picker');
-          } else if (response.error) {
-            console.log('ImagePicker Error: ', response.error);
-          } else if (response.customButton) {
-            console.log('User tapped custom button: ', response.customButton);
-          } else {
-            const source = { uri: response.uri };
- 
-            this.setState({
-                groupImageSource: source,
-                });
-            }
-        });
-    }
-    componentDidMount(){
-       this.setState({
-           name: getCurrentUserName(),
-           id: getCurrentUserID()
+    
+    // componentDidMount(){
+    //    this.setState({
+    //        name: getCurrentUserName(),
+    //        id: getCurrentUserID()
         
-        })
+    //     })
+    // }
+
+
+    handleAddFriend = () =>{
+        createFriendRequest(getCurrentUserID(), getCurrentUserName(), this.props.id)
+    }
+
+    handleRemoveFriend = () =>{
+        removeFriend(getCurrentUserID(),this.props.id)
+    }
+
+    handleInviteFriend = () =>{
+        sendGroupInviteRequest(this.props.id, this.props.gid, getCurrentUserID(), this.props.groupName,getCurrentUserName())
+    }
+
+    renderAddRemove = () =>{
+        if(this.props.isFriend){
+            return(
+                <TouchableOpacity style={styles.add_remove_button} onPress={() => this.handleRemoveFriend()}>
+                    <Text style ={styles.add_text}>Remove</Text>
+                </TouchableOpacity>
+            );
+        }
+        if(this.props.isInvite){
+           return(
+            <TouchableOpacity style={styles.add_remove_button} onPress ={() => this.handleInviteFriend()} > 
+                    <Text style ={styles.add_text}>Invite</Text>
+                </TouchableOpacity>
+            )
+        }
+        else{
+            return(
+            <TouchableOpacity style={styles.add_remove_button} onPress ={() => this.handleAddFriend()} > 
+                <Text style ={styles.add_text}>Add</Text>
+            </TouchableOpacity>
+            );
+        }
     }
 
     render(){
@@ -51,29 +68,22 @@ export default class UserInfoScreen extends Component{
             <View style = {AppStyles.screen}>
                 <View style = {styles.content_container}>
 
-                    <TouchableOpacity
-                    onPress = {this.imagebuttonHandler}
-                    >
+                    <TouchableOpacity>
                         <Icon name="user" size={100} color={color_c} />
                     </TouchableOpacity>
-
-
                     <Text style = {{margin: 5,}}>
-                        {this.state.name}
+                        {this.props.name}
                     </Text>
                     <Text style = {{margin: 5,}}>
-                        {this.state.id}
+                        {this.props.id}
+                    </Text>
+                    <Text style = {{margin: 5,}}>
+                        {this.props.interest}
+                    </Text>
+                    <Text style = {{margin: 5,}}>
+                        {this.renderAddRemove()}
                     </Text>
 
-                    <OvalButton text="Friends" handler = {()=> this.props.navigation.navigate("Friends")}/>
-
-                    <OvalButton text="Interests" handler= {()=> this.props.navigation.navigate("Interests")}/>
-
-                    <OvalButton text="Requests" handler = {() => this.props.navigation.navigate("Requests")}/>
-
-                    <OvalButton text="Settings" handler ={() => this.props.navigation.navigate('Settings')}/>
-                    
-                    <OvalButton text="Sign Out" handler = {() => signOut(this.onSignOut)}/>
                 </View>
             </View>
             </SafeAreaView>
@@ -89,6 +99,15 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center", 
         justifyContent: "center",
+    },
+
+    add_remove_button:{
+        flex: .5,
+        backgroundColor: color_a ,
+        padding:5,
+        borderRadius:10,
+        alignItems:"center",
+        justifyContent: "center"
     },
 
 
