@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, View, Text, SafeAreaView ,TouchableOpacity} from 'react-native';
-import {getUserInfo, getCurrentUserID, getCurrentUserName} from "../../api/MessagingAppAPI"
+import {getUserInfo, createFriendRequest,getCurrentUserID, removeFriend, getCurrentUserName, sendGroupInviteRequest} from '../../api/MessagingAppAPI';
 import OvalButton from "../components/OvalButton";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AppStyles, color_c, color_a } from '../styles/AppStyles';
@@ -12,17 +12,17 @@ export default class UserInfoScreen extends Component{
         this.state = {
             name: "",
             id: "",
-
         }
+        
     }
     
-    // componentDidMount(){
-    //    this.setState({
-    //        name: getCurrentUserName(),
-    //        id: getCurrentUserID()
-        
-    //     })
-    // }
+    componentDidMount(){
+        getUserInfo(getCurrentUserID(), this.userInfoRetrieved)
+    }
+ 
+    userInfoRetrieved = (info) =>{
+        this.setState({name: info.UserName});
+    }
 
 
     handleAddFriend = () =>{
@@ -71,15 +71,19 @@ export default class UserInfoScreen extends Component{
                     <TouchableOpacity>
                         <Icon name="user" size={100} color={color_c} />
                     </TouchableOpacity>
+
                     <Text style = {{margin: 5,}}>
                         {this.props.name}
                     </Text>
+
                     <Text style = {{margin: 5,}}>
                         {this.props.id}
                     </Text>
+
                     <Text style = {{margin: 5,}}>
                         {this.props.interest}
                     </Text>
+
                     <Text style = {{margin: 5,}}>
                         {this.renderAddRemove()}
                     </Text>
