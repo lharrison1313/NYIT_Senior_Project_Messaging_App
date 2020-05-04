@@ -71,8 +71,13 @@ export default class GroupCreationScreen extends Component{
 
 
     buttonHandler = ()=> {
-        createGroup(this.state.groupName,this.state.interests,this.state.place.name,this.state.place.location,this.state.description,this.state.private,this.state.visible)
-        this.props.navigation.goBack()
+        if(this.state.groupName === ''){
+            alert('Group name cannot be empty')
+        }
+        else{
+            createGroup(this.state.groupName,this.state.interests,this.state.place.name,this.state.place.location,this.state.description,this.state.private,this.state.visible)
+            this.props.navigation.goBack()
+        }
     }
 
     interestParser = (text)=> {
