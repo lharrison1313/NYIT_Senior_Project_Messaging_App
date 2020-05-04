@@ -14,7 +14,6 @@ export default class AddFriendScreen extends Component{
         super(props);
         this.state = { 
             friendList: [],
-            name: ""
         };
     }
 
@@ -31,6 +30,18 @@ export default class AddFriendScreen extends Component{
         if(this.unsubscribe != null){
             console.log("unsubscribe")
             this.unsubscribe()
+        }
+    }
+
+    textChanged = (input) =>{
+        this.setState({friendList:[]})
+        if(input == ""){
+            this.unsubscribe()
+            getUsers(this.retrieveUsers,getCurrentUserID(),null).then((unsub) => this.unsubscribe = unsub )
+        }
+        else{
+            this.unsubscribe()
+            getUsers(this.retrieveUsers,getCurrentUserID(),input).then((unsub) => this.unsubscribe = unsub )
         }
     }
 

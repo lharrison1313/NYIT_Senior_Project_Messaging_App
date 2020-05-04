@@ -14,12 +14,12 @@ export default class FriendScreen extends Component{
         super(props);
         this.state = { 
             friendList: [],
-            text: ''
         };
+        this.uid = getCurrentUserID()
     }
 
     componentDidMount(){
-        getFriends(this.retrieveFriends,getCurrentUserID(),null)
+        getFriends(this.retrieveFriends,this.uid,null)
         .then((unsub) => {
             this.unsubscribe = unsub
             console.log("subscribe")})
@@ -30,6 +30,18 @@ export default class FriendScreen extends Component{
         if(this.unsubscribe != null){
             console.log("unsubscribe")
             this.unsubscribe()
+        }
+    }
+
+    textChanged = (input) =>{
+        this.setState({friendList:[]})
+        if(input == ""){
+            this.unsubscribe()
+           getFriends(this.retrieveFriends,this.uid,null).then((unsub) => this.unsubscribe = unsub )
+        }
+        else{
+            this.unsubscribe()
+            getFriends(this.retrieveFriends,this.uid,input).then((unsub) => this.unsubscribe = unsub )
         }
     }
 
@@ -48,7 +60,7 @@ export default class FriendScreen extends Component{
                 <View style={styles.header_container}>
                     <TextInput 
                     style = {styles.search_bar}
-                    onChangeText = {(input)=>{this.setState({text: input})}}
+                    onChangeText = {(input)=>{this.textChanged(input)}}
                     placeholder = {"Search"}
                     />
                     
@@ -66,6 +78,7 @@ export default class FriendScreen extends Component{
                             id = {item.id}
                             interests = {item.Interests}
                             isFriend = {true}
+                            navigation = {this.props.navigation}
                         />
                         )}
                     keyExtractor = {item => item.id}

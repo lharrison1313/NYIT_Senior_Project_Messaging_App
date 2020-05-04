@@ -684,7 +684,6 @@ export async function getUsers(usersRetrieved, uid, filter){
                             UserName: doc.data().UserName,
                             id: doc.id,
                             Interests: doc.data().Interests
-                            //Location: doc.data().Location
                         })
                     }
                 }
@@ -713,7 +712,6 @@ export async function getFriends(friendsRetrieved, uid ,filter){
                     UserName: doc.data().UserName,
                     id: doc.id,
                     Interests: doc.data().Interests
-                    //Location: doc.data().Location
                 })
             })
             friendsRetrieved(users)

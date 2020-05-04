@@ -15,6 +15,7 @@ export default class InviteFriendScreen extends Component{
             friendList: [],
             text: ''
         };
+        this.uid = getCurrentUserID()
     }
 
     componentDidMount(){
@@ -38,6 +39,18 @@ export default class InviteFriendScreen extends Component{
         });
     }
 
+    textChanged = (input) =>{
+        this.setState({friendList:[]})
+        if(input == ""){
+            this.unsubscribe()
+           getFriends(this.retrieveFriends,this.uid,null).then((unsub) => this.unsubscribe = unsub )
+        }
+        else{
+            this.unsubscribe()
+            getFriends(this.retrieveFriends,this.uid,input).then((unsub) => this.unsubscribe = unsub )
+        }
+    }
+
 
     render() {
         return (
@@ -48,7 +61,7 @@ export default class InviteFriendScreen extends Component{
 
                     <TextInput 
                     style = {styles.search_bar}
-                    onChangeText = {(input)=>{this.setState({text: input})}}
+                    onChangeText = {(input)=>{this.textChanged(input)}}
                     placeholder = {"Search"}
                     />
 
@@ -65,6 +78,7 @@ export default class InviteFriendScreen extends Component{
                             isFriend = {false}
                             gid = {this.props.route.params.id}
                             groupName = {this.props.route.params.groupName}
+                            navigation = {this.props.navigation}
                         />
                         )}
                     keyExtractor = {item => item.id}

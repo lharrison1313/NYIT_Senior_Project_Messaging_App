@@ -8,7 +8,8 @@ export default class FriendBar extends Component{
     constructor(props){
         super(props)
         this.state={
-            
+            remove: "Remove",
+            invite: "Invite"
         }  
     }
 
@@ -18,24 +19,26 @@ export default class FriendBar extends Component{
 
     handleRemoveFriend = () =>{
         removeFriend(getCurrentUserID(),this.props.id)
+        this.setState({remove: "Removing"})
     }
 
     handleInviteFriend = () =>{
         sendGroupInviteRequest(this.props.id, this.props.gid, getCurrentUserID(), this.props.groupName,getCurrentUserName())
+        this.setState({invite: "Sent"})
     }
 
     renderAddRemove = () =>{
         if(this.props.isFriend){
             return(
                 <TouchableOpacity style={styles.add_remove_button} onPress={() => this.handleRemoveFriend()}>
-                    <Text style ={styles.add_text}>Remove</Text>
+                    <Text style ={styles.add_text}>{this.state.remove}</Text>
                 </TouchableOpacity>
             );
         }
         if(this.props.isInvite){
            return(
             <TouchableOpacity style={styles.add_remove_button} onPress ={() => this.handleInviteFriend()} > 
-                    <Text style ={styles.add_text}>Invite</Text>
+                    <Text style ={styles.add_text}>{this.state.invite}</Text>
                 </TouchableOpacity>
             )
         }
@@ -52,7 +55,8 @@ export default class FriendBar extends Component{
     
         return(
             
-            <TouchableOpacity style = {styles.bar_container} onPress ={() => this.props.navigation.navigate("UserInfo")} >
+            <TouchableOpacity style = {styles.bar_container} onPress ={() => 
+            this.props.navigation.navigate("UserInfo", {name: this.props.name, id: this.props.id, interests: this.props.interests, isInvite: this.props.isInvite, isFriend: this.props.isFriend, gid: this.props.gid, groupName: this.props.groupName})} >
                 <View style = {{flexDirection:"row", flex:1 }}>
 
                     <View style={styles.left_container}>
