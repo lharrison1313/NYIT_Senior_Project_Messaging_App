@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {acceptGroupRequest,rejectGroupRequest,acceptFriendRequest,rejectFriendRequest, getCurrentUserID, acceptGroupInvite, rejectGroupInvite} from '../../api/MessagingAppAPI'
-import { AppStyles, color_a, color_b, color_c, color_d } from '../styles/AppStyles';
+import { AppStyles, color_a, color_b, color_c, color_d, color_e } from '../styles/AppStyles';
 
 const upIcon = <Icon name="arrow-up" size={25} color= {"green"} />;
 const downIcon = <Icon name="arrow-down" size={25} color= {"red"} />;
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
         backgroundColor: color_b, 
         alignItems: "center", 
         paddingHorizontal: 10,
-        borderColor: color_c,
+        borderColor: color_a,
         borderWidth: 1
     },
 

@@ -2,20 +2,21 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, View} from 'react-native';
 import { AppStyles, color_a, color_b, color_c, color_d } from '../styles/AppStyles';
 
+
 export default class Message extends Component{
 
     render(){
         if(this.props.sent){
             return(
                 <View style={styles.sent_message_container}>
-                    <Text style={{color:color_a}}>{this.props.sender_name}: {this.props.message_text}</Text>
+                    <Text style={{color:"black"}}>{this.props.sender_name}: {this.props.message_text}</Text>
                 </View>
             );
         }
         else{
             return(
                 <View style={styles.recieved_message_container}>
-                    <Text style={{color:color_a}}>{this.props.sender_name}: {this.props.message_text}</Text>
+                    <Text style={{color:"black"}}>{this.props.sender_name}: {this.props.message_text}</Text>
                 </View>
             );
         }
