@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, TextInput, StyleSheet, SafeAreaView, Switch, Text, Picker,TouchableOpacity,Image} from 'react-native';
-import {createGroup} from  "../../api/MessagingAppAPI"
+import {createGroup,uploadGroupImage} from  "../../api/MessagingAppAPI"
 import InterestTextInput from "../components/InterestTextInput";
 import GooglePlacesButton from "../components/GooglePlacesButton"
 import OvalButton from "../components/OvalButton"
@@ -23,7 +23,7 @@ export default class GroupCreationScreen extends Component{
             interests: [],
             place: {},
             groupImageSource:"",
-            private: false,
+            private: false, 
             visible: true,
             //limit: false,
             size: 0,
@@ -76,6 +76,9 @@ export default class GroupCreationScreen extends Component{
 
     buttonHandler = ()=> {
         createGroup(this.state.groupName,this.state.interests,this.state.place.name,this.state.place.location,this.state.description,this.state.private,this.state.visible)
+        uploadGroupImage("nyit",this.state.groupImageSource).then().catch((error)=>{
+           console.log(error)
+        })
         this.props.navigation.goBack()
     }
 

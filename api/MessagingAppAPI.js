@@ -2,6 +2,7 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging';
 import {PermissionsAndroid} from 'react-native';
+import storage from '@react-native-firebase/storage';
 
 export function login(email, password, alert){
     auth().signInWithEmailAndPassword(email,password)
@@ -535,5 +536,10 @@ export function rejectGroupRequest(goid,gid,docID,uid){
     })
 }
 
+export async function uploadGroupImage(imageName,path){
+    const reference = storage().ref(imageName+'.png');
+    reference.putFile(path)
 
+
+}
 
