@@ -4,8 +4,8 @@ import {addUserToGroup,getCurrentUserID, getUserInfo, addLikeDislike} from '../.
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AppStyles, color_a, color_b, color_c, color_d } from '../styles/AppStyles';
 
-const upIcon = <Icon name="arrow-up" size={25} color= "black" />;
-const downIcon = <Icon name="arrow-down" size={25} color= "black" />;
+const upIcon = <Icon name="thumbs-up" size={25} color= "black" />;
+const downIcon = <Icon name="thumbs-down" size={25} color= "black" />;
 
 export default class GroupBar extends Component{
     constructor(props){
