@@ -250,11 +250,11 @@ export async function getAllGroups(groupsRetrieved,filter){
     
     if(filter == null){
         //given no filter get all groups in database
-        var ref = firestore().collection("Groups").orderBy("GroupName")
+        var ref = firestore().collection("Groups").orderBy("Votes","desc")
     }
     else{
         //filter by interest
-        var ref = firestore().collection("Groups").where("Interests","array-contains","#"+filter).orderBy("GroupName")
+        var ref = firestore().collection("Groups").where("Interests","array-contains","#"+filter).orderBy("Votes","desc")
     }
 
     return ref.onSnapshot((querySnapshot) => {
@@ -263,7 +263,7 @@ export async function getAllGroups(groupsRetrieved,filter){
             var index = 0;
 
             querySnapshot.forEach((doc) =>{
-                if(doc.data().Visible){
+                if(doc.data().Visible || (!doc.data().visible && doc.data().GroupUsers.includes(getCurrentUserID()))){
                     var date = Date(doc.data().TimeStamp)
                     //removing certain date info
                     var dateArray = date.toString().split(" ")

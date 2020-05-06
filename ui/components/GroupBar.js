@@ -28,6 +28,14 @@ export default class GroupBar extends Component{
     }
 
     render(){
+
+        var access = "Public";
+        if(!this.props.info.Visible){
+            access = "Invisible";
+        }
+        else if(this.props.info.Private){
+            access = "Private"
+        }
     
         return(
             
@@ -39,13 +47,15 @@ export default class GroupBar extends Component{
                 <View style={styles.header_container}>
                     <Text style = {{fontSize:12, marginRight:10, fontWeight: "bold"}}>{this.props.info.Location}</Text>
                     <Text style = {{fontSize:12}}>{this.props.date}</Text>
+                    
                 </View>
 
                 <View style={styles.body_container}>
-
+                    
                     <View style={styles.left_container}>
-                        <Text style ={{flex:.50}}>{this.props.info.GroupName}</Text>
-                        <Text style ={{flex:.50}}>{this.props.info.Interests.join(" ")}</Text>
+                        <Text style = {{flex: 1,  fontSize:10}}>{access}</Text>
+                        <Text style ={{flex: 1}}>{this.props.info.GroupName}</Text>
+                        <Text style ={{flex: 1}}>{this.props.info.Interests.join(" ")}</Text>
                     </View>
 
                     <View style={styles.right_container}>
@@ -75,18 +85,18 @@ const styles = StyleSheet.create({
     header_container:{
         flex: .25,
         flexDirection:'row',
-        flex: .30
+        
     },
 
     left_container:{
         flexDirection:"column",
-        flex: .55
+        flex: .70
     },
     right_container:{
         flexDirection:"row",
         alignItems:"center",
         justifyContent:"center",
-        flex: .45,
+        flex: .30,
 
     },
     body_container:{

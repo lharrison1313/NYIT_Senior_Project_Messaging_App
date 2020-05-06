@@ -93,7 +93,10 @@ export default class GroupMapScreen extends Component{
     
     renderBar = (item) =>{
         var color = ""
-        if(item.Info.Private){
+        if(!item.Info.Visible){
+            color = "orange"
+        }
+        else if(item.Info.Private){
             color = color_e   
         }
         else{
@@ -122,7 +125,10 @@ export default class GroupMapScreen extends Component{
 
     renderMarker = (group) =>{
         var color = ""
-        if(group.Info.Private){
+        if(!group.Info.Visible){
+            color = "orange"
+        }
+        else if(group.Info.Private){
             color = color_e
         }
         else{
@@ -165,6 +171,7 @@ export default class GroupMapScreen extends Component{
                         horizontal = {true}
                         data = {this.state.groups}
                         scrollEnabled = {false}
+                        showsHorizontalScrollIndicator={false}
                         renderItem={({ item }) => (
                             this.renderBar(item)
                         )}

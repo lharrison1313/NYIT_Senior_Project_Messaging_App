@@ -55,7 +55,7 @@ export default class GroupScreen extends Component{
     renderBar = (item) =>{
         var color = ""
         if(!item.Info.Visible){
-            color = color_c
+            color = "orange"
         }
         else if(item.Info.Private){
             color = color_e   
