@@ -113,13 +113,13 @@ const styles = StyleSheet.create({
     },
 
     button:{
-        flex: .25, 
+        flex: .40, 
         backgroundColor: color_a, 
         borderRadius: 20, 
         alignItems: "center",
         justifyContent: "center", 
         margin: 10, 
-        padding:10
+        //padding:10
     }
    
 
