@@ -60,7 +60,7 @@ export default class FriendBar extends Component{
                 <View style = {{flexDirection:"row", flex:1 }}>
 
                     <View style={styles.left_container}>
-                        <Icon name="user" size={80} color={color_c}/>
+                        <Icon name="user" size={60} color={color_c}/>
                             
                     </View>
 
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
 
     left_container:{
         flexDirection:"column",
+        justifyContent:"center",
         flex: .15,
     },
 

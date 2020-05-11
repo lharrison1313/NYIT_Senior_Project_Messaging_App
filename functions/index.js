@@ -77,43 +77,41 @@ exports.sendNotificationToGroup = functions.firestore
 exports.sendGroupInterestNotification = functions.firestore
     .document("Groups/{Group}")
     .onCreate((snap,context) =>{
-        //remember group hashtags must be removed and replaced with _
+        //remember group hashtags must be removed and replaced with
         const interests = snap.data().Interests;
-        const info = snap.data()
         const gid = context.params.Group;
-        var date = Date(snap.data().TimeStamp)
+        const name = snap.data().GroupName;
+        const description = snap.data().Description;
+        const private = snap.data().Private
+        const location = snap.data().Location;
+        
+        if(!private){
+            //sending message to each group interest
+            interests.forEach((element) => {
+                var body = "A group matching your interest " + element + " has been created.";
 
-        //removing certain date info
-        var dateArray = date.toString().split(" ")
-        dateArray.pop()
-        dateArray.pop()
-        dateArray.pop()
-        const dateString = dateArray.join(" ")
+                var message = {
+                    data: {
+                        type: "group",
+                        gid: gid,
+                        name: name,
+                        description: description,
+                        location: location
+                    },
+                    notification:{
+                        body: body,
+                        title: "Check out this group!",
+                    },
+                    topic: "_"+element.substring(1)
+                }
 
-        //sending message to each group interest
-        interests.forEach((element) => {
-            var body = "A group matching your interest " + element + " has been created.";
-
-            var message = {
-                data: {
-                    type: "group",
-                    gid: gid,
-                    date: dateString,
-                    info: info,
-                },
-                notification:{
-                    body: body,
-                    title: "Check out this group!",
-                },
-                topic: "_"+element.substring(1)
-            }
-
-            admin.messaging().send(message).then(response => {
-                console.log('Successfully sent message:', response);
-            })
-            .catch(error => {
-                console.log('Error sending message:', error);
-            }); 
-        });
+                admin.messaging().send(message).then(response => {
+                    console.log('Successfully sent message:', response);
+                })
+                .catch(error => {
+                    console.log('Error sending message:', error);
+                }); 
+            });
+        }
         
     })

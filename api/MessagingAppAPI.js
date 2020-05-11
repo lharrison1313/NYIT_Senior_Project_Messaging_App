@@ -201,6 +201,13 @@ export function getUserInfo(uid,userInfoRetrieved){
     
 }
 
+export async function getGroupInfo(gid, groupInfoRetrieved){
+    var ref = firestore().collection("Groups").doc(gid)
+    await ref.get().then((doc)=>{
+        groupInfoRetrieved(doc.data())
+    })
+}
+
 //gets the groups the user is in
 export async function getCurrentUserGroups(groupsRetrieved,filter){
 
@@ -289,13 +296,9 @@ export async function getAllGroups(groupsRetrieved,filter){
     })
 }
 
-//given a group id and callback function returns all group data
-export async function getGroupInfo(gid,retrieveGroupInfo){
-    var ref = firestore().collection("Groups").doc(gid)
-    ref.get().then((doc) => {
-        retrieveGroupInfo(doc.data());
-    });
-}
+
+
+
 
 //given a group id, gets all messages from that group
 export async function getGroupMessages(gid,messagesRetrieved){
@@ -365,7 +368,7 @@ export async function requestCameraPermission() {
     }
   }
 
-  //requetss Writing to External Storage
+  //requets Writing to External Storage
   export async function requestWriteExternalPermission() {
     try {
       const granted = await PermissionsAndroid.request(

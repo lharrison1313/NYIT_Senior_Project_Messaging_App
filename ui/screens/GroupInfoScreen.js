@@ -160,7 +160,7 @@ export default class GroupInfoScreen extends Component{
     render() {
         return (
             <SafeAreaView style = {{flex:1}}>
-            <ScrollView contentContainerStyle = {AppStyles.screen} >
+            <View style = {AppStyles.screen} >
                 <ScrollView contentContainerStyle = {styles.content_container}>
                     <Icon name="group" size={100} color={color_c}/>
                     <View style = {{margin:30}}>
@@ -192,7 +192,7 @@ export default class GroupInfoScreen extends Component{
                     
                 </ScrollView>
 
-            </ScrollView>
+            </View>
             </SafeAreaView>
         );
     }

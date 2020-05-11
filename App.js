@@ -4,6 +4,7 @@ import InviteFriendScreen from "./ui/screens/InviteFriendScreen"
 import MessagingScreen from './ui/screens/MessagingScreen';
 import FriendScreen from './ui/screens/FriendScreen';
 import AddFriendScreen from './ui/screens/AddFriendScreen';
+import GroupNotificationScreen from './ui/screens/GroupNotificationScreen'
 import LoginScreen from './ui/screens/LoginScreen';
 import GroupScreen from './ui/screens/GroupScreen';
 import GroupInfoScreen from "./ui/screens/GroupInfoScreen";
@@ -38,6 +39,7 @@ function MyGroupsStackScreen(){
       <MyGroupsStack.Screen name="Message" component = {MessagingScreen} />
       <MyGroupsStack.Screen name="CreateGroup" component = {GroupCreationScreen}/>
       <MyGroupsStack.Screen name="GroupInfo" component = {GroupInfoScreen}/>
+      <MyGroupsStack.Screen name="GroupNotification" component = {GroupNotificationScreen}/>
       <MyGroupsStack.Screen name="InviteFriend" component = {InviteFriendScreen}/>
       <MyGroupsStack.Screen name="UserInfo" component = {UserInfoScreen}/>
     </MyGroupsStack.Navigator>
@@ -52,6 +54,7 @@ function GroupMapStackScreen(){
       <GroupMapStack.Screen name="Message" component = {MessagingScreen}/>
       <GroupMapStack.Screen name="CreateGroup" component = {GroupCreationScreen}/>
       <GroupMapStack.Screen name="GroupInfo" component = {GroupInfoScreen}/>
+      <GroupMapStack.Screen name="GroupNotification" component = {GroupNotificationScreen}/>
       <GroupMapStack.Screen name="InviteFriend" component = {InviteFriendScreen}/>
       <GroupMapStack.Screen name="UserInfo" component = {UserInfoScreen}/>
     </GroupMapStack.Navigator>
@@ -71,6 +74,7 @@ function SearchGroupStackScreen(){
       <SearchGroupStack.Screen name="Message" component = {MessagingScreen}/>
       <SearchGroupStack.Screen name="CreateGroup" component = {GroupCreationScreen}/>
       <SearchGroupStack.Screen name="GroupInfo" component = {GroupInfoScreen}/>
+      <SearchGroupStack.Screen name="GroupNotification" component = {GroupNotificationScreen}/>
       <SearchGroupStack.Screen name="InviteFriend" component = {InviteFriendScreen}/>
       <SearchGroupStack.Screen name="UserInfo" component = {UserInfoScreen}/>
     </SearchGroupStack.Navigator>

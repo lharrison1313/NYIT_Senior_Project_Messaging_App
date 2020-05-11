@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import CircleButton from '../components/CircleButton';
 import {AppStyles, color_a, color_b, color_c, color_d, color_e} from '../styles/AppStyles'
 import messaging from '@react-native-firebase/messaging';
+import { getCurrentUserGroups, getGroupInfo } from '../../api/MessagingAppAPI';
 
 
 const plus = <Icon name="plus-circle" size={25} color= {color_a} />;
@@ -16,6 +17,7 @@ export default class GroupScreen extends Component{
         this.state = {
             groupList: [],
             text: '',
+            notificationGroup: {}
         }
         this.getGroups = this.props.get_groups_functions
     }
@@ -34,10 +36,12 @@ export default class GroupScreen extends Component{
                 this.props.navigation.navigate("Message",{id: remoteMessage.data.gid})
             }
             else if(remoteMessage.data.type == "group"){
-                thiss.props.navigation.navigate("GroupInfo",{id: remoteMessage.data.gid, date: remoteMessage.data.date, info: remoteMessage.data.info})
+                this.props.navigation.navigate("GroupNotification",{gid: remoteMessage.data.gid, name: remoteMessage.data.name, location: remoteMessage.data.location, description: remoteMessage.data.description})
             }
           }
-        )
+        ).catch(error =>{
+            console.log(error)
+        })
         
     }
 
