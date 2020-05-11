@@ -103,32 +103,18 @@ export default class App extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-        signedIn: false
+        signedIn: false,
     }
-    this.initialRoute = "MyGroups"
-    
+    this.navigationRef = React.createRef();
   }
 
-  componentDidMount(){
 
+
+  componentDidMount(){
+    
     registerAppWithFCM()
     requestUserPermission()
     subscribeToAuthChanges(this.authStateChanged)
-    
-    
-    // messaging().setBackgroundMessageHandler((remoteMessage)=>{
-    //   if(remoteMessage.data.type == "message"){
-    //     this.initialRoute = "GroupMap"
-    //   }
-    //   else if(remoteMessage.data.type == "group"){
-    //     this.initialRoute = "MyProfile"
-    //   }
-    //   else{
-    //     this.initialRoute = "MyProfile"
-    //   }
-    // })
-    
-    
 
   }
 
@@ -149,8 +135,8 @@ export default class App extends React.Component {
 
     if(this.state.signedIn){
       return(
-        <NavigationContainer>
-          <Tab.Navigator initialRouteName={this.initialRoute} tabBarOptions = {{activeBackgroundColor:color_a, inactiveBackgroundColor:color_a, inactiveTintColor:color_c, activeTintColor:color_b} }>
+        <NavigationContainer ref={this.navigationRef}>
+          <Tab.Navigator initialRouteName="MyGroups" tabBarOptions = {{activeBackgroundColor:color_a, inactiveBackgroundColor:color_a, inactiveTintColor:color_c, activeTintColor:color_b} }>
             <Tab.Screen name="MyGroups" component={MyGroupsStackScreen} options={{tabBarIcon: ({ color, size }) => (<Icon name="group" size={size} color={color}/>)}} />
             <Tab.Screen name="GroupMap" component={GroupMapStackScreen} options={{tabBarIcon: ({ color, size }) => (<Icon name="map" size={size} color={color}/>)}} />
             <Tab.Screen name="SearchGroup" component={SearchGroupStackScreen} options={{tabBarIcon: ({ color, size }) => (<Icon name="search" size={size} color={color}/>)}} />
@@ -171,3 +157,4 @@ export default class App extends React.Component {
     }
   }
 }
+

@@ -5,6 +5,7 @@ import { FlatList, TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CircleButton from '../components/CircleButton';
 import {AppStyles, color_a, color_b, color_c, color_d, color_e} from '../styles/AppStyles'
+import messaging from '@react-native-firebase/messaging';
 
 
 const plus = <Icon name="plus-circle" size={25} color= {color_a} />;
@@ -25,6 +26,18 @@ export default class GroupScreen extends Component{
             this.unsubscribe = unsub
         })
         .catch((error)=> console.log("GroupScreen: ",error))
+
+
+        //handling notifications reception
+        messaging().getInitialNotification().then( remoteMessage => {
+            if(remoteMessage.data.type == "message"){
+                this.props.navigation.navigate("Message",{id: remoteMessage.data.gid})
+            }
+            else if(remoteMessage.data.type == "group"){
+                thiss.props.navigation.navigate("GroupInfo",{id: remoteMessage.data.gid, date: remoteMessage.data.date, info: remoteMessage.data.info})
+            }
+          }
+        )
         
     }
 

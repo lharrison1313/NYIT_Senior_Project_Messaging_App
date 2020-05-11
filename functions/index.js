@@ -79,13 +79,28 @@ exports.sendGroupInterestNotification = functions.firestore
     .onCreate((snap,context) =>{
         //remember group hashtags must be removed and replaced with _
         const interests = snap.data().Interests;
-        console.log(interests)
+        const info = snap.data()
+        const gid = context.params.Group;
+        var date = Date(snap.data().TimeStamp)
 
+        //removing certain date info
+        var dateArray = date.toString().split(" ")
+        dateArray.pop()
+        dateArray.pop()
+        dateArray.pop()
+        const dateString = dateArray.join(" ")
+
+        //sending message to each group interest
         interests.forEach((element) => {
             var body = "A group matching your interest " + element + " has been created.";
 
             var message = {
-                data: {},
+                data: {
+                    type: "group",
+                    gid: gid,
+                    date: dateString,
+                    info: info,
+                },
                 notification:{
                     body: body,
                     title: "Check out this group!",
