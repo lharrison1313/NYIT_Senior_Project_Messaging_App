@@ -44,7 +44,6 @@ export default class GroupNotificationScreen extends Component{
                             Location: {this.location}
                         </Text>
 
-
                         <Text style = {styles.text}>
                             Description: {this.description}
                         </Text>
