@@ -132,14 +132,21 @@ export function removeUserFromGroup(uid,gid){
 }
 
 //deletes a group from the database
-//input: uid = user id, gid = group id
+//input: uid - user id, gid - group id
 export function deleteGroup(gid,uid){
     var ref = firestore().collection("Groups").doc(gid)
     ref.get().then((doc)=>{
+
         var owner = doc.data().GroupOwner
+
+        //checking if user is owner
         if(owner==uid){
+            //deleting group
             ref.delete()
-            messaging().subscribeToTopic(gid).then(()=>console.log("subscribed to group notifications for group: " + gid))
+            //unsubscribing from notifications for group
+            messaging().unsubscribeFromTopic(gid).then(()=>
+            console.log("unsubscribed to group notifications for group: " + gid)
+            )
         }
     })
 }
@@ -550,6 +557,9 @@ export function createGroupRequest(uid,gid,goid,groupName,userName){
     
 }
 
+//A function for creating friend requests
+//Inputs: uid: current users id, username: current users name, 
+//fid: recipients user id
 export function createFriendRequest(uid,userName,fid){
     //placing request in users request collection
     firestore().collection("Users").doc(fid).collection("Requests").add({
