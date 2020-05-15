@@ -51,7 +51,7 @@ export default class GroupNotificationScreen extends Component{
 
                     <OvalButton text = "Join Group" handler={()=>this.handlejoin()}/>
 
-                    <OvalButton text = "Invite Friends" handler={() => this.props.navigation.navigate('InviteFriend',{id: this.gid, groupName: this.info.GroupName})}/>
+                    <OvalButton text = "Invite Friends" handler={() => this.props.navigation.navigate('InviteFriend',{id: this.gid, groupName: this.name})}/>
                     
                 </ScrollView>
 

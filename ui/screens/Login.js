@@ -45,7 +45,7 @@ export default class LoginForm extends Component{
             <View style ={AppStyles.screen}>
                 <View style={styles.login_container} >
                 
-                    <Image style = {{width: 150, height: 150, margin: 20,}} source = {require('../../res/nyit.png')} />
+                    <Image style = {{ borderRadius:150/2, width: 150, height: 150, margin: 20,}} source = {require('../../res/GroupSleuth.png')} />
                     <TextInput 
                     style = {styles.field}
                     placeholder = "Enter Email"
