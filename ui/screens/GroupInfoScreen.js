@@ -89,15 +89,25 @@ export default class GroupInfoScreen extends Component{
                 <View>
                     <OvalButton text = "Messages" handler = {() => this.handleMessage()}/>
                     <OvalButton text = "Delete Group" handler = {() => this.handleDelete()}/>
+                    <OvalButton text = "Invite Friends" handler={() => this.props.navigation.navigate('InviteFriend',{id: this.gid, groupName: this.info.GroupName})}/>
                 </View>
             );
         }
         // the user is  a member
-        else if(users.includes(uid)){
+        else if(users.includes(uid) && this.info.Private){
             return(
                 <View>
                     <OvalButton text = "Messages" handler = {() => this.handleMessage()}/>
                     <OvalButton text = "Leave Group" handler = {() => this.handleLeave()}/>
+                </View>
+            )
+        }
+        else if(users.includes(uid) && !this.info.Private){
+            return(
+                <View>
+                    <OvalButton text = "Messages" handler = {() => this.handleMessage()}/>
+                    <OvalButton text = "Leave Group" handler = {() => this.handleLeave()}/>
+                    <OvalButton text = "Invite Friends" handler={() => this.props.navigation.navigate('InviteFriend',{id: this.gid, groupName: this.info.GroupName})}/>
                 </View>
             )
         }
@@ -188,7 +198,7 @@ export default class GroupInfoScreen extends Component{
                     {this.renderMap()}
                     {this.renderButtons()}
 
-                    <OvalButton text = "Invite Friends" handler={() => this.props.navigation.navigate('InviteFriend',{id: this.gid, groupName: this.info.GroupName})}/>
+                    
                     
                 </ScrollView>
 

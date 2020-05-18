@@ -47,12 +47,14 @@ exports.initializeVoteTally = functions.firestore
     })
 
 exports.sendNotificationToGroup = functions.firestore
+    //listening for updates in messages collection
     .document('Groups/{Group}/Messages/{Message}')
     .onCreate((snap,context) => {
+        //getting group data
         const gid = context.params.Group
         const body = snap.data().MessageText
         const sender = snap.data().SenderName
-
+        //building notification
         const message = {
             data: {
                 type: "message",
@@ -64,7 +66,7 @@ exports.sendNotificationToGroup = functions.firestore
             },
             topic: gid
         }
-
+        //sending message notification
         admin.messaging().send(message)
         .then(response => {
         console.log('Successfully sent message:', response);

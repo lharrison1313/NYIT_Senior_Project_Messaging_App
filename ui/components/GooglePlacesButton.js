@@ -21,8 +21,8 @@ export default class GooglePlacesButton extends Component{
             this.setState({chosenLocation: place.name});
             this.props.retrieveLocation(place);
         })
-        .catch(error => console.log(error.message));  // error is a Javascript Error object
-      }
+        .catch(error => console.log(error.message));  
+    }
 
     render(){
         if(this.props.shape == "oval"){

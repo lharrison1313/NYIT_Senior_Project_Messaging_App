@@ -18,6 +18,7 @@ export default class ProfileScreen extends Component{
 
         }
     }
+
     imagebuttonHandler = ()=>{
         ImagePicker.showImagePicker((response)=>{
           console.log('Response =',response);
@@ -36,6 +37,7 @@ export default class ProfileScreen extends Component{
             }
         });
     }
+    
     componentDidMount(){
        this.setState({
            name: getCurrentUserName(),

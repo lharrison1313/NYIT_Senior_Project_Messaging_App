@@ -17,7 +17,10 @@ export default class GroupCreationScreen extends Component{
             groupName: "",
             description: "",
             interests: [],
-            place: {},
+            place: {
+                location: null,
+                name: null
+            },
             groupImageSource:"",
             private: false,
             visible: true,
@@ -75,7 +78,18 @@ export default class GroupCreationScreen extends Component{
             alert('Group name cannot be empty')
         }
         else{
-            createGroup(this.state.groupName,this.state.interests,this.state.place.name,this.state.place.location,this.state.description,this.state.private,this.state.visible)
+           
+            var group = {
+                groupName: this.state.groupName,
+                description: this.state.description,
+                interests: this.state.interests,
+                locationName: this.state.place.name,
+                coordinates: this.state.place.location,
+                private: this.state.private,
+                visible: this.state.visible
+            }
+            console.log(group)
+            createGroup(group)
             this.props.navigation.goBack()
         }
     }

@@ -124,6 +124,7 @@ export default class GroupMapScreen extends Component{
 
 
     renderMarker = (group) =>{
+        //setting group color based on privacy
         var color = ""
         if(!group.Info.Visible){
             color = "orange"
@@ -135,13 +136,15 @@ export default class GroupMapScreen extends Component{
             color = color_b
         }
 
+        //rendering marker
         return(
-        <Marker
-            key = {group.id} 
-            coordinate = {group.Info.Coordinates}
-            onPress = {() => this.flatListRef.scrollToIndex({index: group.index, animated:true})}
-            pinColor = {color}
-        />)
+            <Marker
+                key = {group.id} 
+                coordinate = {group.Info.Coordinates}
+                onPress = {() => this.flatListRef.scrollToIndex({index: group.index, animated:true})}
+                pinColor = {color}
+            />
+        )
     }
 
     render(){
@@ -158,9 +161,7 @@ export default class GroupMapScreen extends Component{
                         showsMyLocationButton = {false}
                     >
                         {this.state.groups.map( group =>(
-                            
                             this.renderMarker(group)
-                            
                         ))}
 
                     </MapView>

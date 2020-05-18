@@ -6,9 +6,15 @@ import {PermissionsAndroid} from 'react-native';
 export function login(email, password, alert){
     auth().signInWithEmailAndPassword(email,password)
     .then((value) => console.log(value))
-    .catch((error) =>{ alert()})
+    .catch((error) =>{ 
+        //displaying error dialog
+        alert()
+    })
 }
 
+// registers user account 
+// inputs: email - the choosen user email, password - the choosen user password,  
+// userName - the choosen username, alert - callback function to display error dialog 
 export function signUp(email, password, userName, alert){
     auth().createUserWithEmailAndPassword(email, password)
     .then((userInfo)=>{
@@ -21,12 +27,16 @@ export function signUp(email, password, userName, alert){
             Interests: []
 
         }).then(() => {
-            console.log("User added to database");
+            //setting users display name
+            auth().currentUser.updateProfile({displayName: userName})
+            
         })
         .catch((error) => {
-           alert(error)
+            // displaying error dialog
+            alert(error)
         });
     }).catch((error) =>{
+         // displaying error dialog
         alert(error)
     })
 }
@@ -76,9 +86,11 @@ export async function requestUserPermission() {
     if (settings) {
       console.log('Permission settings:', settings);
     }
-  }
+}
 
 //sends messages to group on database
+//inputs: GroupID - id of group message is sent to, body - message text,
+//senderName - senders user name, senderID - sender's user ID
 export function sendMessage(groupID, body, senderName, senderID){
 
     firestore().collection("Groups").doc(groupID).collection("Messages").add({
@@ -88,7 +100,7 @@ export function sendMessage(groupID, body, senderName, senderID){
         TimeStamp: firestore.FieldValue.serverTimestamp()
     })
     .then(function(docRef) {
-                
+        console.log("Successfully sent message: " + body)
     })
     .catch(function(error) {
         console.error("Error sending message: ", error);
@@ -152,41 +164,41 @@ export function deleteGroup(gid,uid){
 }
 
 //creates a new group on database
-export function createGroup(groupName,interests,locationName,coordinates,description,privategroup,visible){
-    if(locationName == null){
-        locationName = "Anywhere"
+//inputs: group - group POJO with the following fields: groupName, interests
+//locationName, coordinates, description private, visible
+export function createGroup(group){
+    if(group.locationName == null){
+        group.locationName = "Anywhere"
     }
     
     //prepending hash tags to interests
     var interestList = []
-    interests.forEach( element =>{
+    group.interests.forEach( element =>{
         var hash = "#"
         interestList.push(hash.concat(element))
     })
     //creating new group
     firestore().collection("Groups").add({
-        GroupName: groupName,
+        GroupName: group.groupName,
         TimeStamp: firestore.FieldValue.serverTimestamp(),
         Interests: interestList,
-        Location: locationName,
-        Coordinates: coordinates,
+        Location: group.locationName,
+        Coordinates: group.coordinates,
         GroupOwner: getCurrentUserID(),
         GroupUsers: [getCurrentUserID()],
         PendingGroupUsers: [],
         Votes: 0,
-        Private: privategroup,
-        Visible: visible,
-        Description: description
+        Private: group.private,
+        Visible: group.visible,
+        Description: group.description
         
     }).then((info)=>{
-        messaging().subscribeToTopic(info.id).then(()=>console.log("subscribed to group notifications for group: " + info.id))
+        messaging().subscribeToTopic(info.id).then(()=>
+        console.log("subscribed to group notifications for group: " + info.id))
     })
     .catch((error)=>{
         console.log(error)
     })
-    
-
-    
 }
 
 //gets the current users id
@@ -308,6 +320,7 @@ export async function getAllGroups(groupsRetrieved,filter){
 
 
 //given a group id, gets all messages from that group
+//inputs gid - current group id, messagesRetrieved - callback function for retieving messages
 export async function getGroupMessages(gid,messagesRetrieved){
     var ref = firestore().collection("Groups").doc(gid).collection("Messages").orderBy("TimeStamp")
     return ref.onSnapshot((querrySnapshot) => {
@@ -638,24 +651,26 @@ export function rejectGroupRequest(goid,gid,docID,uid){
     })
 }
 
+//Adds interest to users profile
+//inputs: uid - current users id, userInterest - an array of interests
 export function addInterest(uid,userInterest){
     var ref = firestore().collection("Users").doc(uid)
 
-    //adding hashtags
+    
     var hashInterest = []
     userInterest.forEach((item)=>{
+        //adding hashtags
         hashInterest.push("#"+item)
-        messaging().subscribeToTopic("_"+item).then(()=>console.log("subscribed to group notifications for group: " + "_"+item))
+        //subscribing to interest topic
+        messaging().subscribeToTopic("_"+item)
+        .then(( )=> console.log("subscribed to group notifications for group: " + "_"+item))
+        .catch((error) => console.log("error subscribing to interest", error))
     })
 
     ref.update({
         Interests: firestore.FieldValue.arrayUnion.apply(null,hashInterest)
     })
 
-    //subscribing user to push notifications
-    hashInterest.forEach((interest) =>{
-        
-    })
 }
 
 export function removeInterest(uid,userInterest){
@@ -665,7 +680,9 @@ export function removeInterest(uid,userInterest){
     })
 
     var topic = "_"+userInterest.substring(1);
-    messaging().unsubscribeFromTopic(topic).then(()=>console.log("unsubscribed to group notifications for group: " + topic ))
+    messaging().unsubscribeFromTopic(topic)
+    .then(()=>console.log("unsubscribed to group notifications for group: " + topic ))
+    .catch((error) => console.log("error unsubsubscribing to interest", error))
 }
 
 export async function retrieveInterests(uid,retrieveInterests){

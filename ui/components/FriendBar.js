@@ -61,7 +61,6 @@ export default class FriendBar extends Component{
 
                     <View style={styles.left_container}>
                         <Icon name="user" size={60} color={color_c}/>
-                            
                     </View>
 
                     <View style={styles.mid_container}>
@@ -98,13 +97,13 @@ const styles = StyleSheet.create({
         flexDirection:"column",
         alignItems:"center",
         justifyContent:"center",
-        flex: .65,
+        flex: .60,
         padding: 5
 
     },
 
     right_container:{
-        flex: .20,
+        flex: .25,
         justifyContent: "center"
     },
 
